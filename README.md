@@ -71,4 +71,3 @@ For inquiries or feedback, reach out to me at **avidu@pm.me**.
 
 ### 📜 License
 This project is licensed under the [MIT License](LICENSE).
-```
