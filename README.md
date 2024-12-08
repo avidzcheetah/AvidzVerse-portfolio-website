@@ -1,6 +1,7 @@
 # AvidzVerse - Personal Portfolio Website 🌐
 
 A modern, responsive personal portfolio website showcasing my bio, skills, projects, and social media links. Built with a focus on a rich UI/UX design, the website serves as a digital resume and portfolio.
+
 ![Hero](https://github.com/avidzcheetah/AvidzVerse-portfolio-website/blob/main/Previews/Hero.png)
 
 ---
