@@ -1,0 +1,59 @@
+/* Light Theme */
+[data-theme="light"] {
+  --color-primary: rgb(59 130 246);
+  --color-primary-hover: rgb(37 99 235);
+  --color-background: rgb(249 250 251);
+  --color-surface: rgb(255 255 255);
+  --color-text: rgb(17 24 39);
+  --color-text-secondary: rgb(107 114 128);
+  --gradient-start: rgb(243 244 246);
+  --gradient-end: rgb(229 231 235);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-primary: rgb(59 130 246);
+  --color-primary-hover: rgb(37 99 235);
+  --color-background: rgb(17 24 39);
+  --color-surface: rgb(31 41 55);
+  --color-text: rgb(243 244 246);
+  --color-text-secondary: rgb(156 163 175);
+  --gradient-start: rgb(17 24 39);
+  --gradient-end: rgb(31 41 55);
+}
+
+/* Cyberpunk Theme */
+[data-theme="cyberpunk"] {
+  --color-primary: rgb(34 211 238);
+  --color-primary-hover: rgb(6 182 212);
+  --color-background: rgb(88 28 135);
+  --color-surface: rgb(107 33 168);
+  --color-text: rgb(244 114 182);
+  --color-text-secondary: rgb(236 72 153);
+  --gradient-start: rgb(88 28 135);
+  --gradient-end: rgb(107 33 168);
+}
+
+/* Ocean Theme */
+[data-theme="ocean"] {
+  --color-primary: rgb(20 184 166);
+  --color-primary-hover: rgb(13 148 136);
+  --color-background: rgb(30 58 138);
+  --color-surface: rgb(29 78 216);
+  --color-text: rgb(186 230 253);
+  --color-text-secondary: rgb(125 211 252);
+  --gradient-start: rgb(30 58 138);
+  --gradient-end: rgb(29 78 216);
+}
+
+/* Forest Theme */
+[data-theme="forest"] {
+  --color-primary: rgb(16 185 129);
+  --color-primary-hover: rgb(5 150 105);
+  --color-background: rgb(22 163 74);
+  --color-surface: rgb(21 128 61);
+  --color-text: rgb(163 230 53);
+  --color-text-secondary: rgb(132 204 22);
+  --gradient-start: rgb(22 163 74);
+  --gradient-end: rgb(21 128 61);
+}
