@@ -1,6 +1,7 @@
 # AvidzVerse - Personal Portfolio Website 🌐
 
 A modern, responsive personal portfolio website showcasing my bio, skills, projects, and social media links. Built with a focus on a rich UI/UX design, the website serves as a digital resume and portfolio.
+![Hero](https://github.com/avidzcheetah/AvidzVerse-portfolio-website/blob/main/Previews/Hero.png)
 
 ---
 
@@ -22,14 +23,20 @@ A modern, responsive personal portfolio website showcasing my bio, skills, proje
 
 ## 📸 Screenshots
 
-### 1. Homepage
-![Homepage](screenshots/homepage.png)
+### 1. About Me
+![About](https://github.com/avidzcheetah/AvidzVerse-portfolio-website/blob/main/Previews/About.png)
 
 ### 2. Portfolio Section
-![Portfolio](screenshots/portfolio.png)
+![Portfolio](https://github.com/avidzcheetah/AvidzVerse-portfolio-website/blob/main/Previews/Portfo.png)
 
-### 3. Contact Section
-![Contact](screenshots/contact.png)
+### 3. Cyberpunk Theme
+![Cyberpunk](https://github.com/avidzcheetah/AvidzVerse-portfolio-website/blob/main/Previews/cyberpunk.png)
+
+### 4. Ocean Theme
+![ocean](https://github.com/avidzcheetah/AvidzVerse-portfolio-website/blob/main/Previews/ocean.png)
+
+### 5. Forest Theme
+![forest](https://github.com/avidzcheetah/AvidzVerse-portfolio-website/blob/main/Previews/forest.png)
 
 ---
 
