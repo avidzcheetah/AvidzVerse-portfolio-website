@@ -1,6 +1,7 @@
 import React from 'react';
-import { Github, Linkedin, Facebook, Instagram, Youtube } from 'lucide-react';
 import { Link } from 'react-scroll';
+import ProfileImage from './Hero/ProfileImage';
+import SocialLinks from './Hero/SocialLinks';
 
 const Hero = () => {
   return (
@@ -29,55 +30,10 @@ const Hero = () => {
                 View Work
               </Link>
             </div>
-            <div className="flex gap-6">
-              <a 
-                href="https://github.com/avidzcheetah" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-[var(--color-primary)] transition-colors"
-              >
-                <Github size={24} />
-              </a>
-              <a 
-                href="https://linkedin.com/in/avidz" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-[var(--color-primary)] transition-colors"
-              >
-                <Linkedin size={24} />
-              </a>
-              <a 
-                href="https://facebook.com/avidzxv" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-[var(--color-primary)] transition-colors"
-              >
-                <Facebook size={24} />
-              </a>
-              <a 
-                href="https://instagram.com/avidz_cheetah" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-[var(--color-primary)] transition-colors"
-              >
-                <Instagram size={24} />
-              </a>
-              <a 
-                href="https://youtube.com/@avidzxv" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-[var(--color-primary)] transition-colors"
-              >
-                <Youtube size={24} />
-              </a>
-            </div>
+            <SocialLinks />
           </div>
           <div className="lg:w-1/2">
-            <img
-              src="https://media.licdn.com/dms/image/v2/D5603AQEbRB-AADspKQ/profile-displayphoto-shrink_800_800/B56ZPpHzJJGQAc-/0/1734782957746?e=1740614400&v=beta&t=_gMgPWVRYEbKgT3FMQp2XrVWvLt-vmbCJeCRbgS1FXo"
-              alt="Avidz"
-              className="rounded-full w-64 h-64 lg:w-96 lg:h-96 object-cover border-4 border-[var(--color-primary)] shadow-xl"
-            />
+            <ProfileImage />
           </div>
         </div>
       </div>
