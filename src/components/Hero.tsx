@@ -74,7 +74,7 @@ const Hero = () => {
           </div>
           <div className="lg:w-1/2">
             <img
-              src="https://media.licdn.com/dms/image/v2/D4D03AQHMbCu7NozbXg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1726760565137?e=1739404800&v=beta&t=IPgk1YMCIJboO-ghkupLsN8bwURE5Rqh-hV2JYD7gUY"
+              src="https://media.licdn.com/dms/image/v2/D5603AQEbRB-AADspKQ/profile-displayphoto-shrink_800_800/B56ZPpHzJJGQAc-/0/1734782957746?e=1740614400&v=beta&t=_gMgPWVRYEbKgT3FMQp2XrVWvLt-vmbCJeCRbgS1FXo"
               alt="Avidz"
               className="rounded-full w-64 h-64 lg:w-96 lg:h-96 object-cover border-4 border-[var(--color-primary)] shadow-xl"
             />

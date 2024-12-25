@@ -6,7 +6,7 @@ const Terminal = () => {
   const [displayedText, setDisplayedText] = useState('');
   
   const userInfo = `
-avidz@avidzVerse:~$ whoami
+avidzverse@portfolio:~$ whoami
 
 USER INFORMATION
 ---------------
@@ -36,7 +36,7 @@ Facebook: facebook.com/avidzxv
 Instagram: instagram.com/avidz_cheetah
 YouTube: youtube.com/@avidzxv
 
-avidz@avidzVerse:~$ █`;
+avidzverse@portfolio:~$ █`;
 
   useEffect(() => {
     let currentIndex = 0;

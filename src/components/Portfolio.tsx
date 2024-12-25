@@ -3,12 +3,6 @@ import { CircuitBoard, BookOpen, Accessibility, Bot, Car } from 'lucide-react';
 
 const projects = [
   {
-    title: 'AI Chatbot (Mew)',
-    description: 'A real-time chatbot integrating ChatGPT and Gemini AI for dynamic conversations.',
-    icon: Bot,
-    tech: ['Python', 'OpenAI API', 'Google AI'],
-  },
-  {
     title: 'FastLineFollower for NDT Dextron',
     description: 'An autonomous line-following robot designed for the Dextron Competition, featuring precise line tracking, PID control, and high-speed navigation capabilities.',
     icon: Car,
@@ -22,16 +16,22 @@ const projects = [
     tech: ['Arduino', 'C++', 'Robotics'],
   },
   {
+    title: 'Java GUI Student Management System',
+    description: 'Includes advanced features like course integration, LMS functionality, and export to Excel.',
+    icon: BookOpen,
+    tech: ['Java', 'MySQL', 'JavaFX'],
+  },
+  {
     title: 'Electric Wheelchair Project',
     description: 'Designed for improved accessibility and mobility assistance.',
     icon: Accessibility,
     tech: ['Electronics', 'IoT', 'Arduino'],
   },
   {
-    title: 'Java GUI Student Management System',
-    description: 'Includes advanced features like course integration, LMS functionality, and export to Excel.',
-    icon: BookOpen,
-    tech: ['Java', 'MySQL', 'JavaFX'],
+    title: 'AI Chatbot (Mew)',
+    description: 'A real-time chatbot integrating ChatGPT and Gemini AI for dynamic conversations.',
+    icon: Bot,
+    tech: ['Python', 'OpenAI API', 'Google AI'],
   },
 ];
 

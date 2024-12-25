@@ -48,7 +48,7 @@ const Contact = () => {
                 <MapPin className="w-6 h-6 text-blue-500" />
                 <div>
                   <p className="font-medium">Location</p>
-                  <p className="text-gray-600">Colombo, Sri Lanka</p>
+                  <p className="text-gray-600">Jaffna, Sri Lanka</p>
                 </div>
               </div>
             </div>
