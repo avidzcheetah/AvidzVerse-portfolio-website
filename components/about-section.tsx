@@ -59,45 +59,36 @@ export function AboutSection() {
   return (
     <>
       <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        
-        @keyframes float-delayed {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(-180deg); }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-float-delayed {
-          animation: float-delayed 8s ease-in-out infinite;
-        }
-        
         .animate-on-scroll {
           opacity: 0;
-          transition: all 1s ease-out;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         
         .animate-on-scroll.animate-in {
-          opacity: 1 !important;
-          transform: translateX(0) translateY(0) !important;
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        
+        .bounce-in {
+          animation: bounceIn 0.6s ease-out;
+        }
+        
+        @keyframes bounceIn {
+          0% { transform: scale(0.3); opacity: 0; }
+          50% { transform: scale(1.05); }
+          70% { transform: scale(0.9); }
+          100% { transform: scale(1); opacity: 1; }
         }
       `}</style>
-      
-      <section ref={sectionRef} id="about" className="py-24 bg-muted/50 relative overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/5 rounded-full blur-xl animate-float"></div>
-          <div className="absolute bottom-20 right-10 w-40 h-40 bg-purple-500/5 rounded-full blur-xl animate-float-delayed"></div>
-          <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl animate-pulse"></div>
-        </div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16 animate-on-scroll" style={{ transform: 'translateY(30px)' }}>
+      <section ref={sectionRef} id="about" className="py-24 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               About Me
             </h2>
@@ -109,7 +100,7 @@ export function AboutSection() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {/* Education */}
-            <Card className="animate-on-scroll group hover:shadow-xl hover:scale-105 transform transition-all duration-300" style={{ transform: 'translateX(-50px)', transitionDelay: '0.2s' }}>
+            <Card className="animate-on-scroll stagger-1 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 group-hover:text-blue-600 transition-colors">
                   <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full group-hover:scale-110 transition-transform">
@@ -123,7 +114,7 @@ export function AboutSection() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {education.map((edu, index) => (
-                  <div key={index} className="border-l-2 border-blue-200 pl-4 hover:border-blue-400 transition-colors group/item">
+                  <div key={index} className="border-l-2 border-blue-200 pl-4 hover:border-blue-400 transition-all duration-200 group/item">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="group-hover/item:scale-110 transition-transform">
                         {edu.icon}
@@ -141,7 +132,7 @@ export function AboutSection() {
             </Card>
 
             {/* Current Roles */}
-            <Card className="animate-on-scroll group hover:shadow-xl hover:scale-105 transform transition-all duration-300" style={{ transform: 'translateX(50px)', transitionDelay: '0.4s' }}>
+            <Card className="animate-on-scroll stagger-2 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 group-hover:text-purple-600 transition-colors">
                   <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-full group-hover:scale-110 transition-transform">
@@ -155,7 +146,7 @@ export function AboutSection() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {currentRoles.map((role, index) => (
-                  <div key={index} className="border-l-2 border-purple-200 pl-4 hover:border-purple-400 transition-colors group/item">
+                  <div key={index} className="border-l-2 border-purple-200 pl-4 hover:border-purple-400 transition-all duration-200 group/item">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="group-hover/item:scale-110 transition-transform">
                         {role.icon}
