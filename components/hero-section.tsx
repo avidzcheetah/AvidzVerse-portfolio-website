@@ -75,12 +75,14 @@ export function HeroSection() {
                 </p>
               </div>
 
-              {/* Personal Brand Statement */}
+              {/* Quote */}
               <div className="animate-fade-in-up delay-500">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-xl rounded-lg"></div>
-                  <p className="relative text-lg md:text-xl font-medium text-cyan-300 italic bg-slate-800/50 backdrop-blur-sm p-4 rounded-lg border border-cyan-500/30">
-                    "I am a cheetah, chasing a miracle through cyberspace!"
+                  <p className="relative text-sm md:text-s font-small text-cyan-300 italic bg-slate-800/50 backdrop-blur-sm p-4 rounded-lg border border-cyan-500/30">
+                  "There are only two types of companies in the world: those that have been breached and know it and those that have been breached and don't know it."
+                    <br />
+                    - Ted Schlein
                   </p>
                 </div>
               </div>
