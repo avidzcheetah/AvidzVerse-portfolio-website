@@ -12,7 +12,7 @@ export function ExperienceSection() {
   const [isClient, setIsClient] = useState(false);
   const { theme, systemTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('leadership');
-  
+
   // Determine current theme
   const currentTheme = theme === 'system' ? systemTheme : theme;
   const isDark = currentTheme === 'dark';
@@ -101,22 +101,10 @@ export function ExperienceSection() {
       category: 'Competition',
     },
     {
-      title: 'IEEE Regional Exemplary Student Branch Award',
-      date: '2024',
-      description: 'Recognition for outstanding contributions to IEEE student activities at University of Jaffna.',
+      title: 'Best Academic Performance for 1st Semester',
+      date: '2023',
+      description: 'Recognition for overall best academic performance in the 1st semester at the FOE, UOJ.',
       category: 'Recognition',
-    },
-    {
-      title: 'Cloud Connect 2025 Participant',
-      date: '2025',
-      description: 'Participated in cloud computing conference with GDG Cloud Sri Lanka.',
-      category: 'Conference',
-    },
-    {
-      title: 'IEEEXtreme 18.0 Participant',
-      date: '2024',
-      description: 'Competed in the world\'s largest programming competition with Team EFacByteMinds.',
-      category: 'Competition',
     },
   ];
 
@@ -146,101 +134,83 @@ export function ExperienceSection() {
   return (
     <>
       <style jsx>{`
-        /* Professional Background Animations */
-        @keyframes professionalFloat {
-          0%, 100% { 
-            transform: translateY(0px) rotate(0deg) scale(1); 
-            opacity: 0.4; 
-          }
-          33% { 
-            transform: translateY(-15px) rotate(90deg) scale(1.05); 
-            opacity: 0.7; 
-          }
-          66% { 
-            transform: translateY(8px) rotate(180deg) scale(0.95); 
-            opacity: 0.5; 
-          }
+        /* Moving Star Animations */
+        @keyframes starMoveRight {
+          0% { transform: translateX(-100px); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
         }
         
-        @keyframes networkConnect {
-          0%, 100% { 
-            transform: scale(1); 
-            opacity: 0.3; 
-          }
-          50% { 
-            transform: scale(1.3); 
-            opacity: 0.8; 
-          }
+        @keyframes starMoveLeft {
+          0% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateX(-100px); opacity: 0; }
         }
         
-        @keyframes dataFlow {
-          0% { 
-            transform: translateY(-50px); 
-            opacity: 0; 
-          }
-          50% { 
-            opacity: 1; 
-          }
-          100% { 
-            transform: translateY(50vh); 
-            opacity: 0; 
-          }
+        @keyframes starMoveUp {
+          0% { transform: translateY(calc(100vh + 100px)); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-100px); opacity: 0; }
         }
         
-        /* Card Entrance Animations */
+        @keyframes starMoveDown {
+          0% { transform: translateY(-100px); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(calc(100vh + 100px)); opacity: 0; }
+        }
+        
+        @keyframes starMoveDiagonal {
+          0% { transform: translate(-100px, calc(100vh + 100px)); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translate(calc(100vw + 100px), -100px); opacity: 0; }
+        }
+        
+        @keyframes starMoveReverseDiagonal {
+          0% { transform: translate(calc(100vw + 100px), calc(100vh + 100px)); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translate(-100px, -100px); opacity: 0; }
+        }
+        
+        @keyframes shootingStar {
+          0% { transform: translateX(-200px) translateY(200px) rotate(45deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateX(100vw) translateY(-200px) rotate(45deg); opacity: 0; }
+        }
+        
+        @keyframes constellation {
+          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+          50% { transform: translateY(-15px) rotate(180deg); opacity: 0.3; }
+        }
+        
+        /* Card Animations */
         @keyframes cardSlideUp {
-          0% { 
-            transform: translateY(40px) scale(0.95); 
-            opacity: 0; 
-          }
-          100% { 
-            transform: translateY(0) scale(1); 
-            opacity: 1; 
-          }
+          0% { transform: translateY(40px) scale(0.95); opacity: 0; }
+          100% { transform: translateY(0) scale(1); opacity: 1; }
         }
         
         @keyframes cardFadeIn {
-          0% { 
-            transform: translateX(-30px) scale(0.9); 
-            opacity: 0; 
-          }
-          100% { 
-            transform: translateX(0) scale(1); 
-            opacity: 1; 
-          }
+          0% { transform: translateX(-30px) scale(0.9); opacity: 0; }
+          100% { transform: translateX(0) scale(1); opacity: 1; }
         }
         
         @keyframes iconBounce {
-          0%, 100% { 
-            transform: scale(1) rotate(0deg); 
-          }
-          50% { 
-            transform: scale(1.1) rotate(5deg); 
-          }
+          0%, 100% { transform: scale(1) rotate(0deg); }
+          50% { transform: scale(1.1) rotate(5deg); }
         }
         
-        @keyframes borderGlow {
-          0%, 100% { 
-            border-color: ${isDark ? 'rgba(59, 130, 246, 0.3)' : 'rgba(59, 130, 246, 0.2)'}; 
-          }
-          50% { 
-            border-color: ${isDark ? 'rgba(59, 130, 246, 0.6)' : 'rgba(59, 130, 246, 0.4)'}; 
-          }
-        }
-        
-        /* Achievement Trophy Animation */
         @keyframes trophyShine {
-          0%, 100% { 
-            transform: scale(1) rotate(0deg); 
-            filter: brightness(1); 
-          }
-          50% { 
-            transform: scale(1.15) rotate(-5deg); 
-            filter: brightness(1.3); 
-          }
+          0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+          50% { transform: scale(1.15) rotate(-5deg); filter: brightness(1.3); }
         }
         
-        /* Main Animation Classes */
+        /* Animation Classes */
         .animate-on-scroll {
           opacity: 0;
           transform: translateY(30px);
@@ -266,6 +236,34 @@ export function ExperienceSection() {
         
         .icon-animate:hover {
           animation: iconBounce 0.6s ease-in-out;
+        }
+        
+        /* Stagger delays */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        
+        /* Section Header */
+        .section-header {
+          position: relative;
+        }
+        
+        .section-header::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #3b82f6, #8b5cf6, #22c55e);
+          transition: width 0.6s ease;
+        }
+        
+        .section-header.animate-in::after {
+          width: 60px;
         }
         
         /* Professional Card Styling */
@@ -299,10 +297,8 @@ export function ExperienceSection() {
           box-shadow: 0 20px 40px ${isDark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.15)'};
         }
         
-        /* Border Animation for Leadership Cards */
         .executive-card {
           border-left: 4px solid #3b82f6;
-          animation: borderGlow 3s ease-in-out infinite;
         }
         
         .ieee-card {
@@ -313,7 +309,6 @@ export function ExperienceSection() {
           border-left: 4px solid #22c55e;
         }
         
-        /* Achievement Card Special Effects */
         .achievement-card {
           position: relative;
           overflow: hidden;
@@ -343,59 +338,7 @@ export function ExperienceSection() {
           animation: trophyShine 0.8s ease-in-out;
         }
         
-        /* Section Header Animations */
-        .section-header {
-          position: relative;
-        }
-        
-        .section-header::after {
-          content: '';
-          position: absolute;
-          bottom: -8px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #3b82f6, #8b5cf6, #22c55e);
-          transition: width 0.6s ease;
-        }
-        
-        .section-header.animate-in::after {
-          width: 60px;
-        }
-        
-        /* Stagger Effects */
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
-        .stagger-5 { animation-delay: 0.5s; }
-        .stagger-6 { animation-delay: 0.6s; }
-        
-        /* Background Professional Elements */
-        .professional-element {
-          position: absolute;
-          animation: professionalFloat 10s ease-in-out infinite;
-        }
-        
-        .network-node {
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          background: ${isDark ? 'rgba(59, 130, 246, 0.6)' : 'rgba(59, 130, 246, 0.4)'};
-          border-radius: 50%;
-          animation: networkConnect 4s ease-in-out infinite;
-        }
-        
-        .data-stream {
-          position: absolute;
-          font-family: 'Courier New', monospace;
-          font-size: 10px;
-          color: ${isDark ? 'rgba(34, 197, 94, 0.3)' : 'rgba(34, 197, 94, 0.2)'};
-          animation: dataFlow 6s linear infinite;
-        }
-        
-        /* Tab Animation */
+        /* Tab Styling */
         .tab-modern {
           position: relative;
           transition: all 0.3s ease;
@@ -405,7 +348,7 @@ export function ExperienceSection() {
           transform: translateY(-2px);
         }
         
-        /* Badge Animations */
+        /* Badge Styling */
         .badge-modern {
           transition: all 0.3s ease;
           position: relative;
@@ -430,6 +373,88 @@ export function ExperienceSection() {
         .badge-modern:hover {
           transform: scale(1.05);
         }
+        
+        /* Moving Stars */
+        .star {
+          position: absolute;
+          border-radius: 50%;
+        }
+        
+        .star-small {
+          width: 2px;
+          height: 2px;
+          background: ${isDark ? 'white' : 'rgba(0, 0, 0, 0.6)'};
+          box-shadow: 0 0 6px ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.4)'};
+          animation: starMoveRight 20s linear infinite;
+        }
+        
+        .star-medium {
+          width: 3px;
+          height: 3px;
+          background: ${isDark ? 'white' : 'rgba(0, 0, 0, 0.7)'};
+          box-shadow: 0 0 8px ${isDark ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.5)'};
+          animation: starMoveLeft 25s linear infinite;
+        }
+        
+        .star-large {
+          width: 4px;
+          height: 4px;
+          background: ${isDark ? '#ffffff' : 'rgba(0, 0, 0, 0.8)'};
+          box-shadow: 0 0 12px ${isDark ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 0.6)'};
+          animation: starMoveUp 30s linear infinite;
+        }
+        
+        .star:nth-child(2n) {
+          animation: starMoveDown 18s linear infinite;
+          animation-delay: 2s;
+        }
+        
+        .star:nth-child(3n) {
+          animation: starMoveDiagonal 22s linear infinite;
+          animation-delay: 4s;
+        }
+        
+        .star:nth-child(4n) {
+          animation: starMoveReverseDiagonal 28s linear infinite;
+          animation-delay: 6s;
+        }
+        
+        .star:nth-child(5n) {
+          animation: starMoveRight 15s linear infinite;
+          animation-delay: 1s;
+        }
+        
+        .star:nth-child(6n) {
+          animation: starMoveLeft 35s linear infinite;
+          animation-delay: 8s;
+        }
+        
+        .shooting-star {
+          position: absolute;
+          width: 4px;
+          height: 2px;
+          background: linear-gradient(45deg, transparent, ${isDark ? 'white' : 'rgba(0, 0, 0, 0.8)'}, transparent);
+          border-radius: 2px;
+          animation: shootingStar 12s linear infinite;
+        }
+        
+        .shooting-star:nth-child(2n) {
+          animation-delay: 4s;
+          animation-duration: 10s;
+        }
+        
+        .shooting-star:nth-child(3n) {
+          animation-delay: 8s;
+          animation-duration: 14s;
+        }
+        
+        .constellation-effect {
+          position: absolute;
+          width: 120px;
+          height: 120px;
+          opacity: ${isDark ? '0.1' : '0.05'};
+          animation: constellation 12s ease-in-out infinite;
+        }
       `}</style>
 
       <section 
@@ -438,53 +463,73 @@ export function ExperienceSection() {
         className="py-24 relative overflow-hidden"
         style={backgroundStyle}
       >
-        {/* Professional Background Elements */}
+        {/* Moving Star Field Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Professional Geometric Elements */}
-          {[...Array(8)].map((_, i) => (
+          {/* Small Moving Stars */}
+          {[...Array(30)].map((_, i) => (
             <div
-              key={`professional-${i}`}
-              className="professional-element"
-              style={{
-                left: `${15 + i * 12}%`,
-                top: `${10 + i * 15}%`,
-                animationDelay: `${i * 1.5}s`,
-              }}
-            >
-              <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${
-                i % 3 === 0 ? 'from-blue-500/10 to-purple-500/10' :
-                i % 3 === 1 ? 'from-purple-500/10 to-green-500/10' :
-                'from-green-500/10 to-blue-500/10'
-              }`} />
-            </div>
-          ))}
-          
-          {/* Network Connection Nodes */}
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={`network-${i}`}
-              className="network-node"
+              key={`star-small-${i}`}
+              className="star star-small"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`,
+                animationDelay: `${Math.random() * 20}s`,
+                animationDuration: `${15 + Math.random() * 10}s`,
               }}
             />
           ))}
           
-          {/* Data Streams */}
-          {[...Array(6)].map((_, i) => (
+          {/* Medium Moving Stars */}
+          {[...Array(20)].map((_, i) => (
             <div
-              key={`data-${i}`}
-              className="data-stream"
+              key={`star-medium-${i}`}
+              className="star star-medium"
               style={{
                 left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 6}s`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 25}s`,
+                animationDuration: `${20 + Math.random() * 10}s`,
               }}
-            >
-              {['→', '↗', '↘', '←', '↙', '↖'][i]}
-            </div>
+            />
           ))}
+          
+          {/* Large Moving Stars */}
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={`star-large-${i}`}
+              className="star star-large"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 30}s`,
+                animationDuration: `${25 + Math.random() * 10}s`,
+              }}
+            />
+          ))}
+          
+          {/* Shooting Stars */}
+          {[...Array(3)].map((_, i) => (
+            <div
+              key={`shooting-star-${i}`}
+              className="shooting-star"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 12}s`,
+              }}
+            />
+          ))}
+          
+          {/* Constellation Effects */}
+          <div className="constellation-effect" style={{ top: '10%', left: '10%' }}>
+            <div className={`w-full h-full bg-gradient-to-br ${isDark ? 'from-blue-400/20 to-purple-400/20' : 'from-blue-600/10 to-purple-600/10'} rounded-full blur-xl`} />
+          </div>
+          <div className="constellation-effect" style={{ top: '60%', right: '10%', animationDelay: '6s' }}>
+            <div className={`w-full h-full bg-gradient-to-br ${isDark ? 'from-purple-400/20 to-pink-400/20' : 'from-purple-600/10 to-pink-600/10'} rounded-full blur-xl`} />
+          </div>
+          <div className="constellation-effect" style={{ top: '30%', left: '60%', animationDelay: '3s' }}>
+            <div className={`w-full h-full bg-gradient-to-br ${isDark ? 'from-green-400/20 to-cyan-400/20' : 'from-green-600/10 to-cyan-600/10'} rounded-full blur-xl`} />
+          </div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -499,7 +544,7 @@ export function ExperienceSection() {
           </div>
 
           <div className="animate-on-scroll stagger-1">
-            <Tabs defaultValue="leadership" className="w-full" onValueChange={setActiveTab}>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className={`grid w-full grid-cols-2 mb-8 ${isDark ? 'bg-slate-800/50' : 'bg-white/50'} backdrop-blur-sm`}>
                 <TabsTrigger value="leadership" className="tab-modern">Leadership Roles</TabsTrigger>
                 <TabsTrigger value="achievements" className="tab-modern">Achievements</TabsTrigger>

@@ -159,7 +159,7 @@ export function HeroSection() {
                 {/* Profile Image Container */}
                 <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl transform hover:scale-105 transition-all duration-500">
                   <img
-                    src="https://media.licdn.com/dms/image/v2/D5603AQFIej_Nrkla8Q/profile-displayphoto-shrink_800_800/B56ZcV73SRHgAg-/0/1748419707735?e=1756944000&v=beta&t=oVZq2ILz2TjGzNWxSrX57aNMIOAp6Is3iSkFPfIJltw"
+                    src="https://media.licdn.com/dms/image/v2/D5603AQHc96-ENua_uA/profile-displayphoto-crop_800_800/B56ZffMhySG0AM-/0/1751796294656?e=1757548800&v=beta&t=x2mZSbjGmKd5Qg3f058XNpV5GcZ8rL87I3TmjjvpQok"
                     alt="Avidu Witharana"
                     className="w-full h-full object-cover"
                   />

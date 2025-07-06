@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
 export function ContactSection() {
@@ -83,16 +83,16 @@ export function ContactSection() {
     {
       icon: <Instagram className="h-5 w-5" />,
       label: 'Instagram',
-      username: '@avidzxv',
-      href: 'https://instagram.com/avidzxv',
+      username: '@avidz_cheetah',
+      href: 'https://instagram.com/avidz_cheetah',
       color: 'pink',
     },
     {
-      icon: <Twitter className="h-5 w-5" />,
-      label: 'Twitter',
-      username: '@avidzxv',
-      href: 'https://twitter.com/avidzxv',
-      color: 'sky',
+      icon: <Youtube className="h-5 w-5" />,
+      label: 'YouTube',
+      username: 'AVIDZ',
+      href: 'https://www.youtube.com/@avidzxv',
+      color: 'orange',
     },
   ];
 
