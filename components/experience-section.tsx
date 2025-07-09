@@ -11,7 +11,7 @@ export function ExperienceSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isClient, setIsClient] = useState(false);
   const { theme, systemTheme } = useTheme();
-  const [activeTab, setActiveTab] = useState('leadership');
+  const [activeTab, setActiveTab] = useState("leadership");
 
   // Determine current theme
   const currentTheme = theme === 'system' ? systemTheme : theme;
@@ -112,7 +112,6 @@ export function ExperienceSection() {
   const ieeeRoles = leadership.filter(role => role.type === 'IEEE Leadership');
   const communityRoles = leadership.filter(role => role.type === 'Community Leadership');
 
-  // Theme-based background style
   const backgroundStyle = isDark
     ? {
         background: `

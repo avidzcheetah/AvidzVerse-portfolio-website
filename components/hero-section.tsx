@@ -64,7 +64,7 @@ export function HeroSection() {
               {/* Subheadline */}
               <div className="animate-fade-in-up delay-300">
                 <h2 className="text-xl md:text-2xl text-gray-300 mb-4">
-                  Cybersecurity Visionary & AI Pioneer
+                  Computer Engineering & Cybersecurity UG
                 </h2>
               </div>
 
@@ -90,10 +90,16 @@ export function HeroSection() {
               {/* CTAs */}
               <div className="animate-fade-in-up delay-600">
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white border-0 shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105">
-                    <Download className="mr-2 h-4 w-4" />
-                    Download CV
-                  </Button>
+                <a href="https://drive.google.com/uc?export=download&id=1YoLxQiwcBcME2xCFSWnE629HFxcXoSQB" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download>
+                <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white border-0 shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105">
+                <Download className="mr-2 h-4 w-4" />
+                  Download CV
+                </Button>
+                </a>
+
                   <Button size="lg" variant="outline" onClick={() => scrollToSection('#projects')} className="border-purple-500/50 text-purple-300 hover:bg-purple-500/10 hover:border-purple-400 transition-all duration-300 transform hover:scale-105">
                     <ExternalLink className="mr-2 h-4 w-4" />
                     View Projects
