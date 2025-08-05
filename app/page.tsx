@@ -2,6 +2,7 @@
 
 import { HeroSection } from '@/components/hero-section';
 import { AboutSection } from '@/components/about-section';
+import { AcademicSection } from '@/components/academic-section';
 import { SkillsSection } from '@/components/skills-section';
 import { ProjectsSection } from '@/components/projects-section';
 import { ExperienceSection } from '@/components/experience-section';
@@ -22,6 +23,7 @@ return isClient ? (
     <main>
       <HeroSection />
       <AboutSection />
+      <AcademicSection />
       <SkillsSection />
       <ProjectsSection />
       <ExperienceSection />
