@@ -57,9 +57,9 @@ export default function CertificationsPage() {
       date: '2022',
       description: 'Comprehensive cybersecurity program covering threat analysis, security protocols, and incident response.',
       category: 'Diploma',
-      imageUrl: ('YOUR_GOOGLE_DRIVE_URL_HERE'), // Replace with your actual Google Drive URL
+      imageUrl: ('https://i.ibb.co/RkkP1fCC/CERTIFICATE-CSB1-Avidu-Dasun-Sankalpa-Witharana.jpg'),
       skills: ['Threat Analysis', 'Security Protocols', 'Incident Response', 'Digital Forensics'],
-      verificationUrl: 'https://www.facebook.com/londonsbss',
+      verificationUrl: 'https://londonsbs.org.uk/qualification-verification/',
     },
     {
       id: '6',
@@ -77,7 +77,7 @@ export default function CertificationsPage() {
         title: 'Ethical Hacking Essentials',
         institution: 'EC Council',
         date: '2024',
-        description: 'Advanced certification in ICT covering modern communication technologies and information systems.',
+        description: 'Ethical Hacking Essentials is an introductory cybersecurity course that covers ethical hacking and penetration testing fundamentals and prepares learners for a career in cybersecurity. This course will introduce learners to computer and network security concepts such as threats and vulnerabilities, password cracking, web application attacks, IoT and OT attacks, cloud computing, pentesting fundamentals, and more. This course provides hands-on practical experience to learners thus giving them the skills necessary for a future in cybersecurity. EHE-certified learners have an assured means of formal recognition to add to their resumes and show off their expertise and skills to prospective employers. This improves their prospects for employment advancement, higher salaries, and greater job satisfaction.',
         category: 'Certificate',
         imageUrl: 'https://i.ibb.co/B59qfQX5/Ethical-Hacking-Essentials.png', // Replace with your actual Google Drive URL
         skills: ['Communication Systems', 'ICT Infrastructure', 'Network Technologies'],
@@ -538,7 +538,7 @@ export default function CertificationsPage() {
         <div className="relative z-10 pt-24 pb-12 container mx-auto px-4">
           <div className="flex items-center justify-between mb-8">
             <Link
-              href="/#academic-qualifications"
+              href="/#academic"
               className={`flex items-center gap-2 px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105 ${
                 isDark
                   ? 'bg-slate-800/70 hover:bg-slate-700/80 text-slate-300 hover:text-white'
