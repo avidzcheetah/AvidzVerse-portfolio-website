@@ -165,7 +165,7 @@ export function HeroSection() {
                 {/* Profile Image Container */}
                 <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl transform hover:scale-105 transition-all duration-500">
                   <img
-                    src="https://media.licdn.com/dms/image/v2/D5603AQHc96-ENua_uA/profile-displayphoto-crop_800_800/B56ZffMhySG0AM-/0/1751796294656?e=1757548800&v=beta&t=x2mZSbjGmKd5Qg3f058XNpV5GcZ8rL87I3TmjjvpQok"
+                    src="https://scontent.cdninstagram.com/v/t51.2885-19/552148651_18419174269104474_5509321560574648050_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFLwfoF5Ms5CJL5IWcMtoqcNAPYCXFPoZNye_FyharCG2Mczz1b4aI--mtpbUSfe1g&_nc_ohc=oKaAdpE5hKYQ7kNvwE3TE_s&_nc_gid=3OjV8TiZ7-o1ZColakY-Lw&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AfacOTG3k5FrEIQjFkASXErlQ1pMzTbnTDXkgENJhBNgLw&oe=68D54A21&_nc_sid=7a9f4b"
                     alt="Avidu Witharana"
                     className="w-full h-full object-cover"
                   />
