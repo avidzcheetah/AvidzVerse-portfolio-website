@@ -49,9 +49,9 @@ export function AboutSection() {
       icon: <Building className="h-5 w-5" />,
     },
     {
-      title: 'Social Media Manager',
-      organization: 'Vetgrow (PVT) Ltd.',
-      period: 'Oct 2024 - Present',
+      title: 'Software Engineer',
+      organization: 'Quantara IT Solutions (PVT) Ltd.',
+      period: 'Aug 2025 - Present',
       icon: <Building className="h-5 w-5" />,
     },
   ];

@@ -39,9 +39,16 @@ export function ExperienceSection() {
     elements?.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [isClient]);
+  }, [isClient, activeTab]); // Add activeTab as dependency to re-run observer on tab change
 
   const leadership = [
+    {
+      title: 'Software Developer',
+      organization: 'Quantara IT Solutions',
+      period: 'Aug 2025 - Present',
+      type: 'Executive Leadership',
+      description: 'Developing innovative software solutions to enhance IT infrastructure and client services.',
+    },
     {
       title: 'Executive Director',
       organization: 'Nalanda Global Institute of Education (PVT) Ltd.',
@@ -549,7 +556,7 @@ export function ExperienceSection() {
                 <TabsTrigger value="achievements" className="tab-modern">Achievements</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="leadership" className="space-y-8">
+              <TabsContent value="leadership" className="space-y-8" key="leadership">
                 {/* Executive Leadership */}
                 <div className="space-y-6 animate-on-scroll stagger-2">
                   <div className="flex items-center gap-3 mb-4">
@@ -644,7 +651,7 @@ export function ExperienceSection() {
                 </div>
               </TabsContent>
               
-              <TabsContent value="achievements" className="space-y-8">
+              <TabsContent value="achievements" className="space-y-8" key="achievements">
                 <div className="flex items-center gap-3 mb-8 animate-on-scroll stagger-2">
                   <div className="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-full">
                     <Trophy className="h-6 w-6 text-yellow-600 icon-animate" />

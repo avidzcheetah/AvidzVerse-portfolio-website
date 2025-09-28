@@ -151,21 +151,21 @@ export function HeroSection() {
 
             {/* Right Content - Profile Photo */}
             <div className="flex justify-center lg:justify-end animate-fade-in-up delay-300">
-              <div className="relative">
+              <div className="relative w-80 h-80 md:w-96 md:h-96">
                 {/* Outer Glow Ring */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 p-1 animate-spin-slow">
+                <div className="absolute inset-[-8px] rounded-full bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 p-1 animate-spin-slow z-10">
                   <div className="w-full h-full rounded-full bg-slate-900"></div>
                 </div>
                 
                 {/* Middle Ring */}
-                <div className="absolute inset-2 rounded-full bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 p-1 animate-pulse">
+                <div className="absolute inset-[-4px] rounded-full bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 p-1 animate-pulse z-20">
                   <div className="w-full h-full rounded-full bg-slate-900"></div>
                 </div>
                 
                 {/* Profile Image Container */}
-                <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl transform hover:scale-105 transition-all duration-500">
+                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl transform hover:scale-105 transition-all duration-500 z-30">
                   <img
-                    src="https://scontent.cdninstagram.com/v/t51.2885-19/552148651_18419174269104474_5509321560574648050_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFLwfoF5Ms5CJL5IWcMtoqcNAPYCXFPoZNye_FyharCG2Mczz1b4aI--mtpbUSfe1g&_nc_ohc=oKaAdpE5hKYQ7kNvwE3TE_s&_nc_gid=3OjV8TiZ7-o1ZColakY-Lw&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AfacOTG3k5FrEIQjFkASXErlQ1pMzTbnTDXkgENJhBNgLw&oe=68D54A21&_nc_sid=7a9f4b"
+                    src="https://i.postimg.cc/T2HH4XGD/552148651-18419174269104474-5509321560574648050-n-1.jpg"
                     alt="Avidu Witharana"
                     className="w-full h-full object-cover"
                   />
@@ -175,13 +175,13 @@ export function HeroSection() {
                 </div>
 
                 {/* Floating Tech Icons */}
-                <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg animate-bounce delay-1000">
+                <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg animate-bounce delay-1000 z-40">
                   <span className="text-white font-bold text-sm">AI</span>
                 </div>
-                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg animate-bounce delay-1500">
+                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg animate-bounce delay-1500 z-40">
                   <span className="text-white font-bold text-xs">CySec</span>
                 </div>
-                <div className="absolute top-1/2 -right-8 w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg animate-pulse delay-2000">
+                <div className="absolute top-1/2 -right-8 w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg animate-pulse delay-2000 z-40">
                   <span className="text-white font-bold text-xs">SE</span>
                 </div>
               </div>
