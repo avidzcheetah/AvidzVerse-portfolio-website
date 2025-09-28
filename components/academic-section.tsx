@@ -120,18 +120,18 @@ export function AcademicSection() {
   const backgroundStyle = isDark
     ? {
       background: `
-        radial-gradient(circle at 60% 30%, rgba(34,197,94,0.10) 0%, transparent 70%),
-        radial-gradient(circle at 80% 80%, rgba(59,130,246,0.10) 0%, transparent 70%),
-        radial-gradient(circle at 40% 60%, rgba(147,51,234,0.08) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(2,8,23,0.98) 0%, rgba(15,23,42,0.95) 100%)
+        radial-gradient(circle at 60% 30%, rgba(34,197,94,0.08) 0%, transparent 70%),
+        radial-gradient(circle at 80% 80%, rgba(59,130,246,0.08) 0%, transparent 70%),
+        radial-gradient(circle at 40% 60%, rgba(147,51,234,0.06) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(2,8,23,0.95) 0%, rgba(15,23,42,0.90) 100%)
       `
     }
     : {
       background: `
-        radial-gradient(circle at 60% 30%, rgba(34,197,94,0.08) 0%, transparent 70%),
-        radial-gradient(circle at 80% 80%, rgba(59,130,246,0.09) 0%, transparent 70%),
-        radial-gradient(circle at 40% 60%, rgba(147,51,234,0.05) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(248,250,252,0.98) 0%, rgba(226,232,240,0.95) 100%)
+        radial-gradient(circle at 60% 30%, rgba(34,197,94,0.06) 0%, transparent 70%),
+        radial-gradient(circle at 80% 80%, rgba(59,130,246,0.07) 0%, transparent 70%),
+        radial-gradient(circle at 40% 60%, rgba(147,51,234,0.04) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(248,250,252,0.95) 0%, rgba(226,232,240,0.90) 100%)
       `
     };
 
@@ -185,12 +185,12 @@ export function AcademicSection() {
           border-left: 4px solid #94a3b8;
         }
 
-        /* Enhanced Floating Shapes with more variety and galactic feel */
+        /* Floating Shapes with Galactic Feel */
         .floating-shape {
           position: absolute;
           opacity: 0.15;
           filter: blur(1.2px);
-          z-index: 0;
+          z-index: 2;
           will-change: transform;
           animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
         }
@@ -261,7 +261,7 @@ export function AcademicSection() {
           100% { transform: translateY(-33px) translateX(5px) scale(1);}
         }
 
-        /* New Twinkle Animation for Galactic Feel */
+        /* Twinkle Animation for Galactic Feel */
         @keyframes twinkle {
           0%, 100% { opacity: 0.15; filter: brightness(1); }
           50% { opacity: 0.3; filter: brightness(1.5); }
@@ -277,6 +277,48 @@ export function AcademicSection() {
         }
         .icon-animate:hover {
           animation: iconBounce 0.6s ease-in-out;
+        }
+
+        /* Star Animations */
+        @keyframes starMoveRight {
+          0% { transform: translateX(-100px); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
+        }
+        
+        @keyframes starMoveLeft {
+          0% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateX(-100px); opacity: 0; }
+        }
+        
+        @keyframes shootingStar {
+          0% { transform: translateX(-200px) translateY(200px) rotate(45deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateX(100vw) translateY(-200px) rotate(45deg); opacity: 0; }
+        }
+        
+        .star {
+          position: absolute;
+          border-radius: 50%;
+          background: ${isDark ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.7)'};
+          box-shadow: 0 0 6px ${isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.5)'};
+          z-index: 1;
+        }
+        
+        .star-small { width: 2px; height: 2px; animation: starMoveRight 20s linear infinite; }
+        .star-medium { width: 3px; height: 3px; animation: starMoveLeft 25s linear infinite; }
+        .shooting-star {
+          position: absolute;
+          width: 4px;
+          height: 2px;
+          background: linear-gradient(45deg, transparent, ${isDark ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.8)'}, transparent);
+          border-radius: 2px;
+          animation: shootingStar 12s linear infinite;
+          z-index: 1;
         }
 
         .academic-link {
@@ -301,7 +343,7 @@ export function AcademicSection() {
           transform: scale(1.05);
         }
 
-        /* Enhanced Button with pulse */
+        /* Enhanced Button with Pulse */
         @keyframes pulseGlow {
           0% { box-shadow: 0 6px 15px rgba(59,130,246,0.3); }
           50% { box-shadow: 0 6px 15px rgba(59,130,246,0.5); }
@@ -379,29 +421,47 @@ export function AcademicSection() {
           width: 95px;
         }
 
-        /* Milky Way Galaxy Background */
+        /* Enhanced Milky Way Galaxy Background */
         .milky-way {
           position: absolute;
           top: 50%;
           left: 50%;
           height: 1px;
           width: 1px;
-          background-color: #fff;
+          background-color: transparent;
           border-radius: 50%;
-          box-shadow: -24vw -44vh 2px 2px #fff,38vw -4vh 0px 0px #fff,-20vw -48vh 1px 2px #fff,-39vw 38vh 3px 1px #fff,-42vw -11vh 0px 3px #fff,12vw 15vh 3px 3px #fff,42vw 6vh 3px 2px #fff,-8vw 9vh 0px 2px #fff,34vw -38vh 1px 0px #fff,-17vw 45vh 3px 1px #fff,22vw -36vh 3px 2px #fff,-42vw 1vh 1px 0px #fff;
-          animation: zoom 10s alternate infinite;
-          opacity: 0.8;
+          box-shadow: 
+            -30vw -50vh 2px 2px ${isDark ? '#fff' : '#333'},
+            40vw -10vh 1px 1px ${isDark ? '#fff' : '#333'},
+            -25vw -55vh 1px 2px ${isDark ? '#fff' : '#333'},
+            -45vw 40vh 3px 1px ${isDark ? '#fff' : '#333'},
+            -50vw -15vh 0px 3px ${isDark ? '#fff' : '#333'},
+            15vw 20vh 3px 3px ${isDark ? '#fff' : '#333'},
+            45vw 10vh 2px 2px ${isDark ? '#fff' : '#333'},
+            -10vw 15vh 1px 2px ${isDark ? '#fff' : '#333'},
+            35vw -40vh 1px 1px ${isDark ? '#fff' : '#333'},
+            -20vw 50vh 3px 1px ${isDark ? '#fff' : '#333'},
+            25vw -45vh 2px 2px ${isDark ? '#fff' : '#333'},
+            -45vw 5vh 1px 1px ${isDark ? '#fff' : '#333'},
+            10vw -30vh 2px 2px ${isDark ? '#fff' : '#333'},
+            -35vw 25vh 1px 2px ${isDark ? '#fff' : '#333'},
+            20vw 35vh 2px 1px ${isDark ? '#fff' : '#333'},
+            -15vw -20vh 1px 1px ${isDark ? '#fff' : '#333'},
+            30vw 0vh 2px 2px ${isDark ? '#fff' : '#333'},
+            -5vw 45vh 1px 1px ${isDark ? '#fff' : '#333'},
+            50vw -25vh 2px 2px ${isDark ? '#fff' : '#333'},
+            -25vw 10vh 1px 1px ${isDark ? '#fff' : '#333'};
+          animation: zoom 12s alternate infinite;
+          opacity: ${isDark ? '0.95' : '0.75'};
+          filter: blur(0.5px);
           pointer-events: none;
-          z-index: -1;
+          z-index: 2;
+          transform: translate(-50%, -50%) rotate(45deg);
         }
 
         @keyframes zoom {
-          0% {
-            transform: scale(1);
-          }
-          100% {
-            transform: scale(1.5);
-          }
+          0% { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
+          100% { transform: translate(-50%, -50%) rotate(45deg) scale(1.8); }
         }
 
         @media (min-width: 768px) {
@@ -428,8 +488,53 @@ export function AcademicSection() {
         {/* Milky Way Background */}
         <div className="milky-way" />
 
-        {/* Enhanced Floating Animated Shapes */}
-        <div className="absolute inset-0 pointer-events-none z-0">
+        {/* Moving Stars and Shooting Stars */}
+        <div className="absolute inset-0 pointer-events-none z-1">
+          {/* Small Moving Stars */}
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={`star-small-${i}`}
+              className="star star-small"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 20}s`,
+                animationDuration: `${15 + Math.random() * 10}s`,
+              }}
+            />
+          ))}
+          
+          {/* Medium Moving Stars */}
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={`star-medium-${i}`}
+              className="star star-medium"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 25}s`,
+                animationDuration: `${20 + Math.random() * 10}s`,
+              }}
+            />
+          ))}
+          
+          {/* Shooting Stars */}
+          {[...Array(2)].map((_, i) => (
+            <div
+              key={`shooting-star-${i}`}
+              className="shooting-star"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 12}s`,
+                animationDuration: `${10 + Math.random() * 4}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Floating Animated Shapes */}
+        <div className="absolute inset-0 pointer-events-none z-2">
           <div className="floating-shape shape1" />
           <div className="floating-shape shape2" />
           <div className="floating-shape shape3" />
