@@ -15,22 +15,22 @@ export function AboutSection() {
       period: 'Feb 2023 - Present',
     },
     {
-      degree: 'BSc. in Information Technology & Cybersecurity',
+      degree: 'BSc. Information Technology and Cyber Security',
       institution: 'PSB University Cambodia',
-      period: 'Sep 2023 - Present',
+      period: 'Sep 2023 - Feb 2026',
     },
   ];
 
   const roles = [
     {
-      title: 'Executive Director',
-      org: 'Nalanda Global Institute of Education (PVT) Ltd.',
-      period: 'Mar 2025 - Present',
+      title: 'Associate Software Developer (On Contract)',
+      org: 'Enigma Solutions (Pvt) Ltd',
+      period: 'July 2025 - Present',
     },
     {
-      title: 'Software Engineer',
-      org: 'Quantara IT Solutions (PVT) Ltd.',
-      period: 'Aug 2025 - Present',
+      title: 'Social Media Executive (Part-Time)',
+      org: 'Vetgrow (Pvt) Ltd',
+      period: 'Oct 2024 - Aug 2025',
     },
   ];
 
@@ -84,9 +84,9 @@ export function AboutSection() {
             <div className="bg-space-800/50 backdrop-blur border border-space-700 p-6 rounded relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-energy-violet to-transparent" />
               <p className="text-slate-400 leading-relaxed font-sans text-sm relative z-10">
-                A passionate technologist at the intersection of cybersecurity and artificial intelligence, 
-                dedicated to creating secure and innovative solutions for the digital future. Dual-degree 
-                undergraduate managing multiple technical and leadership roles.
+                Cybersecurity enthusiast with a passion for astronomy and computer engineering. Currently pursuing dual degrees. 
+                Highly motivated to apply technical knowledge to enhance security frameworks, develop innovative systems, 
+                and explore interdisciplinary opportunities between technology and science.
               </p>
             </div>
           </motion.div>

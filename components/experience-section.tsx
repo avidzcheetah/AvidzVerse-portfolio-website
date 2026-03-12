@@ -2,61 +2,64 @@
 
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Trophy, ChevronRight, Activity } from 'lucide-react';
+import { ShieldCheck, Trophy, ChevronRight, Activity, Users } from 'lucide-react';
 
 export function ExperienceSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-50px" });
   
-  const [activeTab, setActiveTab] = useState<'ranks' | 'achievements'>('ranks');
+  const [activeTab, setActiveTab] = useState<'ranks' | 'volunteering' | 'achievements'>('ranks');
 
   const experiences = [
     {
-      role: 'Executive Director',
-      company: 'Nalanda Global Institute of Education (PVT) Ltd.',
-      period: 'March 2025 - Present',
-      points: [
-        'Strategic oversight of technology integration in educational programs.',
-        'Spearheading initiatives to modernize the institute\'s digital infrastructure.',
-      ]
-    },
-    {
-      role: 'Software Engineer',
-      company: 'Quantara IT Solutions (PVT) Ltd.',
-      period: 'August 2025 - Present',
+      role: 'Consultant – Associate Software Developer (On Contract)',
+      company: 'Enigma Solutions (Pvt) Ltd',
+      period: 'July 2025 - Present',
       points: [
         'Developing secure, highly available backend systems and APIs.',
-        'Collaborating with cross-functional teams to integrate AI-driven features.',
-        'Implementing CI/CD pipelines and security audits for ongoing projects.'
+        'Collaborating with cross-functional teams to integrate software solutions.',
+        'Ensuring robust security practices across deployed applications.'
       ]
     },
     {
-      role: 'Security Analyst Trainee',
-      company: 'CyberOps Defense Team (Mock/Simulation)',
-      period: 'January 2024 - June 2024',
+      role: 'Social Media Executive (Part-Time)',
+      company: 'Vetgrow (Pvt) Ltd',
+      period: 'Oct 2024 - Aug 2025',
       points: [
-        'Participated in red team / blue team war games simulating APTs.',
-        'Analyzed network traffic logs using Wireshark and Splunk to identify anomalies.',
-        'Drafted incident response reports for simulated breaches.'
+        'Managed social media presence and online strategy.',
+        'Created technical content and engaged with the community.',
       ]
+    }
+  ];
+
+  const volunteering = [
+    {
+      role: 'Vice Chairman',
+      org: 'IEEE RAS Student Branch Chapter, University of Jaffna',
+      period: 'Mar 2025 – Mar 2026'
+    },
+    {
+      role: 'Vice Chairman',
+      org: 'IEEE CIS Student Branch Chapter, University of Jaffna',
+      period: 'Feb 2025 – Jan 2026'
+    },
+    {
+      role: 'Membership Coordinator',
+      org: 'IEEE RAS Student Branch Chapter, University of Jaffna',
+      period: 'Feb 2024 – Feb 2025'
+    },
+    {
+      role: 'Faculty Coordinator',
+      org: 'SEDS Yarl, University of Jaffna',
+      period: 'Apr 2024 – Apr 2025'
     }
   ];
 
   const awards = [
     {
-      title: 'Top 10 Finalist - National Cyber Hackathon',
-      date: '2024',
-      description: 'Secured a top 10 position out of 200+ teams by successfully penetrating a hardened CTF environment within 24 hours.'
-    },
-    {
-      title: 'Excellence in AI Implementation',
-      date: '2023',
-      description: 'Awarded for developing an innovative machine learning model for predictive maintenance in industrial IoT.'
-    },
-    {
-      title: 'Dean\'s List',
-      date: '2023, 2024',
-      description: 'Maintained a GPA within the top 5% of the engineering faculty for multiple consecutive semesters.'
+      title: 'AlgoRhythm – Champions',
+      date: 'Jan 2025 / Jun 2024',
+      description: 'Secured the championship position in AlgoRhythm (Facebook).'
     }
   ];
 
@@ -81,10 +84,10 @@ export function ExperienceSection() {
 
         {/* Tab Controls */}
         <div className="flex justify-center mb-12">
-          <div className="glass-panel p-1 inline-flex rounded-lg overflow-hidden border border-space-700">
+          <div className="glass-panel p-1 inline-flex rounded-lg overflow-hidden border border-space-700 flex-wrap justify-center">
             <button
               onClick={() => setActiveTab('ranks')}
-              className={`flex items-center gap-2 px-6 py-3 font-display tracking-widest text-sm uppercase transition-all ${
+              className={`flex items-center gap-2 px-4 py-3 font-display tracking-widest text-xs sm:text-sm uppercase transition-all ${
                 activeTab === 'ranks' 
                   ? 'bg-energy-violet/20 text-energy-violet border-b-2 border-energy-violet shadow-[inset_0_-2px_10px_rgba(166,74,201,0.2)]' 
                   : 'text-slate-400 hover:text-slate-200 hover:bg-space-800'
@@ -93,8 +96,18 @@ export function ExperienceSection() {
               <ShieldCheck className="w-4 h-4" /> Operational Ranks
             </button>
             <button
+              onClick={() => setActiveTab('volunteering')}
+              className={`flex items-center gap-2 px-4 py-3 font-display tracking-widest text-xs sm:text-sm uppercase transition-all ${
+                activeTab === 'volunteering' 
+                  ? 'bg-energy-teal/20 text-energy-teal border-b-2 border-energy-teal shadow-[inset_0_-2px_10px_rgba(69,162,158,0.2)]' 
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-space-800'
+              }`}
+            >
+              <Users className="w-4 h-4" /> Volunteering
+            </button>
+            <button
               onClick={() => setActiveTab('achievements')}
-              className={`flex items-center gap-2 px-6 py-3 font-display tracking-widest text-sm uppercase transition-all ${
+              className={`flex items-center gap-2 px-4 py-3 font-display tracking-widest text-xs sm:text-sm uppercase transition-all ${
                 activeTab === 'achievements' 
                   ? 'bg-energy-gold/20 text-energy-gold border-b-2 border-energy-gold shadow-[inset_0_-2px_10px_rgba(242,169,0,0.2)]' 
                   : 'text-slate-400 hover:text-slate-200 hover:bg-space-800'
@@ -145,11 +158,11 @@ export function ExperienceSection() {
                           <ul className={`space-y-2 mt-4 text-sm text-slate-400 ${i % 2 === 0 ? 'text-left' : 'md:text-right text-left'}`}>
                             {exp.points.map((point, idx) => (
                               <li key={idx} className={`flex items-start gap-2 ${i % 2 === 0 ? 'justify-start' : 'md:justify-end justify-start'}`}>
-                                {i % 2 === 0 || window.innerWidth < 768 ? (
+                                {i % 2 === 0 || typeof window !== 'undefined' && window.innerWidth < 768 ? (
                                   <ChevronRight className="w-4 h-4 text-energy-violet mt-0.5 shrink-0" />
                                 ) : null}
                                 <span>{point}</span>
-                                {i % 2 !== 0 && window.innerWidth >= 768 ? (
+                                {i % 2 !== 0 && typeof window !== 'undefined' && window.innerWidth >= 768 ? (
                                   <ChevronRight className="w-4 h-4 text-energy-violet mt-0.5 shrink-0 rotate-180" />
                                 ) : null}
                               </li>
@@ -163,6 +176,33 @@ export function ExperienceSection() {
                     </div>
                   ))}
                 </div>
+              </motion.div>
+            )}
+
+            {/* Volunteering Timeline */}
+            {activeTab === 'volunteering' && (
+              <motion.div
+                key="volunteering"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="grid md:grid-cols-2 gap-6"
+              >
+                {volunteering.map((vol, i) => (
+                  <div key={i} className="glass-panel p-6 border-t border-l border-r border-space-700 border-b-2 border-b-energy-teal group hover:-translate-y-2 transition-transform duration-300">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-lg font-bold text-slate-200 leading-tight pr-4">{vol.role}</h3>
+                      <span className="text-xs font-display text-energy-teal border border-energy-teal/30 px-2 py-1 rounded bg-space-900 shrink-0 text-center">
+                        {vol.period.split(' – ')[0]}<br/>{vol.period.split(' – ')[1] && `– ${vol.period.split(' – ')[1]}`}
+                      </span>
+                    </div>
+                    
+                    <p className="text-sm text-slate-400 mt-4 leading-relaxed font-display tracking-wide">
+                      {vol.org}
+                    </p>
+                  </div>
+                ))}
               </motion.div>
             )}
 

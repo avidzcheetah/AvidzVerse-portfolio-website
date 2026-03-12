@@ -46,7 +46,7 @@ export function HeroSection() {
                 </span>
               </h1>
               <h2 className="text-xl md:text-2xl text-slate-400 font-sans tracking-wide mt-4">
-                Cybersecurity Engineer & AI Specialist
+                Computer Engineering Undergraduate
               </h2>
             </motion.div>
 
@@ -56,7 +56,7 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-lg text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
-              Engineering robust security protocols and developing intelligent systems to safeguard the digital frontier.
+              Cybersecurity enthusiast with a passion for astronomy and computer engineering. Actively contributing to various organizations, showcasing a proactive approach to learning and implementing cybersecurity solutions.
             </motion.p>
 
             <motion.div

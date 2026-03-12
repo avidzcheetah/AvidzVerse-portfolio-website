@@ -22,9 +22,9 @@ export function AcademicSection() {
       ]
     },
     {
-      title: 'BSc. in Information Technology & Cybersecurity',
+      title: 'BSc. Information Technology and Cyber Security',
       institution: 'PSB University Cambodia',
-      period: 'Sep 2023 - Present',
+      period: 'Sep 2023 - Feb 2026',
       status: 'In Progress',
       color: 'energy-violet',
       details: [
@@ -37,17 +37,17 @@ export function AcademicSection() {
 
   const diplomas = [
     {
-      title: 'Diploma in Information Technology',
-      institution: 'Esoft Metro Campus',
-      period: 'Jan 2019 - Dec 2019',
-      status: 'Completed',
+      title: 'Cyber Threat Intelligence 101',
+      institution: 'arcX',
+      period: 'Certification',
+      status: 'Valid',
       color: 'energy-teal'
     },
     {
-      title: 'Diploma in English',
-      institution: 'Esoft Metro Campus',
-      period: 'Mar 2018 - Feb 2019',
-      status: 'Completed',
+      title: 'Ethical Hacking Essentials (EHE)',
+      institution: 'EC-Council',
+      period: 'Certification',
+      status: 'Valid',
       color: 'energy-gold'
     }
   ];
@@ -140,7 +140,7 @@ export function AcademicSection() {
                     <p className="text-xs text-slate-400 font-display mt-1">{diploma.institution}</p>
                   </div>
                   <div className="ml-auto text-xs text-slate-500 font-sans">
-                    {diploma.period.split(' - ')[1]} {/* Just show end year for brevity */}
+                    {diploma.period}
                   </div>
                 </motion.div>
               ))}

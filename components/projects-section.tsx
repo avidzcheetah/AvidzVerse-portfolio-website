@@ -6,8 +6,7 @@ import { FolderGit2, ExternalLink, Github, Terminal, ArrowRight, X } from 'lucid
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-// Types for our project data
-type ProjectType = 'all' | 'cyber' | 'ai' | 'web' | 'hardware';
+type ProjectType = 'all' | 'cyber' | 'ai' | 'web';
 
 interface Project {
   title: string;
@@ -17,7 +16,7 @@ interface Project {
   techStack: string[];
   githubUrl?: string;
   liveUrl?: string;
-  status: 'Completed' | 'In Progress' | 'Archived';
+  status: string;
   color: string;
 }
 
@@ -29,60 +28,87 @@ export function ProjectsSection() {
 
   const projects: Project[] = [
     {
-      title: 'Avidz-Vulnerability-Scanner',
-      category: 'cyber',
-      description: 'An advanced automated vulnerability assessment tool built in Python.',
-      longDescription: 'Avidz-Vulnerability-Scanner is designed to actively discover and report security loopholes in web applications. Features include XSS, SQLi, and CSRF detection modules. It leverages concurrent scanning techniques to minimize execution time while maximizing coverage.',
-      techStack: ['Python', 'Requests', 'BeautifulSoup', 'Concurrent.futures'],
-      githubUrl: 'https://github.com/avidzcheetah/Avidz-Vulnerability-Scanner',
-      status: 'Completed',
+      title: 'JamHub',
+      category: 'web',
+      description: 'Real-time Collaborative Music Platform.',
+      longDescription: 'Developed a web platform that enables real-time collaborative music sessions where multiple users can create or join jam rooms and play virtual instruments together with low latency audio interaction using WebAudio, WebSockets, TypeScript, and modern web technologies.',
+      techStack: ['TypeScript', 'WebAudio', 'WebSockets', 'React'],
+      githubUrl: 'https://github.com/avidzcheetah/JamHub',
+      liveUrl: 'https://jamhub.vercel.app',
+      status: 'July 2025 - Present',
       color: 'energy-blue'
     },
     {
-      title: 'Threat Intel AI Engine',
+      title: 'ML Intrusion Detection System',
       category: 'ai',
-      description: 'NLP-based threat intelligence aggregator and analyzer.',
-      longDescription: 'A machine learning system that scrapes various threat intel feeds (Twitter, CVE databases, dark web forums) and uses NLP to categorize and prioritize emerging threats. Provides a dashboard for SOC analysts to quickly identify pertinent risks.',
-      techStack: ['Python', 'Transformers', 'FastAPI', 'React', 'MongoDB'],
-      status: 'In Progress',
+      description: 'Real-time Machine Learning Intrusion Detection System.',
+      longDescription: 'Developed a real-time network intrusion detection system that combines Supervised (Random Forest) and Unsupervised (Autoencoder) machine learning to detect both known and zero-day attacks. Features live packet capture, real-time classification, and explainable AI visualization.',
+      techStack: ['Python', 'Random Forest', 'Autoencoder', 'Network Security'],
+      githubUrl: 'https://github.com/avidzcheetah',
+      status: 'Dec 2025 - Feb 2026',
       color: 'energy-violet'
     },
     {
-      title: 'Jayaweera Tyre Traders ERP',
+      title: 'EngNext',
       category: 'web',
-      description: 'Comprehensive business management system for a retail tyre company.',
-      longDescription: 'Built from scratch to handle inventory management, sales tracking, and customer relationship management. Features a modern glassmorphic dashboard, real-time stock alerts, and role-based access control.',
-      techStack: ['Next.js', 'Tailwind', 'Supabase', 'PostgreSQL'],
-      liveUrl: 'https://jayaweeratyres.com',
-      status: 'Completed',
+      description: 'Career Platform connecting engineering graduates with companies.',
+      longDescription: 'Developed a platform connecting engineering graduates with companies, enabling profile creation, job applications, and recruitment management through student, company, and admin dashboards for streamlined hiring.',
+      techStack: ['Next.js', 'React', 'TypeScript', 'Node.js'],
+      githubUrl: 'https://github.com/avidzcheetah',
+      status: 'Aug 2025 - Oct 2026',
       color: 'energy-teal'
     },
     {
-      title: 'Secure IoT Access Node',
-      category: 'hardware',
-      description: 'Biometric and cryptographic hardware access controller.',
-      longDescription: 'A custom-built hardware device using ESP32 that integrates fingerprint parsing with encrypted MQTT communication to control physical access points. Includes a web interface for credential management.',
-      techStack: ['C++', 'ESP32', 'FreeRTOS', 'MQTT', 'WebSockets'],
-      githubUrl: 'https://github.com/avidzcheetah',
-      status: 'Archived',
-      color: 'energy-gold'
-    },
-    {
-      title: 'Decentralized Identity Vault',
-      category: 'cyber',
-      description: 'Blockchain-backed personal identity management protocol.',
-      techStack: ['Solidity', 'Web3.js', 'React', 'IPFS'],
-      status: 'In Progress',
+      title: 'AvidzVerse Portfolio',
+      category: 'web',
+      description: 'Modern personal portfolio website.',
+      longDescription: 'Developed a modern personal portfolio website using React, TypeScript, HTML, and CSS to present bio, skills, and project showcase with a responsive, mobile friendly interface, fast load times, an integrated contact form, and direct links to GitHub, LinkedIn, and other social profiles.',
+      techStack: ['React', 'TypeScript', 'HTML', 'CSS', 'Tailwind'],
+      githubUrl: 'https://github.com/avidzcheetah/AvidzVerse-portfolio-website',
+      liveUrl: 'https://avidzverse.vercel.app',
+      status: 'Jun 2025',
       color: 'energy-blue'
     },
     {
-      title: 'Cyberpunk Portfolio V1',
+      title: 'Lab Rescheduling System',
       category: 'web',
-      description: 'Previous iteration of portfolio featuring a grunge cyberpunk aesthetic.',
-      techStack: ['React', 'Framer Motion', 'Tailwind'],
-      githubUrl: 'https://github.com/avidzcheetah/AvidzVerse-portfolio-website',
-      status: 'Completed',
+      description: 'Web-based lab rescheduling system for the Faculty of Engineering.',
+      longDescription: 'Developed a web-based lab rescheduling system for the Faculty of Engineering, University of Jaffna with request and approval workflows, automated email notifications, real time tracking, attendance logging, and role-based dashboards.',
+      techStack: ['React.js', 'Next.js', 'PHP', 'MySQL', 'Tailwind CSS', 'EmailJS'],
+      githubUrl: 'https://github.com/avidzcheetah',
+      status: 'Jun 2025',
+      color: 'energy-gold'
+    },
+    {
+      title: 'Mew',
+      category: 'ai',
+      description: 'Real-time AI Chatbot integrating OpenAI and Gemini.',
+      longDescription: 'Developed Mew, a real time AI chatbot built with React that integrates OpenAI ChatGPT and Google Gemini AI, with message streaming, auto resizable input, auto scrolling, Markdown formatting, dark mode, and loading indicators.',
+      techStack: ['React', 'JavaScript', 'CSS', 'OpenAI API', 'Gemini API'],
+      githubUrl: 'https://github.com/avidzcheetah',
+      liveUrl: 'https://mew.vercel.app',
+      status: 'Nov 2024 - Dec 2024',
+      color: 'energy-violet'
+    },
+    {
+      title: 'Crawler',
+      category: 'cyber',
+      description: 'Bash Web Crawler and Vulnerability Checker.',
+      longDescription: 'Developed a Bash script to crawl webpages, extract key content such as headings, paragraphs, and links, and detect security issues including insecure forms, external script loading, and missing Content Security Policies.',
+      techStack: ['Bash', 'Linux', 'Web Security'],
+      githubUrl: 'https://github.com/avidzcheetah',
+      status: 'Oct 2024',
       color: 'energy-teal'
+    },
+    {
+      title: 'RepoSpector',
+      category: 'cyber',
+      description: 'GitHub Repository Analysis Tool.',
+      longDescription: 'Developed a Python based tool using the GitHub API to analyze repositories by reviewing documentation, open issues, pull requests, dependencies, security, and licensing, with automated issue creation for critical problems.',
+      techStack: ['Python', 'GitHub API', 'JSON', 'Automation'],
+      githubUrl: 'https://github.com/avidzcheetah',
+      status: 'Dec 2024',
+      color: 'energy-gold'
     }
   ];
 
@@ -91,7 +117,6 @@ export function ProjectsSection() {
     { id: 'cyber', label: 'Cyber Sec' },
     { id: 'ai', label: 'AI Models' },
     { id: 'web', label: 'Web Systems' },
-    { id: 'hardware', label: 'Hardware' },
   ];
 
   const filteredProjects = activeFilter === 'all' 
@@ -153,8 +178,13 @@ export function ProjectsSection() {
                 <div className="p-6 flex-grow flex flex-col">
                   <div className="flex justify-between items-start mb-4">
                     <Terminal className={`w-8 h-8 text-${project.color} opacity-70 group-hover:opacity-100 transition-opacity`} />
-                    <Badge variant="outline" className="font-display tracking-widest text-[10px] uppercase border-space-700 bg-space-800 text-slate-300">
-                      {project.status}
+                    <Badge variant="outline" className="font-display tracking-wider text-[10px] uppercase border-space-700 bg-space-800 text-slate-300 text-center leading-tight">
+                      {project.status.split(' - ').map((part, idx) => (
+                        <React.Fragment key={idx}>
+                          {part}
+                          {idx === 0 && project.status.includes(' - ') && <br />}
+                        </React.Fragment>
+                      ))}
                     </Badge>
                   </div>
                   
@@ -169,7 +199,7 @@ export function ProjectsSection() {
                   {/* Tech Stack Tags */}
                   <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-space-700/50">
                     {project.techStack.slice(0, 3).map((tech, idx) => (
-                      <span key={idx} className="text-xs font-display tracking-wider text-slate-500 bg-space-800 px-2 py-1 rounded border border-space-700">
+                      <span key={idx} className="text-xs font-display tracking-wider text-slate-500 bg-space-800 px-2 py-1 rounded border border-space-700 flex-shrink-0">
                         {tech}
                       </span>
                     ))}
@@ -226,7 +256,7 @@ export function ProjectsSection() {
                 {/* Modal Body */}
                 <div className="p-6 overflow-y-auto custom-scrollbar">
                   <div className="mb-8">
-                    <h4 className="text-sm font-display tracking-widest text-{selectedProject.color} uppercase mb-3 border-b border-space-700 pb-2">Overview</h4>
+                    <h4 className={`text-sm font-display tracking-widest text-${selectedProject.color} uppercase mb-3 border-b border-space-700 pb-2`}>Overview</h4>
                     <p className="text-slate-300 font-sans leading-relaxed">
                       {selectedProject.longDescription || selectedProject.description}
                     </p>
