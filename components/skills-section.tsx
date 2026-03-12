@@ -10,51 +10,68 @@ export function SkillsSection() {
 
   const skillNodes = [
     {
-      domain: 'Cyber Defenses',
+      domain: 'Cybersecurity & Web',
       icon: <Shield className="w-5 h-5" />,
       color: 'border-energy-blue',
       textColor: 'text-energy-blue',
       nodes: [
         { name: 'Vulnerability Analysis', level: 85 },
+        { name: 'Web Security', level: 88 },
         { name: 'Penetration Testing', level: 80 },
-        { name: 'Network Security', level: 88 },
-        { name: 'Bash Scripting', level: 90 },
       ]
     },
     {
-      domain: 'AI Architectures',
+      domain: 'Machine Learning & AI',
       icon: <Network className="w-5 h-5" />,
       color: 'border-energy-violet',
       textColor: 'text-energy-violet',
       nodes: [
-        { name: 'Machine Learning', level: 80 },
-        { name: 'LLM Integration', level: 78 },
-        { name: 'Data Analysis', level: 82 },
-        { name: 'PyCaret / Streamlit', level: 80 },
+        { name: 'Large Language Models (LLMs)', level: 85 },
+        { name: 'AI Chatbots', level: 90 },
+        { name: 'ChatGPT / Gemini AI', level: 88 },
       ]
     },
     {
-      domain: 'Core Programming',
+      domain: 'Programming Languages',
       icon: <Terminal className="w-5 h-5" />,
       color: 'border-energy-teal',
       textColor: 'text-energy-teal',
       nodes: [
         { name: 'Java / Python', level: 90 },
-        { name: 'React / Next.js', level: 85 },
-        { name: 'JavaScript / C++', level: 80 },
-        { name: 'Tailwind / CSS', level: 85 },
+        { name: 'JavaScript / Bash', level: 85 },
+        { name: 'C++', level: 80 },
       ]
     },
     {
-      domain: 'Hardware Integration',
-      icon: <Cpu className="w-5 h-5" />,
+      domain: 'Web Development',
+      icon: <Terminal className="w-5 h-5" />,
       color: 'border-energy-gold',
       textColor: 'text-energy-gold',
       nodes: [
+        { name: 'React / Next.js', level: 85 },
+        { name: 'HTML / CSS / Tailwind', level: 95 },
+        { name: 'TypeScript / JavaScript', level: 88 }
+      ]
+    },
+    {
+      domain: 'Embedded Systems & IoT',
+      icon: <Cpu className="w-5 h-5" />,
+      color: 'border-slate-400',
+      textColor: 'text-slate-400',
+      nodes: [
         { name: 'Arduino Prog.', level: 88 },
-        { name: 'IoT Development', level: 82 },
+        { name: 'Automation', level: 82 },
         { name: 'Microcontrollers', level: 80 },
-        { name: 'Sensors / Circuits', level: 85 },
+      ]
+    },
+    {
+      domain: 'Tools & Frameworks',
+      icon: <Terminal className="w-5 h-5" />,
+      color: 'border-energy-blue',
+      textColor: 'text-energy-blue',
+      nodes: [
+        { name: 'Git / VS Code / Android Studio', level: 90 },
+        { name: 'Linux', level: 85 },
       ]
     }
   ];

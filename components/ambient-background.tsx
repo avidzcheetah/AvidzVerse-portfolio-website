@@ -42,8 +42,8 @@ export function AmbientBackground() {
       pulseSpeed: number;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
         this.size = Math.random() * 2 + 0.1;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
@@ -64,11 +64,11 @@ export function AmbientBackground() {
         this.y += this.speedY;
 
         // Wrap around screen
-        if (this.x > canvas.width) this.x = 0;
-        else if (this.x < 0) this.x = canvas.width;
+        if (this.x > canvas!.width) this.x = 0;
+        else if (this.x < 0) this.x = canvas!.width;
         
-        if (this.y > canvas.height) this.y = 0;
-        else if (this.y < 0) this.y = canvas.height;
+        if (this.y > canvas!.height) this.y = 0;
+        else if (this.y < 0) this.y = canvas!.height;
 
         // Pulsing opacity
         this.opacity += this.pulseSpeed;
@@ -98,7 +98,7 @@ export function AmbientBackground() {
     };
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas!.width, canvas!.height);
       
       // Draw subtle grid (optional, can be done via CSS too)
       

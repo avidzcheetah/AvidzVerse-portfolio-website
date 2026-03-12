@@ -2,7 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: false,
-  output: 'export',
+  experimental: {
+    serverActions: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

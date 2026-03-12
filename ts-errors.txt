@@ -1,0 +1,6 @@
+﻿components/ambient-background.tsx(45,34): error TS18047: 'canvas' is possibly 'null'.
+components/ambient-background.tsx(46,34): error TS18047: 'canvas' is possibly 'null'.
+components/ambient-background.tsx(67,22): error TS18047: 'canvas' is possibly 'null'.
+components/ambient-background.tsx(68,39): error TS18047: 'canvas' is possibly 'null'.
+components/ambient-background.tsx(70,22): error TS18047: 'canvas' is possibly 'null'.
+components/ambient-background.tsx(71,39): error TS18047: 'canvas' is possibly 'null'.

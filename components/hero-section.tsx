@@ -1,12 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Github, Linkedin, Mail, Download, ChevronDown, Rocket } from 'lucide-react';
+import { getHeroData, HeroData } from '@/app/actions/hero';
 
 export function HeroSection() {
+  const [heroData, setHeroData] = useState<HeroData>({
+    title: 'AVIDU',
+    subtitle: 'WITHARANA',
+    tagline: 'Computer Engineering Undergraduate',
+    description: 'Cybersecurity enthusiast with a passion for astronomy and computer engineering. Actively contributing to various organizations, showcasing a proactive approach to learning and implementing cybersecurity solutions.',
+  });
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await getHeroData();
+      if (data) {
+        setHeroData(data);
+      }
+    }
+    loadData();
+  }, []);
+
   const scrollToProjects = () => {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };

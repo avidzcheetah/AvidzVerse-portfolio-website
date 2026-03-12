@@ -1,56 +1,68 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { BookOpen, Award, CheckCircle2 } from 'lucide-react';
+import { getAcademicData, AcademicData } from '@/app/actions/academic';
 
 export function AcademicSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-50px" });
 
-  const degrees = [
-    {
-      title: 'BSc. Engineering (Hons.) in Computer Engineering',
-      institution: 'University of Jaffna',
-      period: 'Feb 2023 - Present',
-      status: 'In Progress',
-      color: 'energy-blue',
-      details: [
-        'Specializing in Software Engineering and Hardware Integration.',
-        'Core coursework: Data Structures, Algorithms, Computer Architecture.',
-        'Active member of the University Cyber Security Society.'
-      ]
-    },
-    {
-      title: 'BSc. Information Technology and Cyber Security',
-      institution: 'PSB University Cambodia',
-      period: 'Sep 2023 - Feb 2026',
-      status: 'In Progress',
-      color: 'energy-violet',
-      details: [
-        'Focus on Network Security, Cryptography, and Ethical Hacking.',
-        'Practical labs simulating real-world cyber attack and defense scenarios.',
-        'Dual-degree concurrent enrollment.'
-      ]
-    }
-  ];
+  const [academicData, setAcademicData] = useState<AcademicData>({
+    degrees_json: [
+      {
+        title: 'BSc. Engineering (Hons.) in Computer Engineering',
+        institution: 'University of Jaffna',
+        period: 'Feb 2023 - Present',
+        status: 'In Progress',
+        color: 'energy-blue',
+        details: [
+          'Specializing in Software Engineering and Hardware Integration.',
+          'Core coursework: Data Structures, Algorithms, Computer Architecture.',
+          'Active member of the University Cyber Security Society.'
+        ]
+      },
+      {
+        title: 'BSc. Information Technology and Cyber Security',
+        institution: 'PSB University Cambodia',
+        period: 'Sep 2023 - Feb 2026',
+        status: 'In Progress',
+        color: 'energy-violet',
+        details: [
+          'Focus on Network Security, Cryptography, and Ethical Hacking.',
+          'Practical labs simulating real-world cyber attack and defense scenarios.',
+          'Dual-degree concurrent enrollment.'
+        ]
+      }
+    ],
+    diplomas_json: [
+      {
+        title: 'Cyber Threat Intelligence 101',
+        institution: 'arcX',
+        period: 'Certification',
+        status: 'Valid',
+        color: 'energy-teal'
+      },
+      {
+        title: 'Ethical Hacking Essentials (EHE)',
+        institution: 'EC-Council',
+        period: 'Certification',
+        status: 'Valid',
+        color: 'energy-gold'
+      }
+    ]
+  });
 
-  const diplomas = [
-    {
-      title: 'Cyber Threat Intelligence 101',
-      institution: 'arcX',
-      period: 'Certification',
-      status: 'Valid',
-      color: 'energy-teal'
-    },
-    {
-      title: 'Ethical Hacking Essentials (EHE)',
-      institution: 'EC-Council',
-      period: 'Certification',
-      status: 'Valid',
-      color: 'energy-gold'
+  useEffect(() => {
+    async function loadData() {
+      const data = await getAcademicData();
+      if (data) {
+        setAcademicData(data);
+      }
     }
-  ];
+    loadData();
+  }, []);
 
   return (
     <section id="academic" className="py-24 relative z-10" ref={containerRef}>
@@ -80,7 +92,7 @@ export function AcademicSection() {
             </h3>
             
             <div className="grid md:grid-cols-2 gap-6">
-              {degrees.map((degree, i) => (
+              {academicData.degrees_json.map((degree, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
@@ -124,7 +136,7 @@ export function AcademicSection() {
             </h3>
             
             <div className="grid sm:grid-cols-2 gap-4">
-              {diplomas.map((diploma, i) => (
+              {academicData.diplomas_json.map((diploma, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -20 }}

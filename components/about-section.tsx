@@ -1,38 +1,51 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { GraduationCap, Building, Target, Server } from 'lucide-react';
+import { getAboutData, AboutData } from '@/app/actions/about';
 
 export function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  const education = [
-    {
-      degree: 'BSc. Engineering (Hons.) in Computer Engineering',
-      institution: 'University of Jaffna',
-      period: 'Feb 2023 - Present',
-    },
-    {
-      degree: 'BSc. Information Technology and Cyber Security',
-      institution: 'PSB University Cambodia',
-      period: 'Sep 2023 - Feb 2026',
-    },
-  ];
+  const [aboutData, setAboutData] = useState<AboutData>({
+    description: 'Cybersecurity enthusiast with a passion for astronomy and computer engineering. Currently pursuing dual degrees. Highly motivated to apply technical knowledge to enhance security frameworks, develop innovative systems, and explore interdisciplinary opportunities between technology and science.',
+    education_json: [
+      {
+        degree: 'BSc. Engineering (Hons.) in Computer Engineering',
+        institution: 'University of Jaffna',
+        period: 'Feb 2023 - Present',
+      },
+      {
+        degree: 'BSc. Information Technology and Cyber Security',
+        institution: 'PSB University Cambodia',
+        period: 'Sep 2023 - Feb 2026',
+      },
+    ],
+    roles_json: [
+      {
+        title: 'Associate Software Developer (On Contract)',
+        org: 'Enigma Solutions (Pvt) Ltd',
+        period: 'July 2025 - Present',
+      },
+      {
+        title: 'Social Media Executive (Part-Time)',
+        org: 'Vetgrow (Pvt) Ltd',
+        period: 'Oct 2024 - Aug 2025',
+      },
+    ]
+  });
 
-  const roles = [
-    {
-      title: 'Associate Software Developer (On Contract)',
-      org: 'Enigma Solutions (Pvt) Ltd',
-      period: 'July 2025 - Present',
-    },
-    {
-      title: 'Social Media Executive (Part-Time)',
-      org: 'Vetgrow (Pvt) Ltd',
-      period: 'Oct 2024 - Aug 2025',
-    },
-  ];
+  useEffect(() => {
+    async function loadData() {
+      const data = await getAboutData();
+      if (data) {
+        setAboutData(data);
+      }
+    }
+    loadData();
+  }, []);
 
   return (
     <section id="about" className="py-32 relative z-10" ref={containerRef}>
@@ -83,10 +96,8 @@ export function AboutSection() {
 
             <div className="bg-space-800/50 backdrop-blur border border-space-700 p-6 rounded relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-energy-violet to-transparent" />
-              <p className="text-slate-400 leading-relaxed font-sans text-sm relative z-10">
-                Cybersecurity enthusiast with a passion for astronomy and computer engineering. Currently pursuing dual degrees. 
-                Highly motivated to apply technical knowledge to enhance security frameworks, develop innovative systems, 
-                and explore interdisciplinary opportunities between technology and science.
+              <p className="text-slate-400 leading-relaxed font-sans text-sm relative z-10 whitespace-pre-wrap">
+                {aboutData.description}
               </p>
             </div>
           </motion.div>
@@ -109,11 +120,11 @@ export function AboutSection() {
               </h3>
               
               <div className="space-y-6 relative z-10">
-                {education.map((edu, i) => (
+                {aboutData.education_json.map((edu, i) => (
                   <div key={i} className="flex gap-4">
                     <div className="flex flex-col items-center">
                       <div className="w-2 h-2 rounded-full bg-energy-teal shadow-[0_0_8px_theme(colors.energy.teal)]" />
-                      {i !== education.length - 1 && <div className="w-px h-full bg-space-700 my-1" />}
+                      {i !== aboutData.education_json.length - 1 && <div className="w-px h-full bg-space-700 my-1" />}
                     </div>
                     <div className="pb-4">
                       <p className="text-xs font-display text-slate-500 mb-1">{edu.period}</p>
@@ -140,11 +151,11 @@ export function AboutSection() {
               </h3>
               
               <div className="space-y-6 relative z-10">
-                {roles.map((role, i) => (
+                {aboutData.roles_json.map((role, i) => (
                   <div key={i} className="flex gap-4">
                     <div className="flex flex-col items-center">
                       <div className="w-2 h-2 rounded-full border border-energy-violet bg-space-900" />
-                      {i !== roles.length - 1 && <div className="w-px h-full border-l border-dashed border-space-700 my-1" />}
+                      {i !== aboutData.roles_json.length - 1 && <div className="w-px h-full border-l border-dashed border-space-700 my-1" />}
                     </div>
                     <div className="pb-4">
                       <p className="text-xs font-display text-slate-500 mb-1">{role.period}</p>
