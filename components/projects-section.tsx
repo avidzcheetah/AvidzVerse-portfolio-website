@@ -1,32 +1,24 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { FolderGit2, ExternalLink, Github, Terminal, ArrowRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { getProjectsData, ProjectItem } from '@/app/actions/projects';
 
 type ProjectType = 'all' | 'cyber' | 'ai' | 'web';
 
-interface Project {
-  title: string;
-  category: ProjectType;
-  description: string;
-  longDescription?: string;
-  techStack: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-  status: string;
-  color: string;
-}
+// ProjectItem interface imported from actions
+
 
 export function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
   const [activeFilter, setActiveFilter] = useState<ProjectType>('all');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
 
-  const projects: Project[] = [
+  const [projectsList, setProjectsList] = useState<ProjectItem[]>([
     {
       title: 'JamHub',
       category: 'web',
@@ -45,6 +37,7 @@ export function ProjectsSection() {
       longDescription: 'Developed a real-time network intrusion detection system that combines Supervised (Random Forest) and Unsupervised (Autoencoder) machine learning to detect both known and zero-day attacks. Features live packet capture, real-time classification, and explainable AI visualization.',
       techStack: ['Python', 'Random Forest', 'Autoencoder', 'Network Security'],
       githubUrl: 'https://github.com/avidzcheetah',
+      liveUrl: '',
       status: 'Dec 2025 - Feb 2026',
       color: 'energy-violet'
     },
@@ -55,6 +48,7 @@ export function ProjectsSection() {
       longDescription: 'Developed a platform connecting engineering graduates with companies, enabling profile creation, job applications, and recruitment management through student, company, and admin dashboards for streamlined hiring.',
       techStack: ['Next.js', 'React', 'TypeScript', 'Node.js'],
       githubUrl: 'https://github.com/avidzcheetah',
+      liveUrl: '',
       status: 'Aug 2025 - Oct 2026',
       color: 'energy-teal'
     },
@@ -76,6 +70,7 @@ export function ProjectsSection() {
       longDescription: 'Developed a web-based lab rescheduling system for the Faculty of Engineering, University of Jaffna with request and approval workflows, automated email notifications, real time tracking, attendance logging, and role-based dashboards.',
       techStack: ['React.js', 'Next.js', 'PHP', 'MySQL', 'Tailwind CSS', 'EmailJS'],
       githubUrl: 'https://github.com/avidzcheetah',
+      liveUrl: '',
       status: 'Jun 2025',
       color: 'energy-gold'
     },
@@ -97,6 +92,7 @@ export function ProjectsSection() {
       longDescription: 'Developed a Bash script to crawl webpages, extract key content such as headings, paragraphs, and links, and detect security issues including insecure forms, external script loading, and missing Content Security Policies.',
       techStack: ['Bash', 'Linux', 'Web Security'],
       githubUrl: 'https://github.com/avidzcheetah',
+      liveUrl: '',
       status: 'Oct 2024',
       color: 'energy-teal'
     },
@@ -107,10 +103,21 @@ export function ProjectsSection() {
       longDescription: 'Developed a Python based tool using the GitHub API to analyze repositories by reviewing documentation, open issues, pull requests, dependencies, security, and licensing, with automated issue creation for critical problems.',
       techStack: ['Python', 'GitHub API', 'JSON', 'Automation'],
       githubUrl: 'https://github.com/avidzcheetah',
+      liveUrl: '',
       status: 'Dec 2024',
       color: 'energy-gold'
     }
-  ];
+  ]);
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await getProjectsData();
+      if (data && data.projects_json.length > 0) {
+        setProjectsList(data.projects_json);
+      }
+    }
+    loadData();
+  }, []);
 
   const filters: { id: ProjectType; label: string }[] = [
     { id: 'all', label: 'All Operations' },
@@ -120,8 +127,8 @@ export function ProjectsSection() {
   ];
 
   const filteredProjects = activeFilter === 'all' 
-    ? projects 
-    : projects.filter(p => p.category === activeFilter);
+    ? projectsList 
+    : projectsList.filter(p => p.category === activeFilter);
 
   return (
     <section id="projects" className="py-24 relative z-10" ref={containerRef}>

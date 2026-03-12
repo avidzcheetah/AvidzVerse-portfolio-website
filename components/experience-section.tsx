@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Trophy, ChevronRight, Activity, Users } from 'lucide-react';
+import { getExperienceData, ExperienceData } from '@/app/actions/experience';
 
 export function ExperienceSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -10,58 +11,68 @@ export function ExperienceSection() {
   
   const [activeTab, setActiveTab] = useState<'ranks' | 'volunteering' | 'achievements'>('ranks');
 
-  const experiences = [
-    {
-      role: 'Consultant – Associate Software Developer (On Contract)',
-      company: 'Enigma Solutions (Pvt) Ltd',
-      period: 'July 2025 - Present',
-      points: [
-        'Developing secure, highly available backend systems and APIs.',
-        'Collaborating with cross-functional teams to integrate software solutions.',
-        'Ensuring robust security practices across deployed applications.'
-      ]
-    },
-    {
-      role: 'Social Media Executive (Part-Time)',
-      company: 'Vetgrow (Pvt) Ltd',
-      period: 'Oct 2024 - Aug 2025',
-      points: [
-        'Managed social media presence and online strategy.',
-        'Created technical content and engaged with the community.',
-      ]
-    }
-  ];
+  const [expData, setExpData] = useState<ExperienceData>({
+    experiences_json: [
+      {
+        role: 'Consultant – Associate Software Developer (On Contract)',
+        company: 'Enigma Solutions (Pvt) Ltd',
+        period: 'July 2025 - Present',
+        points: [
+          'Developing secure, highly available backend systems and APIs.',
+          'Collaborating with cross-functional teams to integrate software solutions.',
+          'Ensuring robust security practices across deployed applications.'
+        ]
+      },
+      {
+        role: 'Social Media Executive (Part-Time)',
+        company: 'Vetgrow (Pvt) Ltd',
+        period: 'Oct 2024 - Aug 2025',
+        points: [
+          'Managed social media presence and online strategy.',
+          'Created technical content and engaged with the community.',
+        ]
+      }
+    ],
+    volunteering_json: [
+      {
+        role: 'Vice Chairman',
+        org: 'IEEE RAS Student Branch Chapter, University of Jaffna',
+        period: 'Mar 2025 – Mar 2026'
+      },
+      {
+        role: 'Vice Chairman',
+        org: 'IEEE CIS Student Branch Chapter, University of Jaffna',
+        period: 'Feb 2025 – Jan 2026'
+      },
+      {
+        role: 'Membership Coordinator',
+        org: 'IEEE RAS Student Branch Chapter, University of Jaffna',
+        period: 'Feb 2024 – Feb 2025'
+      },
+      {
+        role: 'Faculty Coordinator',
+        org: 'SEDS Yarl, University of Jaffna',
+        period: 'Apr 2024 – Apr 2025'
+      }
+    ],
+    awards_json: [
+      {
+        title: 'AlgoRhythm – Champions',
+        date: 'Jan 2025 / Jun 2024',
+        description: 'Secured the championship position in AlgoRhythm (Facebook).'
+      }
+    ]
+  });
 
-  const volunteering = [
-    {
-      role: 'Vice Chairman',
-      org: 'IEEE RAS Student Branch Chapter, University of Jaffna',
-      period: 'Mar 2025 – Mar 2026'
-    },
-    {
-      role: 'Vice Chairman',
-      org: 'IEEE CIS Student Branch Chapter, University of Jaffna',
-      period: 'Feb 2025 – Jan 2026'
-    },
-    {
-      role: 'Membership Coordinator',
-      org: 'IEEE RAS Student Branch Chapter, University of Jaffna',
-      period: 'Feb 2024 – Feb 2025'
-    },
-    {
-      role: 'Faculty Coordinator',
-      org: 'SEDS Yarl, University of Jaffna',
-      period: 'Apr 2024 – Apr 2025'
+  useEffect(() => {
+    async function loadData() {
+      const data = await getExperienceData();
+      if (data) {
+        setExpData(data);
+      }
     }
-  ];
-
-  const awards = [
-    {
-      title: 'AlgoRhythm – Champions',
-      date: 'Jan 2025 / Jun 2024',
-      description: 'Secured the championship position in AlgoRhythm (Facebook).'
-    }
-  ];
+    loadData();
+  }, []);
 
   return (
     <section id="experience" className="py-24 relative z-10" ref={containerRef}>
@@ -136,7 +147,7 @@ export function ExperienceSection() {
                 <div className="absolute left-[11px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-energy-violet/80 via-energy-violet/20 to-transparent transform md:-translate-x-1/2" />
 
                 <div className="space-y-12">
-                  {experiences.map((exp, i) => (
+                  {expData.experiences_json.map((exp, i) => (
                     <div key={i} className={`relative flex flex-col md:flex-row ${i % 2 === 0 ? 'md:flex-row-reverse' : ''} justify-center items-center w-full`}>
                       
                       {/* Timeline Node */}
@@ -189,7 +200,7 @@ export function ExperienceSection() {
                 transition={{ duration: 0.4 }}
                 className="grid md:grid-cols-2 gap-6"
               >
-                {volunteering.map((vol, i) => (
+                {expData.volunteering_json.map((vol, i) => (
                   <div key={i} className="glass-panel p-6 border-t border-l border-r border-space-700 border-b-2 border-b-energy-teal group hover:-translate-y-2 transition-transform duration-300">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-bold text-slate-200 leading-tight pr-4">{vol.role}</h3>
@@ -216,7 +227,7 @@ export function ExperienceSection() {
                 transition={{ duration: 0.4 }}
                 className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                {awards.map((award, i) => (
+                {expData.awards_json.map((award, i) => (
                   <div key={i} className="glass-panel p-6 border-t border-l border-r border-space-700 border-b-2 border-b-energy-gold group hover:-translate-y-2 transition-transform duration-300">
                     <div className="w-12 h-12 rounded bg-energy-gold/10 border border-energy-gold/30 flex items-center justify-center mb-6 shadow-[inset_0_0_15px_rgba(242,169,0,0.2)] group-hover:bg-energy-gold/20 transition-colors">
                       <Trophy className="w-6 h-6 text-energy-gold" />
