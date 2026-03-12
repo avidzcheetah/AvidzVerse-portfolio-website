@@ -1,621 +1,279 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import React, { useRef, useState } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { FolderGit2, ExternalLink, Github, Terminal, ArrowRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ExternalLink, Github, Calendar, Star } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { Badge } from '@/components/ui/badge';
+
+// Types for our project data
+type ProjectType = 'all' | 'cyber' | 'ai' | 'web' | 'hardware';
+
+interface Project {
+  title: string;
+  category: ProjectType;
+  description: string;
+  longDescription?: string;
+  techStack: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  status: 'Completed' | 'In Progress' | 'Archived';
+  color: string;
+}
 
 export function ProjectsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isClient, setIsClient] = useState(false);
-  const { theme, systemTheme } = useTheme();
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [activeTab, setActiveTab] = useState('featured');
-  
-  // Determine current theme
-  const currentTheme = theme === 'system' ? systemTheme : theme;
-  const isDark = currentTheme === 'dark';
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const [activeFilter, setActiveFilter] = useState<ProjectType>('all');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [isClient]);
-
-  const projects = [
+  const projects: Project[] = [
     {
-      id: 1,
-      title: 'Mew – Real-time AI Chatbot',
-      category: 'AI Innovation',
-      period: 'Dec 2024 - Feb 2025',
-      description: 'State-of-the-art chatbot integrating React, OpenAI\'s ChatGPT, and Google\'s Gemini AI with real-time message streaming, auto-resizable text fields, markdown support, and dark mode.',
-      technologies: ['React', 'ChatGPT', 'Gemini AI', 'JavaScript', 'CSS', 'HTML'],
-      github: 'https://github.com/avidzcheetah/Mew-the-AI-chatbot',
-      demo: 'https://mew-ai-chatbot.vercel.app',
-      featured: true,
+      title: 'Avidz-Vulnerability-Scanner',
+      category: 'cyber',
+      description: 'An advanced automated vulnerability assessment tool built in Python.',
+      longDescription: 'Avidz-Vulnerability-Scanner is designed to actively discover and report security loopholes in web applications. Features include XSS, SQLi, and CSRF detection modules. It leverages concurrent scanning techniques to minimize execution time while maximizing coverage.',
+      techStack: ['Python', 'Requests', 'BeautifulSoup', 'Concurrent.futures'],
+      githubUrl: 'https://github.com/avidzcheetah/Avidz-Vulnerability-Scanner',
+      status: 'Completed',
+      color: 'energy-blue'
     },
     {
-      id: 2,
-      title: 'Liver Disease Prediction Using PyCaret',
-      category: 'AI Innovation',
-      period: 'Mar 2025',
-      description: 'ML model processing 554 patient records with comprehensive data preprocessing, demonstrating AI application in healthcare for early disease detection.',
-      technologies: ['Python', 'PyCaret', 'Pandas', 'Machine Learning', 'Streamlit'],
-      github: 'https://github.com/avidzcheetah/pycaret-liver-disease-predictor',
-      demo: null,
-      featured: true,
+      title: 'Threat Intel AI Engine',
+      category: 'ai',
+      description: 'NLP-based threat intelligence aggregator and analyzer.',
+      longDescription: 'A machine learning system that scrapes various threat intel feeds (Twitter, CVE databases, dark web forums) and uses NLP to categorize and prioritize emerging threats. Provides a dashboard for SOC analysts to quickly identify pertinent risks.',
+      techStack: ['Python', 'Transformers', 'FastAPI', 'React', 'MongoDB'],
+      status: 'In Progress',
+      color: 'energy-violet'
     },
     {
-      id: 3,
-      title: 'Scalable Network Simulation',
-      category: 'Cybersecurity',
-      period: 'Ongoing',
-      description: 'Designed secure network infrastructure for multi-department university campus with VLAN segmentation, achieving 30% scalability capacity for future growth.',
-      technologies: ['Cisco Packet Tracer', 'VLANs', 'Subnetting', 'Layer 3 Switching', 'QoS'],
-      github: 'https://github.com/avidzcheetah/Network-Simulation-UOJ-FOE',
-      demo: 'https://youtu.be/gZVb1rg_U4Y?si=3moHq7sXBfjqfVdo',
-      featured: true,
+      title: 'Jayaweera Tyre Traders ERP',
+      category: 'web',
+      description: 'Comprehensive business management system for a retail tyre company.',
+      longDescription: 'Built from scratch to handle inventory management, sales tracking, and customer relationship management. Features a modern glassmorphic dashboard, real-time stock alerts, and role-based access control.',
+      techStack: ['Next.js', 'Tailwind', 'Supabase', 'PostgreSQL'],
+      liveUrl: 'https://jayaweeratyres.com',
+      status: 'Completed',
+      color: 'energy-teal'
     },
     {
-      id: 4,
-      title: 'Bash Web Crawler & Vulnerability Checker',
-      category: 'Cybersecurity',
-      period: 'Oct 2024',
-      description: 'Advanced security tool for webpage content extraction and vulnerability assessment with security checks for insecure forms, external scripts, and CSP policies.',
-      technologies: ['Bash', 'HTML Parsing', 'Web Security', 'Vulnerability Assessment'],
-      github: 'https://github.com/avidzcheetah/bash-web-crawler',
-      demo: null,
-      featured: false,
+      title: 'Secure IoT Access Node',
+      category: 'hardware',
+      description: 'Biometric and cryptographic hardware access controller.',
+      longDescription: 'A custom-built hardware device using ESP32 that integrates fingerprint parsing with encrypted MQTT communication to control physical access points. Includes a web interface for credential management.',
+      techStack: ['C++', 'ESP32', 'FreeRTOS', 'MQTT', 'WebSockets'],
+      githubUrl: 'https://github.com/avidzcheetah',
+      status: 'Archived',
+      color: 'energy-gold'
     },
     {
-      id: 5,
-      title: 'mFlix – Movie Dashboard',
-      category: 'Full-Stack',
-      period: 'Nov 2024 - Dec 2024',
-      description: 'Complete movie management platform with CRUD operations via Server Actions, responsive design with Tailwind CSS, and MongoDB integration.',
-      technologies: ['Next.js', 'MongoDB', 'Tailwind CSS', 'JavaScript', 'Vercel'],
-      github: 'https://github.com/avidzcheetah/evotech-first-project',
-      demo: 'https://evotech-first-project-8x5p.vercel.app/dashboard',
-      featured: true,
+      title: 'Decentralized Identity Vault',
+      category: 'cyber',
+      description: 'Blockchain-backed personal identity management protocol.',
+      techStack: ['Solidity', 'Web3.js', 'React', 'IPFS'],
+      status: 'In Progress',
+      color: 'energy-blue'
     },
     {
-      id: 6,
-      title: 'Fast Line Follower – Dextron',
-      category: 'Robotics',
-      period: 'Competition Project',
-      description: 'Autonomous robot developed by Team MeowBotz for competition with Arduino Nano-powered system and 5-IR sensor integration.',
-      technologies: ['C++', 'Arduino', 'Embedded Systems', 'Sensor Integration'],
-      github: 'https://github.com/avidzcheetah/FastLineFollower-Dextron',
-      demo: null,
-      featured: false,
-    },
-    {
-      id: 7,
-      title: 'Python Snake Game',
-      category: 'Full-Stack',
-      period: 'Learning Project',
-      description: 'Classic gaming implementation demonstrating programming fundamentals and game development concepts.',
-      technologies: ['Python', 'Pygame', 'Game Development'],
-      github: 'https://github.com/avidzcheetah/python-snake-game',
-      demo: null,
-      featured: false,
-    },
-    {
-      id: 8,
-      title: 'Instagram Secure Password Tool',
-      category: 'Cybersecurity',
-      period: 'Security Project',
-      description: 'Enhanced security tool forked and improved from open source with advanced password encryption and security features.',
-      technologies: ['Python', 'Cryptography', 'Security'],
-      github: 'https://github.com/avidzcheetah/instagram-secure-password',
-      demo: null,
-      featured: false,
-    },
+      title: 'Cyberpunk Portfolio V1',
+      category: 'web',
+      description: 'Previous iteration of portfolio featuring a grunge cyberpunk aesthetic.',
+      techStack: ['React', 'Framer Motion', 'Tailwind'],
+      githubUrl: 'https://github.com/avidzcheetah/AvidzVerse-portfolio-website',
+      status: 'Completed',
+      color: 'energy-teal'
+    }
   ];
 
-  const categories = ['All', 'AI Innovation', 'Cybersecurity', 'Full-Stack', 'Robotics'];
+  const filters: { id: ProjectType; label: string }[] = [
+    { id: 'all', label: 'All Operations' },
+    { id: 'cyber', label: 'Cyber Sec' },
+    { id: 'ai', label: 'AI Models' },
+    { id: 'web', label: 'Web Systems' },
+    { id: 'hardware', label: 'Hardware' },
+  ];
 
-  const filteredProjects = activeCategory === 'All' 
+  const filteredProjects = activeFilter === 'all' 
     ? projects 
-    : projects.filter(project => project.category === activeCategory);
-
-  const featuredProjects = projects.filter(project => project.featured);
-
-  // Theme-based background style
-  const backgroundStyle = isDark
-    ? {
-        background: `
-          radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-          linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)
-        `
-      }
-    : {
-        background: `
-          radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-          linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%)
-        `
-      };
+    : projects.filter(p => p.category === activeFilter);
 
   return (
-    <>
-      <style jsx>{`
-        /* Geometric Background Animations */
-        @keyframes geometricFloat {
-          0%, 100% { 
-            transform: translateY(0px) rotate(0deg) scale(1); 
-            opacity: 0.3; 
-          }
-          33% { 
-            transform: translateY(-20px) rotate(120deg) scale(1.1); 
-            opacity: 0.6; 
-          }
-          66% { 
-            transform: translateY(10px) rotate(240deg) scale(0.9); 
-            opacity: 0.4; 
-          }
-        }
+    <section id="projects" className="py-24 relative z-10" ref={containerRef}>
+      <div className="container mx-auto px-4 max-w-6xl">
         
-        @keyframes prismRotate {
-          0% { 
-            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); 
-            opacity: 0.2; 
-          }
-          50% { 
-            transform: rotateX(180deg) rotateY(180deg) rotateZ(90deg); 
-            opacity: 0.5; 
-          }
-          100% { 
-            transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); 
-            opacity: 0.2; 
-          }
-        }
-        
-        @keyframes networkPulse {
-          0%, 100% { 
-            transform: scale(1); 
-            opacity: 0.4; 
-          }
-          50% { 
-            transform: scale(1.2); 
-            opacity: 0.8; 
-          }
-        }
-        
-        @keyframes codeMatrix {
-          0% { 
-            transform: translateY(-100px); 
-            opacity: 0; 
-          }
-          50% { 
-            opacity: 1; 
-          }
-          100% { 
-            transform: translateY(100vh); 
-            opacity: 0; 
-          }
-        }
-        
-        /* Card Entrance Animations */
-        @keyframes cardSlideIn {
-          0% { 
-            transform: translateY(60px) scale(0.9); 
-            opacity: 0; 
-          }
-          100% { 
-            transform: translateY(0) scale(1); 
-            opacity: 1; 
-          }
-        }
-        
-        @keyframes cardFlipIn {
-          0% { 
-            transform: rotateY(90deg) scale(0.8); 
-            opacity: 0; 
-          }
-          100% { 
-            transform: rotateY(0deg) scale(1); 
-            opacity: 1; 
-          }
-        }
-        
-        @keyframes badgeWave {
-          0%, 100% { 
-            transform: scale(1) rotate(0deg); 
-          }
-          50% { 
-            transform: scale(1.05) rotate(2deg); 
-          }
-        }
-        
-        /* Main Animation Classes */
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(40px);
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .animate-on-scroll.animate-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        .card-animate {
-          animation: cardSlideIn 0.6s ease-out;
-        }
-        
-        .card-animate:nth-child(2n) {
-          animation: cardFlipIn 0.6s ease-out;
-        }
-        
-        .badge-wave {
-          animation: badgeWave 2s ease-in-out infinite;
-        }
-        
-        .badge-wave:nth-child(2n) {
-          animation-delay: 0.2s;
-        }
-        
-        .badge-wave:nth-child(3n) {
-          animation-delay: 0.4s;
-        }
-        
-        /* Stagger Effects */
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
-        .stagger-5 { animation-delay: 0.5s; }
-        .stagger-6 { animation-delay: 0.6s; }
-        
-        /* Background Effects */
-        .geometric-shape {
-          position: absolute;
-          animation: geometricFloat 8s ease-in-out infinite;
-        }
-        
-        .prism-effect {
-          position: absolute;
-          width: 60px;
-          height: 60px;
-          background: linear-gradient(45deg, ${isDark ? 'rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)' : 'rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05)'});
-          border-radius: 12px;
-          animation: prismRotate 12s linear infinite;
-        }
-        
-        .network-node {
-          position: absolute;
-          width: 8px;
-          height: 8px;
-          background: ${isDark ? 'rgba(99, 102, 241, 0.6)' : 'rgba(99, 102, 241, 0.4)'};
-          border-radius: 50%;
-          animation: networkPulse 3s ease-in-out infinite;
-        }
-        
-        .code-particle {
-          position: absolute;
-          font-family: 'Courier New', monospace;
-          font-size: 12px;
-          color: ${isDark ? 'rgba(34, 197, 94, 0.3)' : 'rgba(34, 197, 94, 0.2)'};
-          animation: codeMatrix 8s linear infinite;
-        }
-        
-        /* Glass Morphism Effects */
-        .glass-card {
-          background: ${isDark ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-          backdrop-filter: blur(16px);
-          border: 1px solid ${isDark ? 'rgba(148, 163, 184, 0.1)' : 'rgba(148, 163, 184, 0.2)'};
-          box-shadow: 0 8px 32px ${isDark ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.1)'};
-        }
-        
-        .glass-card:hover {
-          background: ${isDark ? 'rgba(30, 41, 59, 0.9)' : 'rgba(255, 255, 255, 0.9)'};
-          transform: translateY(-8px) scale(1.02);
-          box-shadow: 0 20px 40px ${isDark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.15)'};
-        }
-        
-        /* Tab Animation */
-        .tab-indicator {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          height: 2px;
-          background: linear-gradient(90deg, #6366f1, #a855f7);
-          transition: all 0.3s ease;
-        }
-        
-        /* Button Hover Effects */
-        .btn-glow {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .btn-glow::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          transition: left 0.5s ease;
-        }
-        
-        .btn-glow:hover::before {
-          left: 100%;
-        }
-      `}</style>
-
-      <section 
-        ref={sectionRef}
-        id="projects" 
-        className="py-24 relative overflow-hidden"
-        style={backgroundStyle}
-      >
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Geometric Shapes */}
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={`geometric-${i}`}
-              className="geometric-shape"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 8}s`,
-              }}
-            >
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full" />
-            </div>
-          ))}
-          
-          {/* Prism Effects */}
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={`prism-${i}`}
-              className="prism-effect"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 12}s`,
-              }}
-            />
-          ))}
-          
-          {/* Network Nodes */}
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={`node-${i}`}
-              className="network-node"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-              }}
-            />
-          ))}
-          
-          {/* Code Particles */}
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={`code-${i}`}
-              className="code-particle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 8}s`,
-              }}
-            >
-              {['{ }', '< >', '[ ]', '( )', '/**/'][Math.floor(Math.random() * 5)]}
-            </div>
-          ))}
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16 animate-on-scroll">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${isDark ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400' : 'bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600'} bg-clip-text text-transparent`}>
-              Featured Projects
-            </h2>
-            <div className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-              A showcase of innovative projects spanning AI, cybersecurity, full-stack development, 
-              and robotics, demonstrating technical excellence and practical problem-solving.
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.7 }}
+          className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-space-700 pb-6"
+        >
+          <div className="flex items-center gap-4">
+            <FolderGit2 className="w-10 h-10 text-energy-blue" />
+            <div>
+              <h2 className="text-3xl md:text-5xl font-display font-light text-slate-200 tracking-wider">
+                ACTIVE <span className="font-bold text-energy-blue text-glow">MISSIONS</span>
+              </h2>
             </div>
           </div>
+          
+          {/* Tactical Filter Hub */}
+          <div className="flex flex-wrap gap-2">
+            {filters.map(filter => (
+              <button
+                key={filter.id}
+                onClick={() => setActiveFilter(filter.id)}
+                className={`text-xs font-display tracking-widest uppercase px-4 py-2 border transition-all duration-300 ${
+                  activeFilter === filter.id 
+                    ? 'border-energy-blue bg-energy-blue/10 text-energy-blue shadow-[0_0_10px_rgba(102,252,241,0.3)]' 
+                    : 'border-space-700 text-slate-400 hover:border-slate-500 hover:text-slate-200 bg-space-900/50'
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
 
-          <div className="animate-on-scroll">
-            <Tabs defaultValue="featured" className="w-full" onValueChange={setActiveTab}>
-              <TabsList className={`grid w-full grid-cols-2 mb-8 relative ${isDark ? 'bg-slate-800/50' : 'bg-white/50'} backdrop-blur-sm`}>
-                <TabsTrigger value="featured" className="relative z-10">Featured Projects</TabsTrigger>
-                <TabsTrigger value="all" className="relative z-10">All Projects</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="featured" className="space-y-8">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {featuredProjects.map((project, index) => (
-                    <Card 
-                      key={project.id} 
-                      className={`card-animate stagger-${index + 1} group glass-card transition-all duration-500 hover:shadow-2xl`}
-                    >
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <Badge 
-                            variant="outline" 
-                            className={`mb-2 badge-wave ${isDark ? 'border-blue-400/30 text-blue-400' : 'border-blue-600/30 text-blue-600'}`}
-                          >
-                            {project.category}
-                          </Badge>
-                          {project.featured && (
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 group-hover:scale-125 transition-transform" />
-                          )}
-                        </div>
-                        <CardTitle className={`group-hover:text-primary transition-colors ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
-                          {project.title}
-                        </CardTitle>
-                        <CardDescription className={`flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                          <Calendar className="h-3 w-3" />
-                          {project.period}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                          {project.description}
-                        </p>
-                        
-                        <div className="flex flex-wrap gap-1">
-                          {project.technologies.map((tech, techIndex) => (
-                            <Badge 
-                              key={techIndex} 
-                              variant="secondary" 
-                              className={`text-xs badge-wave transition-all duration-300 ${
-                                isDark 
-                                  ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' 
-                                  : 'bg-gray-100/50 text-gray-700 hover:bg-gray-200/50'
-                              }`}
-                              style={{ animationDelay: `${techIndex * 0.1}s` }}
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                        
-                        <div className="flex gap-2 pt-2">
-                          <Button size="sm" variant="outline" className="btn-glow" asChild>
-                            <a href={project.github} target="_blank" rel="noopener noreferrer">
-                              <Github className="h-3 w-3 mr-1" />
-                              Code
-                            </a>
-                          </Button>
-                          {project.demo && (
-                            <Button size="sm" className="btn-glow" asChild>
-                              <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="h-3 w-3 mr-1" />
-                                Demo
-                              </a>
-                            </Button>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="all" className="space-y-8">
-                <div className="flex flex-wrap gap-2 justify-center mb-8">
-                  {categories.map((category, index) => (
-                    <Button
-                      key={category}
-                      variant={activeCategory === category ? "default" : "outline"}
-                      size="sm"
-                      className={`btn-glow transition-all duration-300 ${
-                        activeCategory === category 
-                          ? 'scale-110 shadow-lg' 
-                          : 'hover:scale-105'
-                      }`}
-                      onClick={() => setActiveCategory(category)}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      {category}
-                    </Button>
-                  ))}
+        {/* Project Grid */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, i) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                onClick={() => setSelectedProject(project)}
+                className={`glass-panel border-t-2 border-${project.color} group cursor-pointer flex flex-col h-full hover:border-${project.color}/80 transition-all hover:shadow-[0_0_30px_rgba(0,0,0,0.5)]`}
+              >
+                <div className="p-6 flex-grow flex flex-col">
+                  <div className="flex justify-between items-start mb-4">
+                    <Terminal className={`w-8 h-8 text-${project.color} opacity-70 group-hover:opacity-100 transition-opacity`} />
+                    <Badge variant="outline" className="font-display tracking-widest text-[10px] uppercase border-space-700 bg-space-800 text-slate-300">
+                      {project.status}
+                    </Badge>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-slate-200 mb-2 font-display tracking-wide group-hover:text-white transition-colors">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-sm text-slate-400 font-sans leading-relaxed mb-6 flex-grow">
+                    {project.description}
+                  </p>
+                  
+                  {/* Tech Stack Tags */}
+                  <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-space-700/50">
+                    {project.techStack.slice(0, 3).map((tech, idx) => (
+                      <span key={idx} className="text-xs font-display tracking-wider text-slate-500 bg-space-800 px-2 py-1 rounded border border-space-700">
+                        {tech}
+                      </span>
+                    ))}
+                    {project.techStack.length > 3 && (
+                      <span className="text-xs font-display tracking-wider text-slate-500 px-1 py-1">
+                        +{project.techStack.length - 3}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredProjects.map((project, index) => (
-                    <Card 
-                      key={project.id} 
-                      className={`card-animate stagger-${(index % 6) + 1} group glass-card transition-all duration-500 hover:shadow-2xl`}
-                    >
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <Badge 
-                            variant="outline" 
-                            className={`mb-2 badge-wave ${isDark ? 'border-blue-400/30 text-blue-400' : 'border-blue-600/30 text-blue-600'}`}
-                          >
-                            {project.category}
-                          </Badge>
-                          {project.featured && (
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 group-hover:scale-125 transition-transform" />
-                          )}
-                        </div>
-                        <CardTitle className={`group-hover:text-primary transition-colors ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
-                          {project.title}
-                        </CardTitle>
-                        <CardDescription className={`flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                          <Calendar className="h-3 w-3" />
-                          {project.period}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                          {project.description}
-                        </p>
-                        
-                        <div className="flex flex-wrap gap-1">
-                          {project.technologies.map((tech, techIndex) => (
-                            <Badge 
-                              key={techIndex} 
-                              variant="secondary" 
-                              className={`text-xs badge-wave transition-all duration-300 ${
-                                isDark 
-                                  ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' 
-                                  : 'bg-gray-100/50 text-gray-700 hover:bg-gray-200/50'
-                              }`}
-                              style={{ animationDelay: `${techIndex * 0.1}s` }}
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                        
-                        <div className="flex gap-2 pt-2">
-                          <Button size="sm" variant="outline" className="btn-glow" asChild>
-                            <a href={project.github} target="_blank" rel="noopener noreferrer">
-                              <Github className="h-3 w-3 mr-1" />
-                              Code
-                            </a>
-                          </Button>
-                          {project.demo && (
-                            <Button size="sm" className="btn-glow" asChild>
-                              <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="h-3 w-3 mr-1" />
-                                Demo
-                              </a>
-                            </Button>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                {/* Decorative bottom bar */}
+                <div className={`h-1 w-full bg-gradient-to-r from-${project.color}/20 via-${project.color}/80 to-${project.color}/20 opacity-0 group-hover:opacity-100 transition-opacity`} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Modal/Expanded View for Selected Project */}
+        <AnimatePresence>
+          {selectedProject && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-space-900/90 backdrop-blur-sm"
+              onClick={() => setSelectedProject(null)}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 50, scale: 0.95 }}
+                onClick={(e) => e.stopPropagation()}
+                className={`w-full max-w-3xl glass-panel border border-${selectedProject.color}/50 rounded-lg overflow-hidden flex flex-col max-h-[90vh]`}
+              >
+                {/* Modal Header */}
+                <div className={`p-6 border-b border-space-700 flex justify-between items-start bg-gradient-to-r from-space-800 to-space-900 relative overflow-hidden`}>
+                  <div className={`absolute top-0 left-0 w-full h-1 bg-${selectedProject.color}`} />
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <Terminal className={`w-5 h-5 text-${selectedProject.color}`} />
+                      <span className="text-xs font-display tracking-widest text-slate-400 uppercase">Mission Dossier</span>
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold font-display text-white">{selectedProject.title}</h2>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedProject(null)}
+                    className="text-slate-400 hover:text-white bg-space-800 p-2 rounded-full border border-space-700 transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
-      </section>
-    </>
+
+                {/* Modal Body */}
+                <div className="p-6 overflow-y-auto custom-scrollbar">
+                  <div className="mb-8">
+                    <h4 className="text-sm font-display tracking-widest text-{selectedProject.color} uppercase mb-3 border-b border-space-700 pb-2">Overview</h4>
+                    <p className="text-slate-300 font-sans leading-relaxed">
+                      {selectedProject.longDescription || selectedProject.description}
+                    </p>
+                  </div>
+
+                  <div className="mb-8">
+                    <h4 className="text-sm font-display tracking-widest text-slate-400 uppercase mb-3 border-b border-space-700 pb-2">Tech Architecture</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.techStack.map((tech, idx) => (
+                        <span key={idx} className={`text-sm font-display tracking-wider text-${selectedProject.color} bg-${selectedProject.color}/10 px-3 py-1.5 rounded border border-${selectedProject.color}/20`}>
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modal Footer (Links) */}
+                <div className="p-6 border-t border-space-700 bg-space-800/50 flex flex-wrap gap-4 mt-auto">
+                  {selectedProject.githubUrl && (
+                    <Button 
+                      onClick={() => window.open(selectedProject.githubUrl, '_blank')}
+                      className="bg-space-700 hover:bg-space-600 text-white border border-space-600 font-display tracking-widest uppercase transition-all"
+                    >
+                      <Github className="w-4 h-4 mr-2" /> View Source
+                    </Button>
+                  )}
+                  {selectedProject.liveUrl && (
+                    <Button 
+                      onClick={() => window.open(selectedProject.liveUrl, '_blank')}
+                      className={`bg-${selectedProject.color} text-space-900 hover:bg-${selectedProject.color}/80 font-display tracking-widest uppercase transition-all shadow-[0_0_15px_rgba(var(--${selectedProject.color}),0.4)]`}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" /> Launch System <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  )}
+                  {!selectedProject.githubUrl && !selectedProject.liveUrl && (
+                    <span className="text-sm font-display tracking-widest text-slate-500 uppercase flex items-center">
+                      Classified / Internal Infrastructure
+                    </span>
+                  )}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+      </div>
+    </section>
   );
 }

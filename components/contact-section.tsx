@@ -1,545 +1,173 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Mail, MessageSquare, Send, Fingerprint, Network } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
-import { useTheme } from 'next-themes';
 
 export function ContactSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isClient, setIsClient] = useState(false);
-  const { theme, systemTheme } = useTheme();
-  
-  // Determine current theme
-  const currentTheme = theme === 'system' ? systemTheme : theme;
-  const isDark = currentTheme === 'dark';
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-50px" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success'>('idle');
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [isClient]);
-
-  const contactInfo = [
-    {
-      icon: <Mail className="h-5 w-5" />,
-      label: 'Email',
-      value: 'avidu@ieee.org',
-      href: 'mailto:avidu@ieee.org',
-      color: 'blue',
-    },
-    {
-      icon: <Phone className="h-5 w-5" />,
-      label: 'Phone',
-      value: '+94 755786246',
-      href: 'tel:+94755786246',
-      color: 'green',
-    },
-    {
-      icon: <MapPin className="h-5 w-5" />,
-      label: 'Location',
-      value: 'North Western Province, Sri Lanka',
-      href: null,
-      color: 'purple',
-    },
-  ];
-
-  const socialLinks = [
-    {
-      icon: <Github className="h-5 w-5" />,
-      label: 'GitHub',
-      username: 'avidzcheetah',
-      href: 'https://github.com/avidzcheetah',
-      color: 'gray',
-    },
-    {
-      icon: <Linkedin className="h-5 w-5" />,
-      label: 'LinkedIn',
-      username: 'avidz',
-      href: 'https://linkedin.com/in/avidz',
-      color: 'blue',
-    },
-    {
-      icon: <Instagram className="h-5 w-5" />,
-      label: 'Instagram',
-      username: '@avidz_cheetah',
-      href: 'https://instagram.com/avidz_cheetah',
-      color: 'pink',
-    },
-    {
-      icon: <Youtube className="h-5 w-5" />,
-      label: 'YouTube',
-      username: 'AVIDZ',
-      href: 'https://www.youtube.com/@avidzxv',
-      color: 'orange',
-    },
-  ];
-
-  // Theme-based background style
-  const backgroundStyle = isDark
-    ? {
-        background: `
-          radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 40% 80%, rgba(34, 197, 94, 0.05) 0%, transparent 50%),
-          linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)
-        `
-      }
-    : {
-        background: `
-          radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-          radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
-          radial-gradient(circle at 40% 80%, rgba(34, 197, 94, 0.03) 0%, transparent 50%),
-          linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%)
-        `
-      };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate network request
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitStatus('success');
+      
+      // Reset after a delay
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+    }, 1500);
+  };
 
   return (
-    <>
-      <style jsx>{`
-        /* Lightweight Background Animations */
-        @keyframes gentleFloat {
-          0%, 100% { 
-            transform: translateY(0px) rotate(0deg); 
-            opacity: 0.4; 
-          }
-          50% { 
-            transform: translateY(-12px) rotate(180deg); 
-            opacity: 0.7; 
-          }
-        }
+    <section id="contact" className="py-24 relative z-10" ref={containerRef}>
+      <div className="container mx-auto px-4 max-w-5xl">
         
-        @keyframes connectionPulse {
-          0%, 100% { 
-            transform: scale(1); 
-            opacity: 0.3; 
-          }
-          50% { 
-            transform: scale(1.2); 
-            opacity: 0.6; 
-          }
-        }
-        
-        /* Main Animation Classes */
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .animate-on-scroll.animate-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        /* Modern Card Styling */
-        .contact-card {
-          background: ${isDark ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.8)'};
-          backdrop-filter: blur(12px);
-          border: 1px solid ${isDark ? 'rgba(148, 163, 184, 0.15)' : 'rgba(148, 163, 184, 0.25)'};
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .contact-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, ${isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)'}, transparent);
-          transition: left 0.6s ease;
-        }
-        
-        .contact-card:hover::before {
-          left: 100%;
-        }
-        
-        .contact-card:hover {
-          background: ${isDark ? 'rgba(30, 41, 59, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
-          transform: translateY(-4px);
-          box-shadow: 0 20px 40px ${isDark ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.1)'};
-        }
-        
-        /* Contact Info Animations */
-        .contact-info-item {
-          transition: all 0.3s ease;
-          border-radius: 12px;
-          padding: 16px;
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .contact-info-item::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(135deg, transparent, ${isDark ? 'rgba(59, 130, 246, 0.05)' : 'rgba(59, 130, 246, 0.03)'}, transparent);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-        
-        .contact-info-item:hover::before {
-          opacity: 1;
-        }
-        
-        .contact-info-item:hover {
-          transform: translateX(8px);
-          background: ${isDark ? 'rgba(59, 130, 246, 0.05)' : 'rgba(59, 130, 246, 0.02)'};
-        }
-        
-        /* Icon Animations */
-        .icon-container {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-        }
-        
-        .icon-container::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border-radius: 50%;
-          background: radial-gradient(circle, currentColor 0%, transparent 70%);
-          opacity: 0;
-          transform: scale(0.8);
-          transition: all 0.3s ease;
-        }
-        
-        .contact-info-item:hover .icon-container::after {
-          opacity: 0.1;
-          transform: scale(1.2);
-        }
-        
-        .icon-container:hover {
-          transform: scale(1.1) rotate(5deg);
-        }
-        
-        /* Social Link Animations */
-        .social-link {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .social-link::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-          transition: left 0.5s ease;
-        }
-        
-        .social-link:hover::before {
-          left: 100%;
-        }
-        
-        .social-link:hover {
-          transform: translateY(-2px) scale(1.02);
-          background: ${isDark ? 'rgba(59, 130, 246, 0.1)' : 'rgba(59, 130, 246, 0.05)'};
-        }
-        
-        /* Form Animations */
-        .form-field {
-          position: relative;
-          transition: all 0.3s ease;
-        }
-        
-        .form-field:focus-within {
-          transform: translateY(-2px);
-        }
-        
-        .form-field input,
-        .form-field textarea {
-          transition: all 0.3s ease;
-          border: 2px solid transparent;
-        }
-        
-        .form-field input:focus,
-        .form-field textarea:focus {
-          border-color: ${isDark ? 'rgba(59, 130, 246, 0.5)' : 'rgba(59, 130, 246, 0.3)'};
-          box-shadow: 0 0 0 4px ${isDark ? 'rgba(59, 130, 246, 0.1)' : 'rgba(59, 130, 246, 0.05)'};
-          transform: scale(1.01);
-        }
-        
-        .form-label {
-          transition: all 0.3s ease;
-          position: relative;
-        }
-        
-        .form-field:focus-within .form-label {
-          color: ${isDark ? '#60a5fa' : '#3b82f6'};
-          transform: translateY(-2px);
-        }
-        
-        /* Button Animation */
-        .submit-button {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .submit-button::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          transition: left 0.5s ease;
-        }
-        
-        .submit-button:hover::before {
-          left: 100%;
-        }
-        
-        .submit-button:hover {
-          transform: translateY(-2px) scale(1.02);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .submit-button:active {
-          transform: translateY(0) scale(0.98);
-        }
-        
-        /* Background Elements */
-        .bg-element {
-          position: absolute;
-          border-radius: 50%;
-          pointer-events: none;
-          animation: gentleFloat 8s ease-in-out infinite;
-        }
-        
-        .connection-node {
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          background: ${isDark ? 'rgba(59, 130, 246, 0.4)' : 'rgba(59, 130, 246, 0.3)'};
-          border-radius: 50%;
-          animation: connectionPulse 4s ease-in-out infinite;
-        }
-        
-        /* Stagger Delays */
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-        .delay-5 { transition-delay: 0.5s; }
-        .delay-6 { transition-delay: 0.6s; }
-        
-        /* Color Variants */
-        .color-blue { color: ${isDark ? '#60a5fa' : '#3b82f6'}; }
-        .color-green { color: ${isDark ? '#4ade80' : '#22c55e'}; }
-        .color-purple { color: ${isDark ? '#a78bfa' : '#8b5cf6'}; }
-        .color-gray { color: ${isDark ? '#9ca3af' : '#6b7280'}; }
-        .color-pink { color: ${isDark ? '#f472b6' : '#ec4899'}; }
-        .color-sky { color: ${isDark ? '#38bdf8' : '#0ea5e9'}; }
-        
-        /* Responsive Optimizations */
-        @media (prefers-reduced-motion: reduce) {
-          .animate-on-scroll,
-          .contact-card,
-          .bg-element {
-            animation: none !important;
-            transition: none !important;
-          }
-        }
-      `}</style>
-
-      <section 
-        ref={sectionRef}
-        id="contact" 
-        className="py-24 relative overflow-hidden"
-        style={backgroundStyle}
-      >
-        {/* Lightweight Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Floating Elements */}
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={`bg-${i}`}
-              className="bg-element"
-              style={{
-                left: `${15 + i * 15}%`,
-                top: `${20 + i * 12}%`,
-                width: `${20 + i * 5}px`,
-                height: `${20 + i * 5}px`,
-                background: `linear-gradient(135deg, ${
-                  i % 3 === 0 ? 'rgba(59, 130, 246, 0.1)' :
-                  i % 3 === 1 ? 'rgba(168, 85, 247, 0.1)' :
-                  'rgba(34, 197, 94, 0.1)'
-                }, transparent)`,
-                animationDelay: `${i * 1.3}s`,
-              }}
-            />
-          ))}
-          
-          {/* Connection Nodes */}
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={`node-${i}`}
-              className="connection-node"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 4}s`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16 animate-on-scroll">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${isDark ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-green-400' : 'bg-gradient-to-r from-blue-600 via-purple-600 to-green-600'} bg-clip-text text-transparent`}>
-              Get In Touch
-            </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-              Ready to collaborate on innovative projects or discuss opportunities in cybersecurity and AI? 
-              Let's connect and explore how we can work together.
-            </p>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.7 }}
+          className="mb-16 text-center"
+        >
+          <div className="inline-flex items-center justify-center p-3 rounded-xl bg-space-900 border border-energy-teal/30 mb-6 shadow-[0_0_20px_rgba(69,162,158,0.2)]">
+            <Network className="w-6 h-6 text-energy-teal" />
           </div>
+          <h2 className="text-3xl md:text-5xl font-display font-light text-slate-200 tracking-wider">
+            SECURE <span className="font-bold text-energy-teal text-glow">COMMS</span>
+          </h2>
+          <p className="mt-4 text-slate-500 font-display tracking-widest uppercase text-sm">
+            Establish encrypted connection
+          </p>
+        </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Information */}
-            <div className="space-y-8 animate-on-scroll delay-1">
-              <Card className="contact-card">
-                <CardHeader>
-                  <CardTitle className={isDark ? 'text-slate-100' : 'text-slate-800'}>Contact Information</CardTitle>
-                  <CardDescription className={isDark ? 'text-slate-400' : 'text-slate-600'}>
-                    Feel free to reach out through any of these channels
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {contactInfo.map((info, index) => (
-                    <div key={index} className="contact-info-item">
-                      <div className="flex items-center gap-4 relative z-10">
-                        <div className={`icon-container flex-shrink-0 w-10 h-10 bg-${info.color}-100 dark:bg-${info.color}-900/30 rounded-full flex items-center justify-center color-${info.color}`}>
-                          {info.icon}
-                        </div>
-                        <div>
-                          <div className={`font-medium ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>{info.label}</div>
-                          {info.href ? (
-                            <a
-                              href={info.href}
-                              className={`${isDark ? 'text-slate-400 hover:text-blue-400' : 'text-slate-600 hover:text-blue-600'} transition-colors duration-300`}
-                            >
-                              {info.value}
-                            </a>
-                          ) : (
-                            <div className={isDark ? 'text-slate-400' : 'text-slate-600'}>{info.value}</div>
-                          )}
-                        </div>
-                      </div>
+        <div className="grid md:grid-cols-5 gap-8">
+          
+          {/* Contact Info Panel */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="md:col-span-2 space-y-6"
+          >
+            <div className="glass-panel p-6 border-l-2 border-energy-teal h-full flex flex-col justify-center">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xs font-display tracking-widest text-energy-teal uppercase mb-2 flex items-center gap-2">
+                    <Fingerprint className="w-4 h-4" /> Identity Verified
+                  </h3>
+                  <p className="text-xl font-bold text-slate-200">Avidu Witharana</p>
+                  <p className="text-sm text-slate-400 mt-1">Cybersecurity Engineer</p>
+                </div>
+
+                <div className="space-y-4">
+                  <a href="mailto:avidu.witharan@gmail.com" className="flex items-center gap-4 text-slate-300 hover:text-energy-teal transition-colors group p-3 rounded bg-space-900/50 border border-space-700 hover:border-energy-teal/50">
+                    <div className="p-2 rounded bg-space-800 group-hover:bg-energy-teal/20 transition-colors">
+                      <Mail className="w-5 h-5" />
                     </div>
-                  ))}
-                </CardContent>
-              </Card>
+                    <div>
+                      <p className="text-xs font-display uppercase tracking-widest text-slate-500 mb-1">Primary Channel</p>
+                      <p className="font-sans text-sm break-all">avidu.witharan@gmail.com</p>
+                    </div>
+                  </a>
+                  
+                  <div className="flex items-center gap-4 text-slate-300 group p-3 rounded bg-space-900/50 border border-space-700">
+                    <div className="p-2 rounded bg-space-800">
+                      <MessageSquare className="w-5 h-5 opacity-50" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-display uppercase tracking-widest text-slate-500 mb-1">Direct Message</p>
+                      <p className="font-sans text-sm italic text-slate-500">Available via LinkedIn</p>
+                    </div>
+                  </div>
+                </div>
 
-              <Card className="contact-card">
-                <CardHeader>
-                  <CardTitle className={isDark ? 'text-slate-100' : 'text-slate-800'}>Social Media & Professional Networks</CardTitle>
-                  <CardDescription className={isDark ? 'text-slate-400' : 'text-slate-600'}>
-                    Connect with me on various platforms
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-link flex items-center gap-4 p-3 rounded-lg group"
-                    >
-                      <div className={`icon-container flex-shrink-0 w-10 h-10 bg-${social.color}-100 dark:bg-${social.color}-900/30 rounded-full flex items-center justify-center group-hover:bg-${social.color}-200 dark:group-hover:bg-${social.color}-800/50 transition-colors color-${social.color}`}>
-                        {social.icon}
-                      </div>
-                      <div>
-                        <div className={`font-medium ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>{social.label}</div>
-                        <div className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{social.username}</div>
-                      </div>
-                    </a>
-                  ))}
-                </CardContent>
-              </Card>
+                <div className="pt-6 border-t border-space-700">
+                  <p className="text-xs font-display text-slate-500 leading-relaxed">
+                    System monitoring active. All communications are subject to encryption protocols. Response latency: {'<'} 24 hours standard cycle.
+                  </p>
+                </div>
+              </div>
             </div>
+          </motion.div>
 
-            {/* Contact Form */}
-            <Card className="contact-card animate-on-scroll delay-2">
-              <CardHeader>
-                <CardTitle className={isDark ? 'text-slate-100' : 'text-slate-800'}>Send a Message</CardTitle>
-                <CardDescription className={isDark ? 'text-slate-400' : 'text-slate-600'}>
-                  Have a project in mind or want to discuss collaboration opportunities?
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="form-field space-y-2">
-                      <label className={`form-label text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>First Name</label>
-                      <Input placeholder="John" />
-                    </div>
-                    <div className="form-field space-y-2">
-                      <label className={`form-label text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Last Name</label>
-                      <Input placeholder="Doe" />
-                    </div>
-                  </div>
-                  <div className="form-field space-y-2">
-                    <label className={`form-label text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Email</label>
-                    <Input type="email" placeholder="john@example.com" />
-                  </div>
-                  <div className="form-field space-y-2">
-                    <label className={`form-label text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Subject</label>
-                    <Input placeholder="Project Collaboration" />
-                  </div>
-                  <div className="form-field space-y-2">
-                    <label className={`form-label text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Message</label>
-                    <Textarea
-                      placeholder="I'm interested in discussing a potential collaboration..."
-                      rows={5}
+          {/* Contact Form Panel */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="md:col-span-3"
+          >
+            <div className="glass-panel p-6 sm:p-8 border-t-2 border-energy-teal relative overflow-hidden">
+              
+              {/* Decorative scanline */}
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-energy-teal glow-line" />
+
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-display tracking-widest text-energy-teal uppercase">Callsign / Name</label>
+                    <Input 
+                      required 
+                      placeholder="Enter designation" 
+                      className="bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 placeholder:text-slate-600 focus-visible:ring-energy-teal rounded-none placeholder:font-display placeholder:text-xs tracking-wider h-12" 
                     />
                   </div>
-                  <Button type="submit" className="submit-button w-full">
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-display tracking-widest text-energy-teal uppercase">Return Frequency / Email</label>
+                    <Input 
+                      required 
+                      type="email" 
+                      placeholder="Enter comm link" 
+                      className="bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 placeholder:text-slate-600 focus-visible:ring-energy-teal rounded-none placeholder:font-display placeholder:text-xs tracking-wider h-12" 
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-xs font-display tracking-widest text-energy-teal uppercase">Transmission Payload</label>
+                  <Textarea 
+                    required 
+                    placeholder="Input message data..." 
+                    className="min-h-[150px] bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 placeholder:text-slate-600 focus-visible:ring-energy-teal rounded-none resize-none placeholder:font-display placeholder:text-xs tracking-wider p-4" 
+                  />
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting || submitStatus === 'success'}
+                  className={`w-full h-14 font-display tracking-widest uppercase transition-all duration-300 ${
+                    submitStatus === 'success' 
+                      ? 'bg-green-500/20 text-green-400 border border-green-500 hover:bg-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
+                      : 'bg-energy-teal/10 hover:bg-energy-teal/20 text-energy-teal border border-energy-teal/50 hover:border-energy-teal hover:shadow-[0_0_20px_rgba(69,162,158,0.4)]'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-energy-teal border-t-transparent rounded-full animate-spin" />
+                      Encrypting...
+                    </span>
+                  ) : submitStatus === 'success' ? (
+                    <span className="flex items-center gap-2">Transmission Sent</span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Send className="w-4 h-4" /> Transmit Data
+                    </span>
+                  )}
+                </Button>
+              </form>
+            </div>
+          </motion.div>
+
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

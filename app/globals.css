@@ -2,73 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    /* Base theme adjusted to default to dark/sci-fi mode seamlessly */
+    --background: 228 18% 5%; /* #0b0c10 equivalent */
+    --foreground: 0 0% 98%;
+    --card: 220 18% 8%; /* Very dark blue-gray */
+    --card-foreground: 0 0% 98%;
+    --popover: 220 18% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 177 98% 69%; /* #66fcf1 */
+    --primary-foreground: 228 18% 5%;
+    --secondary: 213 24% 16%; /* #1f2833 */
+    --secondary-foreground: 177 98% 69%;
+    --muted: 213 24% 16%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 282 56% 54%; /* #a64ac9 */
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --border: 213 24% 16%;
+    --input: 213 24% 20%;
+    --ring: 177 98% 69%;
+    
+    --chart-1: 177 98% 69%; /* Ice blue */
+    --chart-2: 282 56% 54%; /* Soft violet */
+    --chart-3: 175 40% 45%; /* Teal */
+    --chart-4: 210 100% 50%; /* Deep blue */
+    --chart-5: 42 100% 47%; /* Gold */
     --radius: 0.5rem;
-  }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
   }
 }
 
@@ -76,7 +38,64 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    background-color: #0b0c10;
+    /* Optional: Subtle grid background global */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: -1px -1px;
+    background-attachment: fixed;
+    /* Remove default cursor to use custom one */
+    cursor: none;
+  }
+
+  /* Custom Selection */
+  ::selection {
+    background: rgba(102, 252, 241, 0.3); /* energy.blue */
+    color: #ffffff;
+  }
+
+  /* Custom Webkit Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0b0c10;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1f2833;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #45a29e;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)];
+  }
+  .glass-panel-light {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-[0_4px_24px_0_rgba(0,0,0,0.2)];
+  }
+  
+  /* Text gradient utility */
+  .text-glow {
+    text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+  }
+  .text-glow-violet {
+    text-shadow: 0 0 10px rgba(166, 74, 201, 0.5);
+  }
+
+  .interactive-hover {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1;
   }
 }

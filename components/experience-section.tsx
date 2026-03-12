@@ -1,693 +1,205 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Building, Users, Trophy, Calendar } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import React, { useRef, useState } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { ShieldCheck, Trophy, ChevronRight, Activity } from 'lucide-react';
 
 export function ExperienceSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isClient, setIsClient] = useState(false);
-  const { theme, systemTheme } = useTheme();
-  const [activeTab, setActiveTab] = useState("leadership");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-50px" });
+  
+  const [activeTab, setActiveTab] = useState<'ranks' | 'achievements'>('ranks');
 
-  // Determine current theme
-  const currentTheme = theme === 'system' ? systemTheme : theme;
-  const isDark = currentTheme === 'dark';
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [isClient, activeTab]); // Add activeTab as dependency to re-run observer on tab change
-
-  const leadership = [
+  const experiences = [
     {
-      title: 'Software Developer',
-      organization: 'Quantara IT Solutions',
-      period: 'Aug 2025 - Present',
-      type: 'Executive Leadership',
-      description: 'Developing innovative software solutions to enhance IT infrastructure and client services.',
+      role: 'Executive Director',
+      company: 'Nalanda Global Institute of Education (PVT) Ltd.',
+      period: 'March 2025 - Present',
+      points: [
+        'Strategic oversight of technology integration in educational programs.',
+        'Spearheading initiatives to modernize the institute\'s digital infrastructure.',
+      ]
     },
     {
-      title: 'Executive Director',
-      organization: 'Nalanda Global Institute of Education (PVT) Ltd.',
-      period: 'Mar 2025 - Present',
-      type: 'Executive Leadership',
-      description: 'Leading strategic initiatives in educational technology and institutional development.',
+      role: 'Software Engineer',
+      company: 'Quantara IT Solutions (PVT) Ltd.',
+      period: 'August 2025 - Present',
+      points: [
+        'Developing secure, highly available backend systems and APIs.',
+        'Collaborating with cross-functional teams to integrate AI-driven features.',
+        'Implementing CI/CD pipelines and security audits for ongoing projects.'
+      ]
     },
     {
-      title: 'Social Media Manager',
-      organization: 'Vetgrow (PVT) Ltd.',
-      period: 'Oct 2024 - Present',
-      type: 'Executive Leadership',
-      description: 'Managing digital marketing strategies and brand presence across multiple platforms.',
-    },
-    {
-      title: 'Vice Chairman',
-      organization: 'IEEE RAS Student Branch Chapter, University of Jaffna',
-      period: 'Mar 2025 - Present',
-      type: 'IEEE Leadership',
-      description: 'Leading robotics and automation initiatives, organizing technical workshops and competitions.',
-    },
-    {
-      title: 'Vice Chairman',
-      organization: 'IEEE CIS Student Branch Chapter, University of Jaffna',
-      period: 'Feb 2025 - Present',
-      type: 'IEEE Leadership',
-      description: 'Spearheading computational intelligence projects and research collaborations.',
-    },
-    {
-      title: 'Membership Coordinator',
-      organization: 'IEEE RAS Student Branch Chapter',
-      period: 'Feb 2024 - Mar 2025',
-      type: 'IEEE Leadership',
-      description: 'Managed membership growth and engagement activities, achieving significant expansion.',
-    },
-    {
-      title: 'Faculty Coordinator',
-      organization: 'SEDS YARL, University of Jaffna',
-      period: 'Apr 2024 - Present',
-      type: 'Community Leadership',
-      description: 'Coordinating space and engineering development activities for student community.',
-    },
-    {
-      title: 'Student Ambassador',
-      organization: 'LetsUpgrade Higher Education Community, India',
-      period: 'Mar 2025',
-      type: 'Community Leadership',
-      description: 'Representing international educational initiatives and fostering cross-cultural collaboration.',
-    },
+      role: 'Security Analyst Trainee',
+      company: 'CyberOps Defense Team (Mock/Simulation)',
+      period: 'January 2024 - June 2024',
+      points: [
+        'Participated in red team / blue team war games simulating APTs.',
+        'Analyzed network traffic logs using Wireshark and Splunk to identify anomalies.',
+        'Drafted incident response reports for simulated breaches.'
+      ]
+    }
   ];
 
-  const achievements = [
+  const awards = [
     {
-      title: 'AlgoRhythm – Champions',
-      date: 'Jan 2025',
-      description: 'First place in competitive programming and algorithmic problem-solving contest.',
-      category: 'Competition',
+      title: 'Top 10 Finalist - National Cyber Hackathon',
+      date: '2024',
+      description: 'Secured a top 10 position out of 200+ teams by successfully penetrating a hardened CTF environment within 24 hours.'
     },
     {
-      title: 'Best Academic Performance for 1st Semester',
+      title: 'Excellence in AI Implementation',
       date: '2023',
-      description: 'Recognition for overall best academic performance in the 1st semester at the FOE, UOJ.',
-      category: 'Recognition',
+      description: 'Awarded for developing an innovative machine learning model for predictive maintenance in industrial IoT.'
     },
+    {
+      title: 'Dean\'s List',
+      date: '2023, 2024',
+      description: 'Maintained a GPA within the top 5% of the engineering faculty for multiple consecutive semesters.'
+    }
   ];
-
-  const executiveRoles = leadership.filter(role => role.type === 'Executive Leadership');
-  const ieeeRoles = leadership.filter(role => role.type === 'IEEE Leadership');
-  const communityRoles = leadership.filter(role => role.type === 'Community Leadership');
-
-  const backgroundStyle = isDark
-    ? {
-        background: `
-          radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 70% 80%, rgba(147, 51, 234, 0.08) 0%, transparent 50%),
-          radial-gradient(circle at 40% 60%, rgba(34, 197, 94, 0.05) 0%, transparent 50%),
-          linear-gradient(135deg, rgba(2, 8, 23, 0.98) 0%, rgba(15, 23, 42, 0.95) 100%)
-        `
-      }
-    : {
-        background: `
-          radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-          radial-gradient(circle at 70% 80%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
-          radial-gradient(circle at 40% 60%, rgba(34, 197, 94, 0.03) 0%, transparent 50%),
-          linear-gradient(135deg, rgba(248, 250, 252, 0.98) 0%, rgba(226, 232, 240, 0.95) 100%)
-        `
-      };
 
   return (
-    <>
-      <style jsx>{`
-        /* Moving Star Animations */
-        @keyframes starMoveRight {
-          0% { transform: translateX(-100px); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
-        }
+    <section id="experience" className="py-24 relative z-10" ref={containerRef}>
+      <div className="container mx-auto px-4 max-w-5xl">
         
-        @keyframes starMoveLeft {
-          0% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateX(-100px); opacity: 0; }
-        }
-        
-        @keyframes starMoveUp {
-          0% { transform: translateY(calc(100vh + 100px)); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-100px); opacity: 0; }
-        }
-        
-        @keyframes starMoveDown {
-          0% { transform: translateY(-100px); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(calc(100vh + 100px)); opacity: 0; }
-        }
-        
-        @keyframes starMoveDiagonal {
-          0% { transform: translate(-100px, calc(100vh + 100px)); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translate(calc(100vw + 100px), -100px); opacity: 0; }
-        }
-        
-        @keyframes starMoveReverseDiagonal {
-          0% { transform: translate(calc(100vw + 100px), calc(100vh + 100px)); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translate(-100px, -100px); opacity: 0; }
-        }
-        
-        @keyframes shootingStar {
-          0% { transform: translateX(-200px) translateY(200px) rotate(45deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateX(100vw) translateY(-200px) rotate(45deg); opacity: 0; }
-        }
-        
-        @keyframes constellation {
-          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
-          50% { transform: translateY(-15px) rotate(180deg); opacity: 0.3; }
-        }
-        
-        /* Card Animations */
-        @keyframes cardSlideUp {
-          0% { transform: translateY(40px) scale(0.95); opacity: 0; }
-          100% { transform: translateY(0) scale(1); opacity: 1; }
-        }
-        
-        @keyframes cardFadeIn {
-          0% { transform: translateX(-30px) scale(0.9); opacity: 0; }
-          100% { transform: translateX(0) scale(1); opacity: 1; }
-        }
-        
-        @keyframes iconBounce {
-          0%, 100% { transform: scale(1) rotate(0deg); }
-          50% { transform: scale(1.1) rotate(5deg); }
-        }
-        
-        @keyframes trophyShine {
-          0%, 100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
-          50% { transform: scale(1.15) rotate(-5deg); filter: brightness(1.3); }
-        }
-        
-        /* Animation Classes */
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .animate-on-scroll.animate-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        .card-animate {
-          animation: cardSlideUp 0.6s ease-out;
-        }
-        
-        .card-animate:nth-child(2n) {
-          animation: cardFadeIn 0.6s ease-out;
-        }
-        
-        .icon-animate {
-          transition: all 0.3s ease;
-        }
-        
-        .icon-animate:hover {
-          animation: iconBounce 0.6s ease-in-out;
-        }
-        
-        /* Stagger delays */
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-        .stagger-5 { transition-delay: 0.5s; }
-        
-        /* Section Header */
-        .section-header {
-          position: relative;
-        }
-        
-        .section-header::after {
-          content: '';
-          position: absolute;
-          bottom: -8px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #3b82f6, #8b5cf6, #22c55e);
-          transition: width 0.6s ease;
-        }
-        
-        .section-header.animate-in::after {
-          width: 60px;
-        }
-        
-        /* Professional Card Styling */
-        .professional-card {
-          background: ${isDark ? 'rgba(30, 41, 59, 0.7)' : 'rgba(255, 255, 255, 0.7)'};
-          backdrop-filter: blur(12px);
-          border: 1px solid ${isDark ? 'rgba(148, 163, 184, 0.1)' : 'rgba(148, 163, 184, 0.2)'};
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .professional-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, ${isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'}, transparent);
-          transition: left 0.6s ease;
-        }
-        
-        .professional-card:hover::before {
-          left: 100%;
-        }
-        
-        .professional-card:hover {
-          background: ${isDark ? 'rgba(30, 41, 59, 0.9)' : 'rgba(255, 255, 255, 0.9)'};
-          transform: translateY(-6px) scale(1.02);
-          box-shadow: 0 20px 40px ${isDark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.15)'};
-        }
-        
-        .executive-card {
-          border-left: 4px solid #3b82f6;
-        }
-        
-        .ieee-card {
-          border-left: 4px solid #8b5cf6;
-        }
-        
-        .community-card {
-          border-left: 4px solid #22c55e;
-        }
-        
-        .achievement-card {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .achievement-card::after {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: radial-gradient(circle, ${isDark ? 'rgba(255, 215, 0, 0.1)' : 'rgba(255, 215, 0, 0.05)'} 0%, transparent 70%);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-        
-        .achievement-card:hover::after {
-          opacity: 1;
-        }
-        
-        .trophy-icon {
-          transition: all 0.3s ease;
-        }
-        
-        .achievement-card:hover .trophy-icon {
-          animation: trophyShine 0.8s ease-in-out;
-        }
-        
-        /* Tab Styling */
-        .tab-modern {
-          position: relative;
-          transition: all 0.3s ease;
-        }
-        
-        .tab-modern:hover {
-          transform: translateY(-2px);
-        }
-        
-        /* Badge Styling */
-        .badge-modern {
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .badge-modern::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-          transition: left 0.4s ease;
-        }
-        
-        .badge-modern:hover::before {
-          left: 100%;
-        }
-        
-        .badge-modern:hover {
-          transform: scale(1.05);
-        }
-        
-        /* Moving Stars */
-        .star {
-          position: absolute;
-          border-radius: 50%;
-        }
-        
-        .star-small {
-          width: 2px;
-          height: 2px;
-          background: ${isDark ? 'white' : 'rgba(0, 0, 0, 0.6)'};
-          box-shadow: 0 0 6px ${isDark ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.4)'};
-          animation: starMoveRight 20s linear infinite;
-        }
-        
-        .star-medium {
-          width: 3px;
-          height: 3px;
-          background: ${isDark ? 'white' : 'rgba(0, 0, 0, 0.7)'};
-          box-shadow: 0 0 8px ${isDark ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.5)'};
-          animation: starMoveLeft 25s linear infinite;
-        }
-        
-        .star-large {
-          width: 4px;
-          height: 4px;
-          background: ${isDark ? '#ffffff' : 'rgba(0, 0, 0, 0.8)'};
-          box-shadow: 0 0 12px ${isDark ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 0.6)'};
-          animation: starMoveUp 30s linear infinite;
-        }
-        
-        .star:nth-child(2n) {
-          animation: starMoveDown 18s linear infinite;
-          animation-delay: 2s;
-        }
-        
-        .star:nth-child(3n) {
-          animation: starMoveDiagonal 22s linear infinite;
-          animation-delay: 4s;
-        }
-        
-        .star:nth-child(4n) {
-          animation: starMoveReverseDiagonal 28s linear infinite;
-          animation-delay: 6s;
-        }
-        
-        .star:nth-child(5n) {
-          animation: starMoveRight 15s linear infinite;
-          animation-delay: 1s;
-        }
-        
-        .star:nth-child(6n) {
-          animation: starMoveLeft 35s linear infinite;
-          animation-delay: 8s;
-        }
-        
-        .shooting-star {
-          position: absolute;
-          width: 4px;
-          height: 2px;
-          background: linear-gradient(45deg, transparent, ${isDark ? 'white' : 'rgba(0, 0, 0, 0.8)'}, transparent);
-          border-radius: 2px;
-          animation: shootingStar 12s linear infinite;
-        }
-        
-        .shooting-star:nth-child(2n) {
-          animation-delay: 4s;
-          animation-duration: 10s;
-        }
-        
-        .shooting-star:nth-child(3n) {
-          animation-delay: 8s;
-          animation-duration: 14s;
-        }
-        
-        .constellation-effect {
-          position: absolute;
-          width: 120px;
-          height: 120px;
-          opacity: ${isDark ? '0.1' : '0.05'};
-          animation: constellation 12s ease-in-out infinite;
-        }
-      `}</style>
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.7 }}
+          className="mb-12 text-center"
+        >
+          <div className="inline-flex items-center justify-center p-4 rounded-full bg-space-900 border border-energy-violet/30 mb-6 shadow-[0_0_30px_rgba(166,74,201,0.2)]">
+            <Activity className="w-8 h-8 text-energy-violet" />
+          </div>
+          <h2 className="text-3xl md:text-5xl font-display font-light text-slate-200 tracking-wider">
+            SERVICE <span className="font-bold text-energy-violet text-glow-violet">LOGS</span>
+          </h2>
+        </motion.div>
 
-      <section 
-        ref={sectionRef}
-        id="experience" 
-        className="py-24 relative overflow-hidden"
-        style={backgroundStyle}
-      >
-        {/* Moving Star Field Background */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Small Moving Stars */}
-          {[...Array(30)].map((_, i) => (
-            <div
-              key={`star-small-${i}`}
-              className="star star-small"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 20}s`,
-                animationDuration: `${15 + Math.random() * 10}s`,
-              }}
-            />
-          ))}
-          
-          {/* Medium Moving Stars */}
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={`star-medium-${i}`}
-              className="star star-medium"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 25}s`,
-                animationDuration: `${20 + Math.random() * 10}s`,
-              }}
-            />
-          ))}
-          
-          {/* Large Moving Stars */}
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={`star-large-${i}`}
-              className="star star-large"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 30}s`,
-                animationDuration: `${25 + Math.random() * 10}s`,
-              }}
-            />
-          ))}
-          
-          {/* Shooting Stars */}
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={`shooting-star-${i}`}
-              className="shooting-star"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 12}s`,
-              }}
-            />
-          ))}
-          
-          {/* Constellation Effects */}
-          <div className="constellation-effect" style={{ top: '10%', left: '10%' }}>
-            <div className={`w-full h-full bg-gradient-to-br ${isDark ? 'from-blue-400/20 to-purple-400/20' : 'from-blue-600/10 to-purple-600/10'} rounded-full blur-xl`} />
-          </div>
-          <div className="constellation-effect" style={{ top: '60%', right: '10%', animationDelay: '6s' }}>
-            <div className={`w-full h-full bg-gradient-to-br ${isDark ? 'from-purple-400/20 to-pink-400/20' : 'from-purple-600/10 to-pink-600/10'} rounded-full blur-xl`} />
-          </div>
-          <div className="constellation-effect" style={{ top: '30%', left: '60%', animationDelay: '3s' }}>
-            <div className={`w-full h-full bg-gradient-to-br ${isDark ? 'from-green-400/20 to-cyan-400/20' : 'from-green-600/10 to-cyan-600/10'} rounded-full blur-xl`} />
+        {/* Tab Controls */}
+        <div className="flex justify-center mb-12">
+          <div className="glass-panel p-1 inline-flex rounded-lg overflow-hidden border border-space-700">
+            <button
+              onClick={() => setActiveTab('ranks')}
+              className={`flex items-center gap-2 px-6 py-3 font-display tracking-widest text-sm uppercase transition-all ${
+                activeTab === 'ranks' 
+                  ? 'bg-energy-violet/20 text-energy-violet border-b-2 border-energy-violet shadow-[inset_0_-2px_10px_rgba(166,74,201,0.2)]' 
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-space-800'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4" /> Operational Ranks
+            </button>
+            <button
+              onClick={() => setActiveTab('achievements')}
+              className={`flex items-center gap-2 px-6 py-3 font-display tracking-widest text-sm uppercase transition-all ${
+                activeTab === 'achievements' 
+                  ? 'bg-energy-gold/20 text-energy-gold border-b-2 border-energy-gold shadow-[inset_0_-2px_10px_rgba(242,169,0,0.2)]' 
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-space-800'
+              }`}
+            >
+              <Trophy className="w-4 h-4" /> Achievements
+            </button>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16 animate-on-scroll section-header">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${isDark ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-green-400' : 'bg-gradient-to-r from-blue-600 via-purple-600 to-green-600'} bg-clip-text text-transparent`}>
-              Professional Experience & Leadership
-            </h2>
-            <div className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-              A track record of leadership excellence across executive positions, 
-              IEEE activities, and community engagement, demonstrating strong organizational and strategic skills.
-            </div>
-          </div>
+        {/* Tab Content */}
+        <div className="relative min-h-[400px]">
+          <AnimatePresence mode="wait">
+            
+            {/* Experience Timeline */}
+            {activeTab === 'ranks' && (
+              <motion.div
+                key="ranks"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.4 }}
+                className="relative pl-6 md:pl-0"
+              >
+                {/* Central Timeline Line (Desktop) / Left Line (Mobile) */}
+                <div className="absolute left-[11px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-energy-violet/80 via-energy-violet/20 to-transparent transform md:-translate-x-1/2" />
 
-          <div className="animate-on-scroll stagger-1">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className={`grid w-full grid-cols-2 mb-8 ${isDark ? 'bg-slate-800/50' : 'bg-white/50'} backdrop-blur-sm`}>
-                <TabsTrigger value="leadership" className="tab-modern">Leadership Roles</TabsTrigger>
-                <TabsTrigger value="achievements" className="tab-modern">Achievements</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="leadership" className="space-y-8" key="leadership">
-                {/* Executive Leadership */}
-                <div className="space-y-6 animate-on-scroll stagger-2">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                      <Building className="h-6 w-6 text-blue-600 icon-animate" />
-                    </div>
-                    <h3 className={`text-xl font-semibold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>Executive Leadership</h3>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {executiveRoles.map((role, index) => (
-                      <Card key={index} className={`card-animate stagger-${index + 3} professional-card executive-card group`}>
-                        <CardHeader>
-                          <CardTitle className={`text-lg group-hover:text-blue-600 transition-colors ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
-                            {role.title}
-                          </CardTitle>
-                          <CardDescription className={`space-y-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                            <div className="font-medium">{role.organization}</div>
-                            <div className="flex items-center gap-2 text-sm">
-                              <Calendar className="h-3 w-3 icon-animate" />
-                              {role.period}
-                            </div>
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>{role.description}</p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
+                <div className="space-y-12">
+                  {experiences.map((exp, i) => (
+                    <div key={i} className={`relative flex flex-col md:flex-row ${i % 2 === 0 ? 'md:flex-row-reverse' : ''} justify-center items-center w-full`}>
+                      
+                      {/* Timeline Node */}
+                      <div className="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-space-900 border-2 border-energy-violet shadow-[0_0_15px_rgba(166,74,201,0.5)] transform -translate-x-1/2 z-10 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-energy-violet animate-pulse" />
+                      </div>
 
-                {/* IEEE Leadership */}
-                <div className="space-y-6 animate-on-scroll stagger-3">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                      <Users className="h-6 w-6 text-purple-600 icon-animate" />
-                    </div>
-                    <h3 className={`text-xl font-semibold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>IEEE Leadership Excellence</h3>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {ieeeRoles.map((role, index) => (
-                      <Card key={index} className={`card-animate stagger-${index + 4} professional-card ieee-card group`}>
-                        <CardHeader>
-                          <CardTitle className={`text-lg group-hover:text-purple-600 transition-colors ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
-                            {role.title}
-                          </CardTitle>
-                          <CardDescription className={`space-y-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                            <div className="font-medium">{role.organization}</div>
-                            <div className="flex items-center gap-2 text-sm">
-                              <Calendar className="h-3 w-3 icon-animate" />
-                              {role.period}
-                            </div>
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>{role.description}</p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Community Leadership */}
-                <div className="space-y-6 animate-on-scroll stagger-4">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-full">
-                      <Users className="h-6 w-6 text-green-600 icon-animate" />
-                    </div>
-                    <h3 className={`text-xl font-semibold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>Community Leadership</h3>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {communityRoles.map((role, index) => (
-                      <Card key={index} className={`card-animate stagger-${index + 5} professional-card community-card group`}>
-                        <CardHeader>
-                          <CardTitle className={`text-lg group-hover:text-green-600 transition-colors ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
-                            {role.title}
-                          </CardTitle>
-                          <CardDescription className={`space-y-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                            <div className="font-medium">{role.organization}</div>
-                            <div className="flex items-center gap-2 text-sm">
-                              <Calendar className="h-3 w-3 icon-animate" />
-                              {role.period}
-                            </div>
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>{role.description}</p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="achievements" className="space-y-8" key="achievements">
-                <div className="flex items-center gap-3 mb-8 animate-on-scroll stagger-2">
-                  <div className="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-full">
-                    <Trophy className="h-6 w-6 text-yellow-600 icon-animate" />
-                  </div>
-                  <h3 className={`text-xl font-semibold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>Recognition & Achievements</h3>
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  {achievements.map((achievement, index) => (
-                    <Card key={index} className={`card-animate stagger-${index + 3} professional-card achievement-card group`}>
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <Badge variant="outline" className={`mb-2 badge-modern ${isDark ? 'border-yellow-400/30 text-yellow-400' : 'border-yellow-600/30 text-yellow-600'}`}>
-                            {achievement.category}
-                          </Badge>
-                          <Trophy className="h-4 w-4 text-yellow-600 trophy-icon" />
+                      {/* Content Card */}
+                      <div className={`w-full md:w-5/12 ml-8 md:ml-0 ${i % 2 === 0 ? 'md:pl-12 text-left' : 'md:pr-12 md:text-right'}`}>
+                        <div className={`glass-panel p-6 border-b-2 border-t border-r border-l border-space-700 hover:border-energy-violet/50 transition-colors group ${i % 2 === 0 ? 'border-b-energy-violet' : 'border-b-energy-violet'}`}>
+                          
+                          <div className={`text-xs font-display tracking-widest text-energy-violet mb-2 ${i % 2 === 0 ? 'text-left' : 'md:text-right text-left'}`}>
+                            {exp.period}
+                          </div>
+                          
+                          <h3 className="text-xl font-bold text-slate-200 mb-1">{exp.role}</h3>
+                          <h4 className="text-sm font-display tracking-wide text-slate-400 mb-4">{exp.company}</h4>
+                          
+                          <ul className={`space-y-2 mt-4 text-sm text-slate-400 ${i % 2 === 0 ? 'text-left' : 'md:text-right text-left'}`}>
+                            {exp.points.map((point, idx) => (
+                              <li key={idx} className={`flex items-start gap-2 ${i % 2 === 0 ? 'justify-start' : 'md:justify-end justify-start'}`}>
+                                {i % 2 === 0 || window.innerWidth < 768 ? (
+                                  <ChevronRight className="w-4 h-4 text-energy-violet mt-0.5 shrink-0" />
+                                ) : null}
+                                <span>{point}</span>
+                                {i % 2 !== 0 && window.innerWidth >= 768 ? (
+                                  <ChevronRight className="w-4 h-4 text-energy-violet mt-0.5 shrink-0 rotate-180" />
+                                ) : null}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                        <CardTitle className={`text-lg group-hover:text-yellow-600 transition-colors ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
-                          {achievement.title}
-                        </CardTitle>
-                        <CardDescription className={`flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                          <Calendar className="h-3 w-3 icon-animate" />
-                          {achievement.date}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>{achievement.description}</p>
-                      </CardContent>
-                    </Card>
+                      </div>
+                      
+                      {/* Empty spacer for the other side */}
+                      <div className="hidden md:block md:w-5/12" />
+                    </div>
                   ))}
                 </div>
-              </TabsContent>
-            </Tabs>
-          </div>
+              </motion.div>
+            )}
+
+            {/* Awards Grid */}
+            {activeTab === 'achievements' && (
+              <motion.div
+                key="achievements"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                {awards.map((award, i) => (
+                  <div key={i} className="glass-panel p-6 border-t border-l border-r border-space-700 border-b-2 border-b-energy-gold group hover:-translate-y-2 transition-transform duration-300">
+                    <div className="w-12 h-12 rounded bg-energy-gold/10 border border-energy-gold/30 flex items-center justify-center mb-6 shadow-[inset_0_0_15px_rgba(242,169,0,0.2)] group-hover:bg-energy-gold/20 transition-colors">
+                      <Trophy className="w-6 h-6 text-energy-gold" />
+                    </div>
+                    
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-lg font-bold text-slate-200 leading-tight pr-4">{award.title}</h3>
+                      <span className="text-xs font-display text-energy-gold border border-energy-gold/30 px-2 py-1 rounded bg-space-900 shrink-0">
+                        {award.date}
+                      </span>
+                    </div>
+                    
+                    <p className="text-sm text-slate-400 mt-4 leading-relaxed bg-space-900/50 p-3 rounded border border-space-700">
+                      {award.description}
+                    </p>
+                  </div>
+                ))}
+              </motion.div>
+            )}
+
+          </AnimatePresence>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

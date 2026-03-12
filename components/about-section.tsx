@@ -1,199 +1,164 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { GraduationCap, Building, Target, Calendar } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { GraduationCap, Building, Target, Server } from 'lucide-react';
 
 export function AboutSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   const education = [
     {
       degree: 'BSc. Engineering (Hons.) in Computer Engineering',
       institution: 'University of Jaffna',
       period: 'Feb 2023 - Present',
-      icon: <GraduationCap className="h-5 w-5" />,
     },
     {
       degree: 'BSc. in Information Technology & Cybersecurity',
       institution: 'PSB University Cambodia',
       period: 'Sep 2023 - Present',
-      icon: <GraduationCap className="h-5 w-5" />,
     },
   ];
 
-  const currentRoles = [
+  const roles = [
     {
       title: 'Executive Director',
-      organization: 'Nalanda Global Institute of Education (PVT) Ltd.',
+      org: 'Nalanda Global Institute of Education (PVT) Ltd.',
       period: 'Mar 2025 - Present',
-      icon: <Building className="h-5 w-5" />,
     },
     {
       title: 'Software Engineer',
-      organization: 'Quantara IT Solutions (PVT) Ltd.',
+      org: 'Quantara IT Solutions (PVT) Ltd.',
       period: 'Aug 2025 - Present',
-      icon: <Building className="h-5 w-5" />,
     },
   ];
 
   return (
-    <>
-      <style jsx>{`
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .animate-on-scroll.animate-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        
-        .bounce-in {
-          animation: bounceIn 0.6s ease-out;
-        }
-        
-        @keyframes bounceIn {
-          0% { transform: scale(0.3); opacity: 0; }
-          50% { transform: scale(1.05); }
-          70% { transform: scale(0.9); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
-
-      <section ref={sectionRef} id="about" className="py-24 bg-muted/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              About Me
+    <section id="about" className="py-32 relative z-10" ref={containerRef}>
+      <div className="container mx-auto px-4 max-w-6xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.7 }}
+          className="mb-16 flex items-center justify-between border-b border-space-700 pb-4"
+        >
+          <div>
+            <h2 className="text-3xl md:text-5xl font-display font-light text-slate-200 tracking-wider">
+              DOSSIER <span className="text-energy-blue font-bold">///</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A passionate technologist at the intersection of cybersecurity and artificial intelligence, 
-              dedicated to creating secure and innovative solutions for the digital future.
-            </p>
+            <p className="text-slate-500 font-display mt-2 tracking-widest uppercase text-sm">Subject: Avidu Witharana</p>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {/* Education */}
-            <Card className="animate-on-scroll stagger-1 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 group-hover:text-blue-600 transition-colors">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full group-hover:scale-110 transition-transform">
-                    <GraduationCap className="h-5 w-5 text-blue-600" />
-                  </div>
-                  Education
-                </CardTitle>
-                <CardDescription>
-                  Currently pursuing dual degrees in Computer Engineering and Cybersecurity
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {education.map((edu, index) => (
-                  <div key={index} className="border-l-2 border-blue-200 pl-4 hover:border-blue-400 transition-all duration-200 group/item">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="group-hover/item:scale-110 transition-transform">
-                        {edu.icon}
-                      </div>
-                      <h3 className="font-semibold group-hover/item:text-blue-600 transition-colors">{edu.degree}</h3>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{edu.institution}</p>
-                    <div className="flex items-center gap-1 mt-1">
-                      <Calendar className="h-3 w-3 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">{edu.period}</span>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Current Roles */}
-            <Card className="animate-on-scroll stagger-2 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 group-hover:text-purple-600 transition-colors">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-full group-hover:scale-110 transition-transform">
-                    <Building className="h-5 w-5 text-purple-600" />
-                  </div>
-                  Current Roles
-                </CardTitle>
-                <CardDescription>
-                  Leading professional positions in education and technology
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {currentRoles.map((role, index) => (
-                  <div key={index} className="border-l-2 border-purple-200 pl-4 hover:border-purple-400 transition-all duration-200 group/item">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="group-hover/item:scale-110 transition-transform">
-                        {role.icon}
-                      </div>
-                      <h3 className="font-semibold group-hover/item:text-purple-600 transition-colors">{role.title}</h3>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{role.organization}</p>
-                    <div className="flex items-center gap-1 mt-1">
-                      <Calendar className="h-3 w-3 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">{role.period}</span>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+          <div className="hidden md:flex items-center gap-2 text-energy-violet/60 font-display text-sm tracking-widest border border-energy-violet/20 px-4 py-2 rounded glass-panel-light">
+            <span className="w-2 h-2 rounded-full bg-energy-violet animate-pulse" />
+            Classified Info
           </div>
+        </motion.div>
 
-          {/* Mission Statement */}
-          <Card className="animate-on-scroll bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 border-0 hover:shadow-2xl hover:scale-105 transform group transition-all duration-300" style={{ transform: 'translateY(30px)', transitionDelay: '0.6s' }}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-center justify-center group-hover:scale-110 transition-transform">
-                <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-full animate-pulse">
-                  <Target className="h-5 w-5 text-orange-600" />
-                </div>
-                Mission Statement
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-lg text-center font-medium bg-gradient-to-r from-blue-600 via-purple-600 to-orange-600 bg-clip-text text-transparent">
-                "Currently working on combining AI and CySec for a secure cyberspace"
+        <div className="grid lg:grid-cols-12 gap-8">
+          
+          {/* Left Column - Biography & Mission */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-4 space-y-8"
+          >
+            <div className="glass-panel p-6 border-l-4 border-l-energy-blue hover:border-l-energy-teal transition-colors">
+              <div className="flex items-center gap-3 mb-4">
+                <Target className="text-energy-blue w-6 h-6" />
+                <h3 className="text-xl font-display tracking-wider text-slate-200 uppercase">Primary Directive</h3>
+              </div>
+              <p className="text-slate-400 leading-relaxed font-sans text-sm">
+                "Currently working on combining AI and CySec for a secure cyberspace."
               </p>
-              <div className="flex flex-wrap justify-center gap-2 mt-6">
-                {['AI Innovation', 'Cybersecurity', 'Leadership', 'Research', 'Open Source'].map((badge, index) => (
-                  <Badge 
-                    key={badge} 
-                    variant="secondary" 
-                    className="hover:scale-110 transition-transform cursor-default animate-bounce"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    {badge}
-                  </Badge>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {['AI Innovation', 'Cybersecurity', 'Research', 'Leadership'].map((tag) => (
+                  <span key={tag} className="text-xs font-display tracking-wider text-energy-teal bg-energy-teal/10 border border-energy-teal/20 px-2 py-1 rounded">
+                    {tag}
+                  </span>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+
+            <div className="bg-space-800/50 backdrop-blur border border-space-700 p-6 rounded relative overflow-hidden group">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-energy-violet to-transparent" />
+              <p className="text-slate-400 leading-relaxed font-sans text-sm relative z-10">
+                A passionate technologist at the intersection of cybersecurity and artificial intelligence, 
+                dedicated to creating secure and innovative solutions for the digital future. Dual-degree 
+                undergraduate managing multiple technical and leadership roles.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Right Column - Data Grid (Education & Roles) */}
+          <div className="lg:col-span-8 grid md:grid-cols-2 gap-6">
+            
+            {/* Education Data Block */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="glass-panel p-6 relative group"
+            >
+              <div className="absolute top-4 right-4 text-space-700 group-hover:text-energy-teal/20 transition-colors">
+                <GraduationCap className="w-12 h-12" />
+              </div>
+              <h3 className="text-lg font-display tracking-widest text-slate-300 uppercase mb-6 flex items-center gap-2">
+                <span className="text-energy-teal">01.</span> Academic Records
+              </h3>
+              
+              <div className="space-y-6 relative z-10">
+                {education.map((edu, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="flex flex-col items-center">
+                      <div className="w-2 h-2 rounded-full bg-energy-teal shadow-[0_0_8px_theme(colors.energy.teal)]" />
+                      {i !== education.length - 1 && <div className="w-px h-full bg-space-700 my-1" />}
+                    </div>
+                    <div className="pb-4">
+                      <p className="text-xs font-display text-slate-500 mb-1">{edu.period}</p>
+                      <h4 className="text-sm font-bold text-slate-200 leading-tight">{edu.degree}</h4>
+                      <p className="text-sm text-slate-400 mt-1">{edu.institution}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Current Roles Data Block */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="glass-panel p-6 relative group"
+            >
+              <div className="absolute top-4 right-4 text-space-700 group-hover:text-energy-violet/20 transition-colors">
+                <Building className="w-12 h-12" />
+              </div>
+              <h3 className="text-lg font-display tracking-widest text-slate-300 uppercase mb-6 flex items-center gap-2">
+                <span className="text-energy-violet">02.</span> Active Postings
+              </h3>
+              
+              <div className="space-y-6 relative z-10">
+                {roles.map((role, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="flex flex-col items-center">
+                      <div className="w-2 h-2 rounded-full border border-energy-violet bg-space-900" />
+                      {i !== roles.length - 1 && <div className="w-px h-full border-l border-dashed border-space-700 my-1" />}
+                    </div>
+                    <div className="pb-4">
+                      <p className="text-xs font-display text-slate-500 mb-1">{role.period}</p>
+                      <h4 className="text-sm font-bold text-slate-200 leading-tight">{role.title}</h4>
+                      <p className="text-sm text-slate-400 mt-1">{role.org}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
