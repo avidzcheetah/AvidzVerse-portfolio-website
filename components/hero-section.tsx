@@ -57,14 +57,14 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-2">
-                <span className="text-white">AVIDU</span>
+                <span className="text-white">{heroData.title}</span>
                 <br />
                 <span className="bg-gradient-to-r from-energy-blue via-energy-teal to-energy-violet bg-clip-text text-transparent text-glow">
-                  WITHARANA
+                  {heroData.subtitle}
                 </span>
               </h1>
               <h2 className="text-xl md:text-2xl text-slate-400 font-sans tracking-wide mt-4">
-                Computer Engineering Undergraduate
+                {heroData.tagline}
               </h2>
             </motion.div>
 
@@ -74,7 +74,7 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-lg text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
-              Cybersecurity enthusiast with a passion for astronomy and computer engineering. Actively contributing to various organizations, showcasing a proactive approach to learning and implementing cybersecurity solutions.
+              {heroData.description}
             </motion.p>
 
             <motion.div
