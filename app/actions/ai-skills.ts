@@ -40,7 +40,9 @@ ${Array.isArray(repos) ? repos.map((r: any) => `- ${r.name}: ${r.description || 
       githubText = 'GitHub data not available via public API.';
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // We'll try common model versions to avoid 404 errors in different regions
+    const modelNames = ['gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-1.0-pro'];
+    let model = genAI.getGenerativeModel({ model: modelNames[0] });
 
     const prompt = `
 You are an expert technical resume analyzer and portfolio developer. 
@@ -76,7 +78,27 @@ ${githubText}
 Only return the JSON. No preamble.
 `;
 
-    const result = await model.generateContent(prompt);
+    let result;
+    let success = false;
+    let lastError = '';
+
+    for (const modelName of modelNames) {
+      try {
+        const currentModel = genAI.getGenerativeModel({ model: modelName });
+        result = await currentModel.generateContent(prompt);
+        success = true;
+        break;
+      } catch (e: any) {
+        lastError = e.message;
+        console.warn(`Model ${modelName} failed: ${e.message}. Trying next...`);
+        continue;
+      }
+    }
+
+    if (!success || !result) {
+      throw new Error(`AI Generation failed on all attempted models. Last error: ${lastError}`);
+    }
+
     const response = await result.response;
     let text = response.text();
     
