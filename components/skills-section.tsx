@@ -117,7 +117,11 @@ export function SkillsSection() {
           <h2 className="text-3xl md:text-5xl font-display font-light text-slate-200 tracking-widest uppercase">
             Tech <span className="font-bold">Matrix</span>
           </h2>
-          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-slate-500 to-transparent mx-auto mt-6" />
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="w-1.5 h-1.5 rounded-full bg-energy-blue animate-pulse" />
+            <span className="text-[10px] font-display tracking-[0.3em] text-energy-blue/60 uppercase">AI Neural Analysis Active</span>
+          </div>
+          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-slate-500 to-transparent mx-auto mt-4" />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 relative">

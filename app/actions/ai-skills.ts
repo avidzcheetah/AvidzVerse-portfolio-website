@@ -54,20 +54,20 @@ ${JSON.stringify(missions, null, 2)}
 ${githubText}
 
 ### INSTRUCTIONS:
-1. Identify the core domains (e.g., "Cybersecurity & Web", "Machine Learning & AI", "Programming Languages", "Web Development", "Embedded Systems & IoT", "Tools & Frameworks").
-2. For each domain, pick appropriate icons: Shield, Network, Cpu, Database, Code2, Layout, Smartphone, or Terminal.
-3. Assign "Node" levels (0-100) based on the complexity and frequency of use in the missions.
-4. "Embedded Systems & IoT" MUST be included if there are relevant projects (like Arduino/Automation).
-5. Output EXACTLY a JSON structure following the SkillsData interface:
+1. **Dynamic Analysis**: Analyze the missions and GitHub data to extract EXACT tool names and skill domains. DO NOT use a fixed list of skills. Find what is actually used (e.g., if "Next.js" is in techStack, use it).
+2. **Proficiency Filtering**: Only include skills where the developer demonstrates high proficiency (level >= 60%). Ignore minor or peripheral tools.
+3. **Core Domains**: Organize skills into logical domains like "Cybersecurity", "AI & Data Science", "Web Systems", etc. Choose the most fitting icons.
+4. **Embedded Systems**: Ensure "Embedded Systems & IoT" is present if there is evidence of hardware/automation work.
+5. **Output Structure**: Return EXACTLY a JSON structure following the SkillsData interface.
 {
   "categories_json": [
     {
       "domain": "Domain Name",
       "iconName": "IconString",
       "color": "border-energy-blue", // Choose from: border-energy-blue, border-energy-teal, border-energy-violet, border-energy-gold, border-slate-400
-      "textColor": "text-energy-blue", // MUST match the color choice (e.g. text-energy-blue for border-energy-blue)
+      "textColor": "text-energy-blue",
       "nodes": [
-        { "name": "Skill Name", "level": 85 }
+        { "name": "Dynamic Skill Name", "level": 85 }
       ]
     }
   ]
