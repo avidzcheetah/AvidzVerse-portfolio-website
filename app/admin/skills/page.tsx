@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Code2, Save, AlertCircle, CheckCircle2, Plus, Trash2 } from 'lucide-react';
+import { Code2, Save, AlertCircle, CheckCircle2, Plus, Trash2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { getSkillsData, updateSkillsData, SkillsData, SkillCategory, SkillNode } from '@/app/actions/skills';
+import { generateSkillsWithAI } from '@/app/actions/ai-skills';
+import { toast } from 'sonner';
 
 export default function AdminSkills() {
   const [formData, setFormData] = useState<SkillsData>({
@@ -13,6 +15,7 @@ export default function AdminSkills() {
   
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
   const [statusText, setStatusText] = useState('');
   const [statusType, setStatusType] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -89,6 +92,27 @@ export default function AdminSkills() {
     setTimeout(() => setStatusType('idle'), 3000);
   };
 
+  const handleAIGenerate = async () => {
+    setIsGeneratingAI(true);
+    const result = await generateSkillsWithAI();
+    
+    if (result.success) {
+      if (result.data) {
+        setFormData(result.data);
+      }
+      toast.success('Matrix dynamically updated via AI neural link.');
+      setStatusType('success');
+      setStatusText('AI successfully synchronized the Tech Matrix.');
+    } else {
+      toast.error(`Neural Link Failure: ${result.error}`);
+      setStatusType('error');
+      setStatusText(`AI Error: ${result.error}`);
+    }
+    
+    setIsGeneratingAI(false);
+    setTimeout(() => setStatusType('idle'), 5000);
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-12">
@@ -113,9 +137,24 @@ export default function AdminSkills() {
           <p className="text-xs font-display text-slate-400 uppercase tracking-widest max-w-xl">
             Configure skill domains and individual nodes. Select an icon string (e.g. Shield, Terminal, Cpu, Network) to render the corresponding lucide-react icon.
           </p>
-          <Button type="button" onClick={addCategory} className="bg-energy-gold/10 hover:bg-energy-gold/20 text-energy-gold border border-energy-gold/50">
-            <Plus className="w-4 h-4 mr-2" /> Add Category
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              type="button" 
+              onClick={handleAIGenerate} 
+              disabled={isGeneratingAI}
+              className="bg-energy-teal/10 hover:bg-energy-teal/20 text-energy-teal border border-energy-teal/50"
+            >
+              {isGeneratingAI ? (
+                <div className="w-4 h-4 border-2 border-energy-teal border-t-transparent rounded-full animate-spin mr-2" />
+              ) : (
+                <Sparkles className="w-4 h-4 mr-2" />
+              )}
+              AI Generate
+            </Button>
+            <Button type="button" onClick={addCategory} className="bg-energy-gold/10 hover:bg-energy-gold/20 text-energy-gold border border-energy-gold/50">
+              <Plus className="w-4 h-4 mr-2" /> Add Category
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

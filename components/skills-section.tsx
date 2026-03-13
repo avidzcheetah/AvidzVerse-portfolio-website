@@ -162,7 +162,7 @@ export function SkillsSection() {
                       </div>
                       <div className="h-1.5 w-full bg-space-900 rounded-full overflow-hidden border border-space-700">
                         <motion.div 
-                          className={`h-full ${domain.color.replace('border-', 'bg-')} shadow-[0_0_10px_currentColor]`}
+                          className={`h-full ${domain.color.replace('border-', 'bg-')} ${domain.textColor} shadow-[0_0_10px_currentColor]`}
                           initial={{ width: 0 }}
                           animate={isInView ? { width: `${node.level}%` } : { width: 0 }}
                           transition={{ duration: 1, delay: 0.5 + (i * 0.1), ease: "easeOut" }}
