@@ -67,7 +67,7 @@ ${githubText}
     {
       "domain": "Domain Name",
       "iconName": "IconString",
-      "color": "border-energy-blue", // Choose from: border-energy-blue, border-energy-teal, border-energy-violet, border-energy-gold, border-slate-400
+      "color": "border-energy-blue", // Choose from: border-energy-blue, border-energy-teal, border-energy-violet, border-energy-gold
       "textColor": "text-energy-blue",
       "nodes": [
         { "name": "Dynamic Skill Name", "level": 85 }

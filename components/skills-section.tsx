@@ -2,8 +2,9 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Terminal, Shield, Cpu, Network, Code2, Database, Layout, Smartphone } from 'lucide-react';
-import { getSkillsData, SkillsData } from '@/app/actions/skills';
+import { Terminal, Shield, Cpu, Network, Code2, Database, Layout, Smartphone, ChevronRight, X } from 'lucide-react';
+import { getSkillsData, SkillsData, SkillCategory } from '@/app/actions/skills';
+import * as Dialog from '@radix-ui/react-dialog';
 
 export function SkillsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -58,8 +59,8 @@ export function SkillsSection() {
       {
         domain: 'Embedded Systems & IoT',
         iconName: 'Cpu',
-        color: 'border-slate-400',
-        textColor: 'text-slate-400',
+        color: 'border-energy-blue',
+        textColor: 'text-energy-blue',
         nodes: [
           { name: 'Arduino Prog.', level: 88 },
           { name: 'Automation', level: 82 },
@@ -104,6 +105,8 @@ export function SkillsSection() {
     }
   };
 
+  const [selectedCategory, setSelectedCategory] = useState<SkillCategory | null>(null);
+
   return (
     <section id="skills" className="py-24 relative z-10" ref={containerRef}>
       <div className="container mx-auto px-4 max-w-6xl">
@@ -138,13 +141,18 @@ export function SkillsSection() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
-              className={`glass-panel p-6 sm:p-8 border-t-2 ${domain.color} relative overflow-hidden group`}
+              className={`glass-panel p-6 sm:p-8 border-t-2 ${domain.color} relative overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:-translate-y-1`}
+              onClick={() => setSelectedCategory(domain)}
             >
+              <div className="absolute top-4 right-4 text-slate-600 group-hover:text-energy-blue transition-colors">
+                <ChevronRight className="w-5 h-5" />
+              </div>
+
               {/* Subtle background glow on hover */}
-              <div className="absolute inset-0 bg-space-800/0 group-hover:bg-space-800/50 transition-colors duration-500" />
+              <div className="absolute inset-0 bg-space-800/0 group-hover:bg-space-800/40 transition-colors duration-500" />
               
               <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-8">
+                <div className="flex items-center gap-3 mb-8 pr-8">
                   <div className={`p-2 rounded bg-space-900 border ${domain.color} ${domain.textColor}`}>
                     {renderIcon(domain.iconName)}
                   </div>
@@ -154,7 +162,7 @@ export function SkillsSection() {
                 </div>
 
                 <div className="space-y-6">
-                  {domain.nodes.map((node, i) => (
+                  {domain.nodes.slice(0, 5).map((node, i) => (
                     <div key={i} className="group/node">
                       <div className="flex justify-between items-end mb-2">
                         <span className="text-sm font-sans text-slate-400 group-hover/node:text-slate-200 transition-colors">
@@ -174,11 +182,75 @@ export function SkillsSection() {
                       </div>
                     </div>
                   ))}
+                  {domain.nodes.length > 5 && (
+                    <div className="pt-4 border-t border-space-700/50">
+                      <p className="text-[10px] font-display uppercase tracking-widest text-slate-500 group-hover:text-energy-blue transition-colors">
+                        + {domain.nodes.length - 5} More Skills Detected
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Neural Detail Popup */}
+        <Dialog.Root open={!!selectedCategory} onOpenChange={(open) => !open && setSelectedCategory(null)}>
+          <Dialog.Portal>
+            <Dialog.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] animate-in fade-in duration-300" />
+            <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-2xl bg-space-900 border border-space-700 rounded-xl p-6 md:p-10 z-[101] shadow-[0_0_50px_rgba(0,0,0,0.8)] animate-in zoom-in-95 duration-300 outline-none">
+              {selectedCategory && (
+                <>
+                  <div className="flex justify-between items-start mb-10">
+                    <div className="flex items-center gap-4">
+                      <div className={`p-3 rounded bg-space-800 border ${selectedCategory.color} ${selectedCategory.textColor} animate-pulse`}>
+                        {renderIcon(selectedCategory.iconName)}
+                      </div>
+                      <div>
+                        <Dialog.Title className="text-xl md:text-2xl font-display font-bold tracking-[0.2em] text-slate-200 uppercase">
+                          {selectedCategory.domain}
+                        </Dialog.Title>
+                        <p className="text-[10px] font-display text-energy-blue/60 tracking-widest uppercase mt-1">Full Neural Node Analysis</p>
+                      </div>
+                    </div>
+                    <Dialog.Close asChild>
+                      <button className="p-2 text-slate-500 hover:text-white transition-colors">
+                        <X className="w-6 h-6" />
+                      </button>
+                    </Dialog.Close>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-x-8 gap-y-8 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                    {selectedCategory.nodes.map((node, i) => (
+                      <div key={i} className="group/node">
+                        <div className="flex justify-between items-end mb-2">
+                          <span className="text-sm font-sans text-slate-300">
+                            {node.name}
+                          </span>
+                          <span className={`text-xs font-display tracking-wider ${selectedCategory.textColor}`}>
+                            {node.level}%
+                          </span>
+                        </div>
+                        <div className="h-1.5 w-full bg-space-800 rounded-full overflow-hidden border border-space-700">
+                          <div 
+                            className={`h-full ${selectedCategory.color.replace('border-', 'bg-')} ${selectedCategory.textColor} shadow-[0_0_10px_currentColor]`}
+                            style={{ width: `${node.level}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-12 pt-6 border-t border-space-700 flex justify-between items-center text-[10px] font-display tracking-widest text-slate-500 uppercase">
+                    <span>AvidzVerse.Neural.Core_v2.01</span>
+                    <span className="text-energy-blue/40">Encryption Active</span>
+                  </div>
+                </>
+              )}
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
       </div>
     </section>
   );

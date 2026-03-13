@@ -200,7 +200,6 @@ export default function AdminSkills() {
                       <option value="energy-teal">Energy Teal</option>
                       <option value="energy-violet">Energy Violet</option>
                       <option value="energy-gold">Energy Gold</option>
-                      <option value="slate-400">Neutral Gray</option>
                     </select>
                   </div>
                 </div>
