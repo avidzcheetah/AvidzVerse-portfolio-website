@@ -139,7 +139,7 @@ async function main() {
     projects_json: [
         {
           title: 'JamHub',
-          category: 'web',
+          category: ['web'],
           description: 'Real-time Collaborative Music Platform.',
           longDescription: 'Developed a web platform that enables real-time collaborative music sessions where multiple users can create or join jam rooms and play virtual instruments together with low latency audio interaction using WebAudio, WebSockets, TypeScript, and modern web technologies.',
           techStack: ['TypeScript', 'WebAudio', 'WebSockets', 'React'],
@@ -150,7 +150,7 @@ async function main() {
         },
         {
           title: 'ML Intrusion Detection System',
-          category: 'ai',
+          category: ['ai', 'cyber'],
           description: 'Real-time Machine Learning Intrusion Detection System.',
           longDescription: 'Developed a real-time network intrusion detection system that combines Supervised (Random Forest) and Unsupervised (Autoencoder) machine learning to detect both known and zero-day attacks. Features live packet capture, real-time classification, and explainable AI visualization.',
           techStack: ['Python', 'Random Forest', 'Autoencoder', 'Network Security'],
@@ -161,7 +161,7 @@ async function main() {
         },
         {
           title: 'EngNext',
-          category: 'web',
+          category: ['web'],
           description: 'Career Platform connecting engineering graduates with companies.',
           longDescription: 'Developed a platform connecting engineering graduates with companies, enabling profile creation, job applications, and recruitment management through student, company, and admin dashboards for streamlined hiring.',
           techStack: ['Next.js', 'React', 'TypeScript', 'Node.js'],
@@ -172,7 +172,7 @@ async function main() {
         },
         {
           title: 'AvidzVerse Portfolio',
-          category: 'web',
+          category: ['web'],
           description: 'Modern personal portfolio website.',
           longDescription: 'Developed a modern personal portfolio website using React, TypeScript, HTML, and CSS to present bio, skills, and project showcase with a responsive, mobile friendly interface, fast load times, an integrated contact form, and direct links to GitHub, LinkedIn, and other social profiles.',
           techStack: ['React', 'TypeScript', 'HTML', 'CSS', 'Tailwind'],
@@ -183,7 +183,7 @@ async function main() {
         },
         {
           title: 'Lab Rescheduling System',
-          category: 'web',
+          category: ['web'],
           description: 'Web-based lab rescheduling system for the Faculty of Engineering.',
           longDescription: 'Developed a web-based lab rescheduling system for the Faculty of Engineering, University of Jaffna with request and approval workflows, automated email notifications, real time tracking, attendance logging, and role-based dashboards.',
           techStack: ['React.js', 'Next.js', 'PHP', 'MySQL', 'Tailwind CSS', 'EmailJS'],
@@ -194,7 +194,7 @@ async function main() {
         },
         {
           title: 'Mew',
-          category: 'ai',
+          category: ['ai'],
           description: 'Real-time AI Chatbot integrating OpenAI and Gemini.',
           longDescription: 'Developed Mew, a real time AI chatbot built with React that integrates OpenAI ChatGPT and Google Gemini AI, with message streaming, auto resizable input, auto scrolling, Markdown formatting, dark mode, and loading indicators.',
           techStack: ['React', 'JavaScript', 'CSS', 'OpenAI API', 'Gemini API'],
@@ -205,7 +205,7 @@ async function main() {
         },
         {
           title: 'Crawler',
-          category: 'cyber',
+          category: ['cyber'],
           description: 'Bash Web Crawler and Vulnerability Checker.',
           longDescription: 'Developed a Bash script to crawl webpages, extract key content such as headings, paragraphs, and links, and detect security issues including insecure forms, external script loading, and missing Content Security Policies.',
           techStack: ['Bash', 'Linux', 'Web Security'],
@@ -216,7 +216,7 @@ async function main() {
         },
         {
           title: 'RepoSpector',
-          category: 'cyber',
+          category: ['cyber'],
           description: 'GitHub Repository Analysis Tool.',
           longDescription: 'Developed a Python based tool using the GitHub API to analyze repositories by reviewing documentation, open issues, pull requests, dependencies, security, and licensing, with automated issue creation for critical problems.',
           techStack: ['Python', 'GitHub API', 'JSON', 'Automation'],

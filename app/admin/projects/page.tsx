@@ -39,13 +39,29 @@ export default function AdminProjects() {
     handleProjectChange(index, 'techStack', techArray);
   };
 
+  const handleCategoryToggle = (index: number, cat: ProjectType) => {
+    const project = formData.projects_json[index];
+    const currentCategories = Array.isArray(project.category) 
+      ? project.category 
+      : [project.category as unknown as ProjectType].filter(Boolean);
+    
+    let newCategories: ProjectType[];
+    if (currentCategories.includes(cat)) {
+      newCategories = currentCategories.filter(c => c !== cat);
+      if (newCategories.length === 0) newCategories = [cat]; // Prevent empty category
+    } else {
+      newCategories = [...currentCategories, cat];
+    }
+    handleProjectChange(index, 'category', newCategories);
+  };
+
   const addProject = () => {
     setFormData(prev => ({
       ...prev,
       projects_json: [
         { 
           title: '', 
-          category: 'web', 
+          category: ['web'], 
           description: '', 
           longDescription: '', 
           techStack: [], 
@@ -138,16 +154,31 @@ export default function AdminProjects() {
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-[10px] font-display uppercase tracking-widest text-slate-500 mb-1 block">Category</label>
-                      <select 
-                        value={project.category} 
-                        onChange={(e) => handleProjectChange(index, 'category', e.target.value as ProjectType)} 
-                        className="w-full h-9 bg-space-900 border border-space-700 text-slate-200 rounded px-3 text-sm"
-                      >
-                        <option value="web">Web System</option>
-                        <option value="cyber">Cyber Sec</option>
-                        <option value="ai">AI Model</option>
-                      </select>
+                      <label className="text-[10px] font-display uppercase tracking-widest text-slate-500 mb-2 block">Categories</label>
+                      <div className="flex flex-wrap gap-2">
+                        {(['web', 'cyber', 'ai'] as ProjectType[]).map(cat => {
+                          const currentCategories = Array.isArray(project.category) 
+                            ? project.category 
+                            : [project.category as unknown as ProjectType].filter(Boolean);
+                          const isSelected = currentCategories.includes(cat);
+                          const labels: Record<string, string> = { web: 'Web', cyber: 'Cyber', ai: 'AI' };
+                          
+                          return (
+                            <button
+                              key={cat}
+                              type="button"
+                              onClick={() => handleCategoryToggle(index, cat)}
+                              className={`text-xs font-display tracking-widest uppercase px-3 py-1.5 rounded transition-colors ${
+                                isSelected 
+                                  ? 'bg-energy-blue/20 text-energy-blue border border-energy-blue/50 shadow-[0_0_10px_rgba(102,252,241,0.2)]' 
+                                  : 'bg-space-900 text-slate-400 border border-space-700 hover:border-slate-500'
+                              }`}
+                            >
+                              {labels[cat as string]}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                     <div>
                       <label className="text-[10px] font-display uppercase tracking-widest text-slate-500 mb-1 block">Theme Color</label>

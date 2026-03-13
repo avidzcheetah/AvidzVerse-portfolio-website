@@ -7,7 +7,7 @@ export type ProjectType = 'all' | 'cyber' | 'ai' | 'web';
 
 export interface ProjectItem {
   title: string;
-  category: ProjectType;
+  category: ProjectType[];
   description: string;
   longDescription: string;
   techStack: string[];
