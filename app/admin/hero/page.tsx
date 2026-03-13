@@ -13,6 +13,10 @@ export default function AdminHero() {
     subtitle: '',
     tagline: '',
     description: '',
+    email: '',
+    github_url: '',
+    linkedin_url: '',
+    cv_url: '',
   });
   
   const [isLoading, setIsLoading] = useState(true);
@@ -132,6 +136,57 @@ export default function AdminHero() {
                 required
                 className="bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 rounded-none min-h-[160px] resize-none"
               />
+            </div>
+          </div>
+
+          <div className="md:col-span-2 space-y-4 pt-4 border-t border-space-700">
+            <h3 className="font-display tracking-widest text-slate-300 uppercase text-sm border-b border-space-700 pb-2">Comms & Social Links</h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-display tracking-widest text-slate-500 uppercase">Primary Email</label>
+                <Input 
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 rounded-none h-12"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-xs font-display tracking-widest text-slate-500 uppercase">GitHub URL</label>
+                <Input 
+                  name="github_url"
+                  value={formData.github_url}
+                  onChange={handleChange}
+                  required
+                  className="bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 rounded-none h-12"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-display tracking-widest text-slate-500 uppercase">LinkedIn URL</label>
+                <Input 
+                  name="linkedin_url"
+                  value={formData.linkedin_url}
+                  onChange={handleChange}
+                  required
+                  className="bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 rounded-none h-12"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-display tracking-widest text-slate-500 uppercase">CV Download URL</label>
+                <Input 
+                  name="cv_url"
+                  value={formData.cv_url}
+                  onChange={handleChange}
+                  required
+                  className="bg-space-900 border-space-700 focus:border-energy-teal text-slate-200 rounded-none h-12"
+                />
+              </div>
             </div>
           </div>
 

@@ -1,8 +1,20 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, ExternalLink } from 'lucide-react';
+import { getHeroData, HeroData } from '@/app/actions/hero';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await getHeroData();
+      if (data) setHeroData(data);
+    }
+    loadData();
+  }, []);
 
   return (
     <footer className="relative border-t border-space-700 bg-space-900 overflow-hidden z-10 p-4">
@@ -30,21 +42,27 @@ export function Footer() {
 
           {/* Links */}
           <div className="flex justify-center gap-6">
-            <a href="https://github.com/avidzcheetah" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-energy-blue transition-colors group">
-              <div className="p-2 rounded bg-space-800 border border-space-700 group-hover:border-energy-blue/50 group-hover:bg-energy-blue/10 transition-all">
-                <Github className="w-5 h-5" />
-              </div>
-            </a>
-            <a href="https://linkedin.com/in/avidz" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-energy-blue transition-colors group">
-              <div className="p-2 rounded bg-space-800 border border-space-700 group-hover:border-energy-blue/50 group-hover:bg-energy-blue/10 transition-all">
-                <Linkedin className="w-5 h-5" />
-              </div>
-            </a>
-            <a href="https://flowcv.me/avidz" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-energy-blue transition-colors group">
-              <div className="p-2 rounded bg-space-800 border border-space-700 group-hover:border-energy-blue/50 group-hover:bg-energy-blue/10 transition-all">
-                <ExternalLink className="w-5 h-5" />
-              </div>
-            </a>
+            {heroData?.github_url && (
+              <a href={heroData.github_url} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-energy-blue transition-colors group">
+                <div className="p-2 rounded bg-space-800 border border-space-700 group-hover:border-energy-blue/50 group-hover:bg-energy-blue/10 transition-all">
+                  <Github className="w-5 h-5" />
+                </div>
+              </a>
+            )}
+            {heroData?.linkedin_url && (
+              <a href={heroData.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-energy-blue transition-colors group">
+                <div className="p-2 rounded bg-space-800 border border-space-700 group-hover:border-energy-blue/50 group-hover:bg-energy-blue/10 transition-all">
+                  <Linkedin className="w-5 h-5" />
+                </div>
+              </a>
+            )}
+            {heroData?.cv_url && (
+              <a href={heroData.cv_url} target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-energy-blue transition-colors group">
+                <div className="p-2 rounded bg-space-800 border border-space-700 group-hover:border-energy-blue/50 group-hover:bg-energy-blue/10 transition-all">
+                  <ExternalLink className="w-5 h-5" />
+                </div>
+              </a>
+            )}
           </div>
 
           {/* Copyright */}

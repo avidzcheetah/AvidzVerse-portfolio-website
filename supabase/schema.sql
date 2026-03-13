@@ -7,17 +7,25 @@ CREATE TABLE public.hero_section (
   title TEXT NOT NULL DEFAULT 'AVIDU',
   subtitle TEXT NOT NULL DEFAULT 'WITHARANA',
   tagline TEXT NOT NULL DEFAULT 'Computer Engineering Undergraduate',
-  description TEXT NOT NULL DEFAULT 'Cybersecurity enthusiast with a passion for astronomy...',
+  description TEXT NOT NULL DEFAULT 'Cybersecurity enthusiast...',
+  email TEXT NOT NULL DEFAULT 'avidu.witharan@gmail.com',
+  github_url TEXT NOT NULL DEFAULT 'https://github.com/avidzcheetah',
+  linkedin_url TEXT NOT NULL DEFAULT 'https://linkedin.com/in/avidz',
+  cv_url TEXT NOT NULL DEFAULT 'https://drive.google.com/uc?export=download&id=1YoLxQiwcBcME2xCFSWnE629HFxcXoSQB',
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
 -- Insert initial default row
-INSERT INTO public.hero_section (title, subtitle, tagline, description) 
+INSERT INTO public.hero_section (title, subtitle, tagline, description, email, github_url, linkedin_url, cv_url) 
 VALUES (
   'AVIDU', 
   'WITHARANA', 
   'Computer Engineering Undergraduate', 
-  'Cybersecurity enthusiast with a passion for astronomy and computer engineering. Actively contributing to various organizations, showcasing a proactive approach to learning and implementing cybersecurity solutions.'
+  'Cybersecurity enthusiast with a passion for astronomy and computer engineering. Actively contributing to various organizations, showcasing a proactive approach to learning and implementing cybersecurity solutions.',
+  'avidu.witharan@gmail.com',
+  'https://github.com/avidzcheetah',
+  'https://linkedin.com/in/avidz',
+  'https://drive.google.com/uc?export=download&id=1YoLxQiwcBcME2xCFSWnE629HFxcXoSQB'
 );
 
 -- Enable Row Level Security (RLS)

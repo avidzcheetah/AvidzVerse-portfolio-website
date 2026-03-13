@@ -13,6 +13,10 @@ export function HeroSection() {
     subtitle: 'WITHARANA',
     tagline: 'Computer Engineering Undergraduate',
     description: 'Cybersecurity enthusiast with a passion for astronomy and computer engineering. Actively contributing to various organizations, showcasing a proactive approach to learning and implementing cybersecurity solutions.',
+    email: 'avidu.witharan@gmail.com',
+    github_url: 'https://github.com/avidzcheetah',
+    linkedin_url: 'https://linkedin.com/in/avidz',
+    cv_url: 'https://drive.google.com/uc?export=download&id=1YoLxQiwcBcME2xCFSWnE629HFxcXoSQB',
   });
 
   useEffect(() => {
@@ -108,15 +112,15 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex items-center justify-center lg:justify-start gap-6 pt-4"
             >
-              <a href="https://github.com/avidzcheetah" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-energy-blue transition-colors hover:scale-110 transform duration-300">
+              <a href={heroData.github_url} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-energy-blue transition-colors hover:scale-110 transform duration-300">
                 <Github className="w-6 h-6" />
                 <span className="sr-only">GitHub</span>
               </a>
-              <a href="https://linkedin.com/in/avidz" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-energy-blue transition-colors hover:scale-110 transform duration-300">
+              <a href={heroData.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-energy-blue transition-colors hover:scale-110 transform duration-300">
                 <Linkedin className="w-6 h-6" />
                 <span className="sr-only">LinkedIn</span>
               </a>
-              <a href="https://drive.google.com/uc?export=download&id=1YoLxQiwcBcME2xCFSWnE629HFxcXoSQB" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-energy-blue transition-colors hover:scale-110 transform duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-display">
+              <a href={heroData.cv_url} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-energy-blue transition-colors hover:scale-110 transform duration-300 flex items-center gap-2 text-sm uppercase tracking-wider font-display">
                 <Download className="w-5 h-5" />
                 <span>Decrypt CV</span>
               </a>

@@ -1,17 +1,27 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Mail, MessageSquare, Send, Fingerprint, Network } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { getHeroData, HeroData } from '@/app/actions/hero';
 
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-50px" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success'>('idle');
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await getHeroData();
+      if (data) setHeroData(data);
+    }
+    loadData();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,13 +78,13 @@ export function ContactSection() {
                 </div>
 
                 <div className="space-y-4">
-                  <a href="mailto:avidu.witharan@gmail.com" className="flex items-center gap-4 text-slate-300 hover:text-energy-teal transition-colors group p-3 rounded bg-space-900/50 border border-space-700 hover:border-energy-teal/50">
+                  <a href={`mailto:${heroData?.email || 'avidu.witharan@gmail.com'}`} className="flex items-center gap-4 text-slate-300 hover:text-energy-teal transition-colors group p-3 rounded bg-space-900/50 border border-space-700 hover:border-energy-teal/50">
                     <div className="p-2 rounded bg-space-800 group-hover:bg-energy-teal/20 transition-colors">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="text-xs font-display uppercase tracking-widest text-slate-500 mb-1">Primary Channel</p>
-                      <p className="font-sans text-sm break-all">avidu.witharan@gmail.com</p>
+                      <p className="font-sans text-sm break-all">{heroData?.email || 'avidu.witharan@gmail.com'}</p>
                     </div>
                   </a>
                   

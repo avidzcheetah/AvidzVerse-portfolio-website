@@ -9,6 +9,10 @@ export interface HeroData {
   subtitle: string;
   tagline: string;
   description: string;
+  email: string;
+  github_url: string;
+  linkedin_url: string;
+  cv_url: string;
 }
 
 export async function getHeroData(): Promise<HeroData | null> {
@@ -34,7 +38,7 @@ export async function getHeroData(): Promise<HeroData | null> {
 
 export async function updateHeroData(formData: HeroData) {
   try {
-    const { id, title, subtitle, tagline, description } = formData;
+    const { id, title, subtitle, tagline, description, email, github_url, linkedin_url, cv_url } = formData;
     
     // Check if we already have a record
     const existing = await getHeroData();
@@ -43,14 +47,21 @@ export async function updateHeroData(formData: HeroData) {
     if (existing?.id) {
       result = await supabaseAdmin
         .from('hero_section')
-        .update({ title, subtitle, tagline, description, updated_at: new Date().toISOString() })
+        .update({ 
+          title, subtitle, tagline, description, 
+          email, github_url, linkedin_url, cv_url,
+          updated_at: new Date().toISOString() 
+        })
         .eq('id', existing.id)
         .select()
         .single();
     } else {
       result = await supabaseAdmin
         .from('hero_section')
-        .insert([{ title, subtitle, tagline, description }])
+        .insert([{ 
+          title, subtitle, tagline, description,
+          email, github_url, linkedin_url, cv_url
+        }])
         .select()
         .single();
     }
