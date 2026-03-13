@@ -41,7 +41,8 @@ ${Array.isArray(repos) ? repos.map((r: any) => `- ${r.name}: ${r.description || 
     }
 
     // We'll try common model versions to avoid 404 errors in different regions
-    const modelNames = ['gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-1.0-pro'];
+    // Diagnostic revealed gemini-2.5-flash is available for this key
+    const modelNames = ['gemini-2.5-flash', 'gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-1.0-pro'];
     let model = genAI.getGenerativeModel({ model: modelNames[0] });
 
     const prompt = `
