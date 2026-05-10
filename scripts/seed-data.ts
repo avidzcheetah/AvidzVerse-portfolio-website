@@ -24,8 +24,7 @@ async function main() {
         color: 'energy-blue',
         details: [
           'Specializing in Software Engineering and Hardware Integration.',
-          'Core coursework: Data Structures, Algorithms, Computer Architecture.',
-          'Active member of the University Cyber Security Society.'
+          'Core coursework: Data Structures, Algorithms, Computer Architecture.'
         ]
       },
       {
@@ -55,6 +54,48 @@ async function main() {
         period: 'Certification',
         status: 'Valid',
         color: 'energy-gold'
+      },
+      {
+        title: 'Diploma in Information Technology',
+        institution: 'SITC Campus',
+        period: '2023',
+        status: 'Valid',
+        color: 'energy-blue'
+      },
+      {
+        title: 'Diploma in Psychology and Counselling',
+        institution: 'SITC Campus',
+        period: '2024',
+        status: 'Valid',
+        color: 'energy-violet'
+      },
+      {
+        title: 'Diploma in Cyber Security',
+        institution: 'London School of Business and Social Sciences',
+        period: '2022',
+        status: 'Valid',
+        color: 'energy-teal'
+      },
+      {
+        title: 'Diploma in English',
+        institution: 'SITC Campus',
+        period: '2023',
+        status: 'Valid',
+        color: 'energy-gold'
+      },
+      {
+        title: 'Diploma in Aviation Airlines Air Transportation & Airports',
+        institution: 'MTF Institute of Management, Technology and Finance',
+        period: '2024',
+        status: 'Valid',
+        color: 'energy-blue'
+      },
+      {
+        title: 'Advanced Certificate in Parapsychology',
+        institution: 'NTSL Campus',
+        period: '2024',
+        status: 'Valid',
+        color: 'energy-teal'
       }
     ]
   };

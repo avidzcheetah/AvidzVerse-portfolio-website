@@ -2,7 +2,8 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { BookOpen, Award, CheckCircle2 } from 'lucide-react';
+import { BookOpen, Award, CheckCircle2, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import { getAcademicData, AcademicData } from '@/app/actions/academic';
 
 export function AcademicSection() {
@@ -19,8 +20,7 @@ export function AcademicSection() {
         color: 'energy-blue',
         details: [
           'Specializing in Software Engineering and Hardware Integration.',
-          'Core coursework: Data Structures, Algorithms, Computer Architecture.',
-          'Active member of the University Cyber Security Society.'
+          'Core coursework: Data Structures, Algorithms, Computer Architecture.'
         ]
       },
       {
@@ -159,6 +159,23 @@ export function AcademicSection() {
             </div>
           </div>
 
+          {/* View All Button */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="mt-12 text-center"
+          >
+            <Link href="/certifications">
+              <button className="group relative px-8 py-3 bg-space-900 border border-energy-teal/30 text-energy-teal font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:border-energy-teal hover:shadow-[0_0_20px_rgba(69,162,158,0.3)]">
+                <span className="relative z-10 flex items-center gap-2">
+                  Launch Certification Portal
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+                <div className="absolute inset-0 bg-energy-teal/5 translate-y-full group-hover:translate-y-0 transition-transform" />
+              </button>
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>
