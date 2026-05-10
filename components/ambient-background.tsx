@@ -83,10 +83,6 @@ export function AmbientBackground() {
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.color.replace('OPACITY', this.opacity.toString());
         ctx.fill();
-        
-        // Add subtle glow
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = this.color.replace('OPACITY', (this.opacity * 0.5).toString());
       }
     }
 
