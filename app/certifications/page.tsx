@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, X, Calendar, Award, ExternalLink, Search } from 'lucide-react';
+import { ArrowLeft, X, Calendar, Award, ExternalLink, Search, Rocket } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { url } from 'node:inspector';
+import { AmbientBackground } from '@/components/ambient-background';
 
 interface Certificate {
   id: string;
@@ -62,6 +62,36 @@ export default function CertificationsPage() {
       verificationUrl: 'https://londonsbs.org.uk/qualification-verification/',
     },
     {
+      id: '3',
+      title: 'Diploma in Psychology and Counselling',
+      institution: 'SITC Campus',
+      date: '2024',
+      description: 'Foundational study of human behavior, psychological theories, and professional counselling techniques.',
+      category: 'Diploma',
+      imageUrl: 'YOUR_GOOGLE_DRIVE_URL_HERE',
+      skills: ['Behavioral Psychology', 'Counselling Techniques', 'Mental Health Awareness'],
+    },
+    {
+      id: '4',
+      title: 'Diploma in English',
+      institution: 'SITC Campus',
+      date: '2023',
+      description: 'Advanced English language program focusing on professional communication, literature, and linguistic proficiency.',
+      category: 'Diploma',
+      imageUrl: 'YOUR_GOOGLE_DRIVE_URL_HERE',
+      skills: ['Professional Communication', 'Linguistics', 'Technical Writing'],
+    },
+    {
+      id: '5',
+      title: 'Diploma in Aviation Airlines Air Transportation & Airports',
+      institution: 'MTF Institute of Management, Technology and Finance',
+      date: '2024',
+      description: 'Specialized program covering aviation management, airport operations, and air transportation logistics.',
+      category: 'Diploma',
+      imageUrl: 'YOUR_GOOGLE_DRIVE_URL_HERE',
+      skills: ['Aviation Management', 'Airport Operations', 'Logistics'],
+    },
+    {
       id: '6',
       title: 'Advanced Certificate in Information and Communication Technology',
       institution: 'BCI Campus',
@@ -73,16 +103,26 @@ export default function CertificationsPage() {
       verificationUrl: 'https://www.facebook.com/BCICAMPUSLK',
     },
     {
-        id: '7',
-        title: 'Ethical Hacking Essentials',
-        institution: 'EC Council',
-        date: '2024',
-        description: 'Ethical Hacking Essentials is an introductory cybersecurity course that covers ethical hacking and penetration testing fundamentals and prepares learners for a career in cybersecurity. This course will introduce learners to computer and network security concepts such as threats and vulnerabilities, password cracking, web application attacks, IoT and OT attacks, cloud computing, pentesting fundamentals, and more. This course provides hands-on practical experience to learners thus giving them the skills necessary for a future in cybersecurity. EHE-certified learners have an assured means of formal recognition to add to their resumes and show off their expertise and skills to prospective employers. This improves their prospects for employment advancement, higher salaries, and greater job satisfaction.',
-        category: 'Certificate',
-        imageUrl: 'https://i.ibb.co/B59qfQX5/Ethical-Hacking-Essentials.png', // Replace with your actual Google Drive URL
-        skills: ['Communication Systems', 'ICT Infrastructure', 'Network Technologies'],
-        verificationUrl: 'https://www.facebook.com/BCICAMPUSLK',
-      },
+      id: '7',
+      title: 'Ethical Hacking Essentials',
+      institution: 'EC Council',
+      date: '2024',
+      description: 'Ethical Hacking Essentials is an introductory cybersecurity course that covers ethical hacking and penetration testing fundamentals and prepares learners for a career in cybersecurity.',
+      category: 'Certificate',
+      imageUrl: 'https://i.ibb.co/B59qfQX5/Ethical-Hacking-Essentials.png',
+      skills: ['Penetration Testing', 'Network Security', 'Vulnerability Assessment'],
+      verificationUrl: 'https://www.facebook.com/BCICAMPUSLK',
+    },
+    {
+      id: '8',
+      title: 'Advanced Certificate in Parapsychology',
+      institution: 'NTSL Campus',
+      date: '2024',
+      description: 'In-depth exploration of parapsychological phenomena, research methodologies, and theoretical frameworks.',
+      category: 'Certificate',
+      imageUrl: 'YOUR_GOOGLE_DRIVE_URL_HERE',
+      skills: ['Research Methodologies', 'Phenomenological Analysis', 'Theoretical Research'],
+    },
   ];
 
   const categories = ['All', ...Array.from(new Set(certificates.map(cert => cert.category)))];
@@ -136,19 +176,9 @@ export default function CertificationsPage() {
     setImageLoading(initialLoading);
   }, []);
 
-  const backgroundStyle = isDark
-    ? {
-        background: `
-          radial-gradient(ellipse at top, #1e1b4b 0%, #0f0f23 25%, #000000 70%),
-          radial-gradient(ellipse at bottom, #312e81 0%, #1e1b4b 50%, transparent 100%)
-        `
-      }
-    : {
-        background: `
-          radial-gradient(ellipse at top, #ddd6fe 0%, #c7d2fe 25%, #e0e7ff 70%),
-          radial-gradient(ellipse at bottom, #a5b4fc 0%, #c7d2fe 50%, transparent 100%)
-        `
-      };
+  const backgroundStyle = {
+    backgroundColor: '#0b0c10',
+  };
 
   if (!isClient) return null;
 
@@ -172,6 +202,7 @@ export default function CertificationsPage() {
           background: white;
           border-radius: 50%;
           animation: twinkle 3s ease-in-out infinite;
+          will-change: transform, opacity;
         }
 
         .star-small {
@@ -205,6 +236,7 @@ export default function CertificationsPage() {
           background: linear-gradient(45deg, #fff, #87ceeb, transparent);
           border-radius: 50%;
           animation: shoot 8s linear infinite;
+          will-change: transform, opacity;
         }
 
         @keyframes shoot {
@@ -239,15 +271,16 @@ export default function CertificationsPage() {
         .nebula {
           position: absolute;
           border-radius: 50%;
-          filter: blur(40px);
+          /* filter: blur(40px); */ /* Removed for performance */
           animation: float 20s ease-in-out infinite;
-          opacity: ${isDark ? '0.3' : '0.2'};
+          opacity: ${isDark ? '0.2' : '0.1'};
+          will-change: transform, opacity;
         }
 
         .nebula-1 {
           width: 300px;
           height: 200px;
-          background: radial-gradient(ellipse, #ff6b9d, #c44569, transparent);
+          background: radial-gradient(ellipse at center, rgba(255, 107, 157, 0.5) 0%, rgba(196, 69, 105, 0.2) 40%, transparent 70%);
           top: 10%;
           left: 20%;
           animation-delay: 0s;
@@ -256,7 +289,7 @@ export default function CertificationsPage() {
         .nebula-2 {
           width: 250px;
           height: 150px;
-          background: radial-gradient(ellipse, #4834d4, #686de0, transparent);
+          background: radial-gradient(ellipse at center, rgba(72, 52, 212, 0.5) 0%, rgba(104, 109, 224, 0.2) 40%, transparent 70%);
           top: 60%;
           right: 15%;
           animation-delay: -7s;
@@ -265,7 +298,7 @@ export default function CertificationsPage() {
         .nebula-3 {
           width: 200px;
           height: 300px;
-          background: radial-gradient(ellipse, #00d2d3, #01a3a4, transparent);
+          background: radial-gradient(ellipse at center, rgba(0, 210, 211, 0.5) 0%, rgba(1, 163, 164, 0.2) 40%, transparent 70%);
           top: 30%;
           right: 40%;
           animation-delay: -14s;
@@ -377,20 +410,34 @@ export default function CertificationsPage() {
 
         /* Certificate Card Animations */
         .certificate-card {
-          background: ${isDark ? 'rgba(15, 23, 42, 0.85)' : 'rgba(255, 255, 255, 0.85)'};
-          backdrop-filter: blur(12px);
-          border: 1px solid ${isDark ? 'rgba(148, 163, 184, 0.1)' : 'rgba(148, 163, 184, 0.2)'};
+          background: rgba(15, 23, 42, 0.4);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(102, 252, 241, 0.1);
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           overflow: hidden;
-          border-radius: 16px;
+          border-radius: 12px;
           cursor: pointer;
         }
 
         .certificate-card:hover {
           transform: translateY(-8px) scale(1.02);
-          box-shadow: 0 20px 40px ${isDark ? 'rgba(59, 130, 246, 0.3)' : 'rgba(59, 130, 246, 0.15)'};
-          background: ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
+          box-shadow: 0 10px 30px rgba(102, 252, 241, 0.2);
+          border-color: rgba(102, 252, 241, 0.4);
+          background: rgba(15, 23, 42, 0.6);
+          will-change: transform;
+        }
+
+        .skill-tag {
+          background: rgba(102, 252, 241, 0.05);
+          color: #66fcf1;
+          border: 1px solid rgba(102, 252, 241, 0.2);
+          padding: 2px 8px;
+          border-radius: 4px;
+          font-family: var(--font-space-grotesk), sans-serif;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
 
         /* Image Loading and Error States */
@@ -468,7 +515,8 @@ export default function CertificationsPage() {
         {/* Cosmic Sky Background */}
         <div className="cosmic-container">
           {/* Twinkling Stars */}
-          {[...Array(150)].map((_, i) => {
+          {/* Twinkling Stars - Reduced count for performance */}
+          {[...Array(60)].map((_, i) => {
             const starType = i % 3 === 0 ? 'star-large' : i % 2 === 0 ? 'star-medium' : 'star-small';
             return (
               <div
@@ -485,7 +533,8 @@ export default function CertificationsPage() {
           })}
 
           {/* Shooting Stars */}
-          {[...Array(5)].map((_, i) => (
+          {/* Shooting Stars - Reduced count */}
+          {[...Array(3)].map((_, i) => (
             <div
               key={`shooting-${i}`}
               className="shooting-star"
@@ -534,53 +583,48 @@ export default function CertificationsPage() {
           </svg>
         </div>
 
+        {/* Ambient Background */}
+        <AmbientBackground />
+
         {/* Header */}
         <div className="relative z-10 pt-24 pb-12 container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-12">
             <Link
               href="/#academic"
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105 ${
-                isDark
-                  ? 'bg-slate-800/70 hover:bg-slate-700/80 text-slate-300 hover:text-white'
-                  : 'bg-white/70 hover:bg-white/90 text-slate-600 hover:text-slate-900'
-              } backdrop-blur-sm border border-white/20`}
+              className="group flex items-center gap-2 px-6 py-2 rounded-full transition-all duration-300 bg-space-800/40 hover:bg-space-700/60 text-slate-300 hover:text-energy-blue backdrop-blur-sm border border-energy-blue/20 hover:border-energy-blue/50"
             >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Portfolio
+              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              <span className="font-display tracking-widest uppercase text-xs">Return to Command Center</span>
             </Link>
           </div>
 
-          <div className="text-center mb-12">
-            <h1
-              className={`text-4xl md:text-5xl font-bold mb-4 ${
-                isDark ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400' : 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600'
-              } bg-clip-text text-transparent`}
-            >
-              My Certifications
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 tracking-widest text-white uppercase">
+              MISSION <span className="text-energy-blue text-glow">ACCOMPLISHMENTS</span>
             </h1>
-            <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-              A comprehensive collection of my academic achievements, professional certifications, and continuous learning journey across the cosmos of knowledge.
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="w-2 h-2 rounded-full bg-energy-blue animate-pulse" />
+              <span className="text-[10px] font-display tracking-[0.4em] text-energy-blue/60 uppercase">Database Decryption Complete</span>
+            </div>
+            <p className="text-sm max-w-2xl mx-auto text-slate-400 font-sans leading-relaxed">
+              Archive of verified academic credentials and specialized certifications obtained during active duty across various technical sectors.
             </p>
           </div>
 
           {/* Search and category filter */}
-          <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="flex flex-col md:flex-row gap-4 mb-12">
             <div className="relative flex-1">
               <Search
-                className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 ${
-                  isDark ? 'text-gray-400' : 'text-gray-500'
-                }`}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-energy-blue/50"
                 aria-hidden="true"
               />
               <input
                 type="text"
-                aria-label="Search certificates"
-                placeholder="Search certificates..."
+                aria-label="Search archive"
+                placeholder="Search archive..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pl-10 pr-4 py-3 rounded-xl border transition duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  isDark ? 'bg-slate-800/70 border-slate-700/50 text-white placeholder-gray-400' : 'bg-white/70 border-gray-200/50 text-gray-900 placeholder-gray-500'
-                } backdrop-blur-sm border-white/20`}
+                className="w-full pl-12 pr-4 py-4 rounded bg-space-800/40 border border-space-700 text-white placeholder-slate-500 focus:ring-1 focus:ring-energy-blue focus:border-energy-blue/50 transition-all font-sans"
               />
             </div>
 
@@ -589,12 +633,10 @@ export default function CertificationsPage() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm transition-transform duration-200 border border-white/20 ${
+                  className={`px-6 py-2 rounded font-display text-[10px] tracking-widest uppercase transition-all border ${
                     selectedCategory === category
-                      ? 'bg-blue-600/90 text-white scale-105 shadow-lg shadow-blue-500/25'
-                      : isDark
-                      ? 'bg-slate-800/70 text-slate-300 hover:bg-slate-700/80'
-                      : 'bg-white/70 text-gray-600 hover:bg-white/90'
+                      ? 'bg-energy-blue/20 text-energy-blue border-energy-blue/50 shadow-[0_0_15px_rgba(102,252,241,0.2)]'
+                      : 'bg-space-800/40 text-slate-400 border-space-700 hover:border-slate-500'
                   }`}
                   type="button"
                 >
@@ -635,42 +677,42 @@ export default function CertificationsPage() {
                         <div className="text-xs mt-1 opacity-70">Failed to load</div>
                       </div>
                     ) : (
-                      <Image
-                        src={certificate.imageUrl}
-                        alt={certificate.title}
-                        fill
-                        className="object-cover transition-transform duration-300"
-                        onLoad={() => handleImageLoad(certificate.id)}
-                        onError={() => handleImageError(certificate.id)}
-                        unoptimized // Add this for Google Drive images
-                      />
+                        <Image
+                          src={certificate.imageUrl}
+                          alt={certificate.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          onLoad={() => handleImageLoad(certificate.id)}
+                          onError={() => handleImageError(certificate.id)}
+                          unoptimized
+                        />
                     )}
                     
-                    <span
-                      className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
-                        certificate.category === 'Degree'
-                          ? 'bg-blue-500/80 text-white'
-                          : certificate.category === 'Diploma'
-                          ? 'bg-purple-500/80 text-white'
-                          : 'bg-green-500/80 text-white'
-                      }`}
-                    >
-                      {certificate.category}
-                    </span>
+                      <span
+                        className={`absolute top-2 right-2 px-3 py-1 rounded text-[8px] font-display tracking-widest uppercase backdrop-blur-md border ${
+                          certificate.category === 'Degree'
+                            ? 'bg-energy-blue/20 text-energy-blue border-energy-blue/40'
+                            : certificate.category === 'Diploma'
+                            ? 'bg-energy-violet/20 text-energy-violet border-energy-violet/40'
+                            : 'bg-energy-teal/20 text-energy-teal border-energy-teal/40'
+                        }`}
+                      >
+                        {certificate.category}
+                      </span>
                   </div>
 
-                  <h3 id={`cert-title-${certificate.id}`} className={`text-lg font-semibold mb-2 line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  <h3 id={`cert-title-${certificate.id}`} className="text-lg font-bold mb-2 line-clamp-2 text-white font-display tracking-wide uppercase">
                     {certificate.title}
                   </h3>
-                  <div className={`flex items-center gap-2 mb-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                    <Award className="h-4 w-4" />
-                    <span className="text-sm font-medium">{certificate.institution}</span>
+                  <div className="flex items-center gap-2 mb-2 text-slate-300">
+                    <Award className="h-4 w-4 text-energy-teal" />
+                    <span className="text-xs font-display tracking-wider uppercase">{certificate.institution}</span>
                   </div>
-                  <div className={`flex items-center gap-2 mb-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <div className="flex items-center gap-2 mb-3 text-slate-500">
                     <Calendar className="h-4 w-4" />
-                    <span className="text-sm">{certificate.date}</span>
+                    <span className="text-[10px] uppercase tracking-widest">{certificate.date}</span>
                   </div>
-                  <p className={`text-sm mb-4 line-clamp-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <p className="text-xs mb-4 line-clamp-2 text-slate-400 font-sans leading-relaxed">
                     {certificate.description}
                   </p>
                   <div className="flex flex-wrap gap-1">
@@ -680,7 +722,7 @@ export default function CertificationsPage() {
                       </span>
                     ))}
                     {certificate.skills.length > 3 && (
-                      <span className={`px-2 py-1 rounded-full text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <span className="px-2 py-1 text-[8px] font-display tracking-widest text-slate-600 uppercase">
                         +{certificate.skills.length - 3} more
                       </span>
                     )}
@@ -703,14 +745,12 @@ export default function CertificationsPage() {
             <div className="modal-overlay absolute inset-0 bg-black/70" onClick={closeModal} tabIndex={-1} />
             <section
               ref={modalRef}
-              className={`modal-content relative rounded-2xl max-w-8xl w-full max-h-[90vh] overflow-y-auto p-8 shadow-lg border border-white/20 ${
-                isDark ? 'bg-slate-800/95' : 'bg-white/95'
-              } backdrop-blur-sm`}
+              className="modal-content relative rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto p-8 shadow-2xl border border-energy-blue/30 bg-space-950/95 backdrop-blur-md"
             >
               <button
                 onClick={closeModal}
                 aria-label="Close modal"
-                className="absolute top-4 right-4 p-2 rounded-full bg-gray-100/80 dark:bg-gray-700/80 hover:bg-gray-200/80 dark:hover:bg-gray-600/80 transition-colors z-10 backdrop-blur-sm"
+                className="absolute top-4 right-4 p-2 rounded bg-space-800 text-energy-blue hover:text-white border border-energy-blue/20 transition-all z-10"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -738,38 +778,38 @@ export default function CertificationsPage() {
                 {/* Details Section */}
                 <div className="space-y-6">
                   <span
-                    className={`inline-block px-3 py-1 rounded-full text-sm font-medium mb-3 backdrop-blur-sm ${
+                    className={`inline-block px-4 py-1.5 rounded text-[10px] font-display tracking-widest uppercase mb-4 border ${
                       selectedCertificate.category === 'Degree'
-                        ? 'bg-blue-500/80 text-white'
+                        ? 'bg-energy-blue/20 text-energy-blue border-energy-blue/40'
                         : selectedCertificate.category === 'Diploma'
-                        ? 'bg-purple-500/80 text-white'
-                        : 'bg-green-500/80 text-white'
+                        ? 'bg-energy-violet/20 text-energy-violet border-energy-violet/40'
+                        : 'bg-energy-teal/20 text-energy-teal border-energy-teal/40'
                     }`}
                   >
                     {selectedCertificate.category}
                   </span>
 
-                  <h2 id="modal-title" className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <h2 id="modal-title" className="text-3xl font-bold font-display text-white tracking-wide uppercase">
                     {selectedCertificate.title}
                   </h2>
 
-                  <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 mb-1">
+                  <div className="flex items-center gap-2 text-energy-teal mb-1">
                     <Award className="h-5 w-5" />
-                    <span className="font-medium">{selectedCertificate.institution}</span>
+                    <span className="font-display tracking-widest uppercase text-sm">{selectedCertificate.institution}</span>
                   </div>
 
-                  <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-4">
-                    <Calendar className="h-5 w-5" />
-                    <span>{selectedCertificate.date}</span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Description</h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{selectedCertificate.description}</p>
+                  <div className="flex items-center gap-2 text-slate-500 mb-6">
+                    <Calendar className="h-4 w-4" />
+                    <span className="text-xs uppercase tracking-[0.2em]">{selectedCertificate.date}</span>
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Skills & Competencies</h3>
+                    <h3 className="text-xs font-display tracking-[0.3em] text-slate-500 uppercase mb-3 border-b border-space-700 pb-2">Analysis Report</h3>
+                    <p className="text-slate-300 font-sans leading-relaxed text-sm">{selectedCertificate.description}</p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xs font-display tracking-[0.3em] text-slate-500 uppercase mb-4 border-b border-space-700 pb-2">Technical Proficiency</h3>
                     <div className="flex flex-wrap gap-2">
                       {selectedCertificate.skills.map((skill, idx) => (
                         <span key={idx} className="skill-tag">
@@ -784,9 +824,9 @@ export default function CertificationsPage() {
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Verification</h3>
 
                       {selectedCertificate.credentialId && (
-                        <div className="mb-3">
-                          <span className="text-sm text-gray-500 dark:text-gray-400">Credential ID:</span>
-                          <p className="font-mono text-sm text-gray-700 dark:text-gray-300">{selectedCertificate.credentialId}</p>
+                        <div className="mb-6">
+                          <span className="text-[10px] font-display tracking-widest text-slate-600 uppercase">Archive ID:</span>
+                          <p className="font-mono text-xs text-energy-blue bg-space-800/50 p-2 rounded border border-space-700 mt-2">{selectedCertificate.credentialId}</p>
                         </div>
                       )}
 
@@ -795,10 +835,10 @@ export default function CertificationsPage() {
                           href={selectedCertificate.verificationUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/90 hover:bg-blue-700/90 text-white rounded-lg transition-colors backdrop-blur-sm"
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-energy-blue text-space-900 font-display tracking-widest uppercase text-xs rounded transition-all hover:bg-energy-teal shadow-[0_0_15px_rgba(102,252,241,0.3)]"
                         >
                           <ExternalLink className="h-4 w-4" />
-                          Verify Certificate
+                          Verify Credentials
                         </a>
                       )}
                     </div>
